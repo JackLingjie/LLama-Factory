@@ -6,28 +6,28 @@ stage: sft
 do_train: true
 finetuning_type: lora
 lora_target: all
-deepspeed: examples/deepspeed/ds_z3_config.json
+deepspeed: examples/deepspeed/ds_z2_config.json
 
 ### dataset
-dataset: identity,alpaca_en_demo
+dataset: tulu_v2
 template: llama3
-cutoff_len: 1024
-max_samples: 1000
+cutoff_len: 2048
+max_samples: 330000
 overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: saves/llama3.1-8b/lora/sft
+output_dir: saves/tulu_v2_8b_zero2/lora/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
 overwrite_output_dir: true
 
 ### train
-per_device_train_batch_size: 16
-gradient_accumulation_steps: 2
-learning_rate: 1.0e-4
-num_train_epochs: 3.0
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 8
+learning_rate: 2.0e-5
+num_train_epochs: 2.0
 lr_scheduler_type: cosine
 warmup_ratio: 0.1
 bf16: true
@@ -35,6 +35,6 @@ ddp_timeout: 180000000
 
 ### eval
 val_size: 0.1
-per_device_eval_batch_size: 1
+per_device_eval_batch_size: 8
 eval_strategy: steps
 eval_steps: 500
