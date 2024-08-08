@@ -167,3 +167,5 @@ config/
 saves/
 output/
 wandb/
+amlt_job/.amltconfig
+amlt_job/mount.sh
