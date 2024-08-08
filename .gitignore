@@ -169,3 +169,5 @@ output/
 wandb/
 amlt_job/.amltconfig
 amlt_job/mount.sh
+data/tulu_v2.json
+model_checkpoint/
