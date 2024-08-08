@@ -34,7 +34,6 @@ search:
     - echo $${rank}
     - bash amlt_job/mount.sh
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
-    # - llamafactory-cli train bash_script/tulu_lora_dpo_job.yaml
     - torchrun --nproc_per_node=8 src/train.py bash_script/tulu_lora_sft_ds2_job.yaml
     submit_args:
       env:
