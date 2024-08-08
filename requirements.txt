@@ -19,4 +19,3 @@ fire
 packaging
 pyyaml
 numpy<2.0.0
-deepspeed==0.14.4
