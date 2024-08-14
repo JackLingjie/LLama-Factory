@@ -38,6 +38,20 @@
       "system_tag": "system"
     }
   },
+  "tulu_v2_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/tulu_v2.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  },
   "mllm_demo": {
     "file_name": "mllm_demo.json",
     "formatting": "sharegpt",

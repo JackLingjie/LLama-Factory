@@ -1,7 +1,6 @@
 ### model
-# model_name_or_path: /home/lidong1/jianglingjie/model_checkpoint/huggingface/Meta-Llama-3.1-8B
-model_name_or_path: model_checkpoint/huggingface/Meta-Llama-3.1-8B
-adapter_name_or_path: saves/tulu_v2_8b_0808/lora/sft/checkpoint-14
+model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/huggingface/Meta-Llama-3.1-8B
+adapter_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/tulu_v2_8b_zero2_bsz64/lora/sft
 
 ### method
 stage: dpo
@@ -15,7 +14,7 @@ pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
 dataset: ultrafeedback
 template: llama3
 cutoff_len: 1024
-max_samples: 1000
+max_samples: 64000
 overwrite_cache: true
 preprocessing_num_workers: 16
 

@@ -1,0 +1,1 @@
+FORCE_TORCHRUN=1 llamafactory-cli train bash_script/tulu_lora_sft_ds2.yaml
