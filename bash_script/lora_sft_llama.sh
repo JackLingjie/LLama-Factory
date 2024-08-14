@@ -23,6 +23,7 @@ torchrun --nproc_per_node=4 src/train.py bash_script/tulu_lora_dpo_test.yaml
 
 torchrun --nproc_per_node=4 src/train.py bash_script/tulu_lora_dpo_job.yaml
 
+llamafactory-cli train bash_script/tulu_lora_dpo_test.yaml
 #job dpo train 
 torchrun --nproc_per_node=8 src/train.py bash_script/tulu_lora_dpo_job.yaml
 llamafactory-cli train bash_script/tulu_lora_dpo_job.yaml
