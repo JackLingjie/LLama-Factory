@@ -11,6 +11,8 @@ llamafactory-cli train examples/train_lora/tulu_llama3_lora_sft.yaml
 
 llamafactory-cli train bash_script/tulu_lora_sft_ds2_local_test.yaml
 
+llamafactory-cli train bash_script/tulu_lora_sft_ds2_local_base.yaml
+
 FORCE_TORCHRUN=1 llamafactory-cli train examples/train_lora/tulu_lora_sft_ds2.yaml
 
 # local dpo train
