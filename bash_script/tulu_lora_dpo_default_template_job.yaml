@@ -1,6 +1,6 @@
 ### model
 model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/huggingface/Meta-Llama-3.1-8B
-adapter_name_or_path: saves/tulu_v2_8b_test/lora/sft
+adapter_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/tulu_v2_8b_bsz64_default_template/lora/sft
 
 ### method
 stage: dpo
@@ -14,22 +14,22 @@ pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
 dataset: ultrafeedback
 template: default
 cutoff_len: 1024
-max_samples: 200
+max_samples: 64000
 overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: saves/tulu_v2_8b_default_template_dpo/lora/dpo
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/tulu_v2_8b_default_template_dpo/lora/dpo
 logging_steps: 10
 save_steps: 500
 plot_loss: true
 overwrite_output_dir: true
 
 ### train
-per_device_train_batch_size: 4
-gradient_accumulation_steps: 8
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 1
 learning_rate: 5.0e-6
-num_train_epochs: 3.0
+num_train_epochs: 2.0
 lr_scheduler_type: cosine
 warmup_ratio: 0.1
 bf16: true
@@ -37,6 +37,6 @@ ddp_timeout: 180000000
 
 ### eval
 val_size: 0.1
-per_device_eval_batch_size: 1
+per_device_eval_batch_size: 8
 eval_strategy: steps
 eval_steps: 500
