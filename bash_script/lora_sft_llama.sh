@@ -36,3 +36,15 @@ llamafactory-cli export bash_script/merge_lora_sft.yaml
 
 # export dpo model
 llamafactory-cli export bash_script/merge_dpo_tulu.yaml
+
+# export default template
+llamafactory-cli export bash_script/merge_lora_sft_default_template.yaml
+
+# export base template
+llamafactory-cli export bash_script/merge_lora_sft_base_template.yaml
+
+# export base template dpo
+llamafactory-cli export bash_script/export_model/merge_dpo_base_template.yaml
+
+# export default template dpo
+llamafactory-cli export bash_script/export_model/merge_dpo_default_template.yaml
