@@ -1,0 +1,50 @@
+description: bitnet
+
+target:
+  service: aml
+  name: alta2
+
+environment:
+  image: nvcr:v23.10
+  registry: shumingdocker.azurecr.io
+  setup:
+  - echo "master_addr:" "$$MASTER_ADDR"
+  - echo "master_port:" $$MASTER_PORT
+  - echo "node_rank:" $$OMPI_COMM_WORLD_RANK
+  username: shumingdocker
+
+code:
+  local_dir: $CONFIG_DIR/..
+
+# storage:
+#   lingjiejiang:
+#     storage_account_name: msranlpintern
+#     container_name: lingjiejiang
+
+search:
+  job_template:
+    name: PRJ-0349-A54-1_.58_-bit-LLMs-test-scaling
+    sku: 1xG8
+    mpi: True
+    process_count_per_node: 1
+    command:
+    - pip install -e ".[torch,metrics]"
+    # - pip install -e ".[torch,metrics]" # to update the latest version of the deepspeed
+    - pip install deepspeed==0.14.4
+    - echo $${rank}
+    - bash amlt_job/mount.sh
+    - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+    - bash bash_script/runs/tulu_sft_dpo_4096_default_template.sh
+    submit_args:
+      env:
+        {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
+      container_args:
+        shm_size: 256g
+    tags: [Project_Name:1.58-bit-LLMs, ProjectID:PRJ-0349-A54, Experiment:BitNet-scaling]
+
+  type: grid
+  max_trials: 500
+  params:
+    - name: rank
+      spec: discrete
+      values: [0]
