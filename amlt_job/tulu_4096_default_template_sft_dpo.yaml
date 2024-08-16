@@ -34,7 +34,10 @@ search:
     - echo $${rank}
     - bash amlt_job/mount.sh
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
-    - bash bash_script/runs/tulu_sft_dpo_4096_default_template.sh
+    # - bash bash_script/runs/tulu_sft_dpo_4096_default_template.sh
+    - torchrun --nproc_per_node=8 src/train.py "bash_script/tulu_lora_sft_4096_default_template_job.yaml"
+    - sleep 60
+    - torchrun --nproc_per_node=8 src/train.py "bash_script/tulu_lora_dpo_4096_default_template_job.yaml"
     submit_args:
       env:
         {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
