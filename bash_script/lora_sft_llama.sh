@@ -48,3 +48,13 @@ llamafactory-cli export bash_script/export_model/merge_dpo_base_template.yaml
 
 # export default template dpo
 llamafactory-cli export bash_script/export_model/merge_dpo_default_template.yaml
+
+# export default template 2048 sft
+llamafactory-cli export bash_script/export_model/merge_lora_sft_default_template_2048.yaml
+
+# export default template 2048 dpo
+llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048.yaml
+
+# export default template 4096 sft
+llamafactory-cli export bash_script/export_model/merge_lora_sft_default_template_4096.yaml
+
