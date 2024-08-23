@@ -5,7 +5,7 @@ from PIL import Image
 import os  
 import markdown  
 import logging  
-  
+import time
 # 配置日志  
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')  
   
@@ -36,7 +36,7 @@ def html_to_image(html_file, output_image):
     # Open HTML file  
     file_url = f"file://{os.path.abspath(html_file)}"  
     driver.get(file_url)  
-      
+    time.sleep(2)
     # Take screenshot  
     screenshot = driver.get_screenshot_as_png()  
       
@@ -53,7 +53,9 @@ def html_to_image(html_file, output_image):
         img.save(output_image)  
   
 def text_to_image(text, output_image):  
-    """Convert text to image and log the process"""  
+    """  
+    Convert text to image and log the process  
+    """  
     logging.info("Starting the conversion process.")  
       
     # Convert text to Markdown (assume the text is in Markdown format)  
@@ -78,24 +80,65 @@ def text_to_image(text, output_image):
     </html>  
     """  
       
-    # Get the directory of the current script  
-    script_dir = os.path.dirname(os.path.abspath(__file__))  
-      
     # Save HTML to file  
-    html_file = os.path.join(script_dir, 'example.html')  
+    html_file = 'example.html'  
     save_html_to_file(html_content, html_file)  
     logging.info(f"HTML content saved to {html_file}.")  
       
     # Convert HTML to image  
-    output_image_path = os.path.join(script_dir, output_image)  
-    html_to_image(html_file, output_image_path)  
-    logging.info(f"Image saved to {output_image_path}.")  
+    html_to_image(html_file, output_image)  
+    logging.info(f"Image saved to {output_image}.")  
       
     # Delete HTML file  
     os.remove(html_file)  
     logging.info(f"Temporary HTML file {html_file} deleted.")  
       
     logging.info("Conversion process completed successfully.")  
+  
+# def text_to_image(text, output_image):  
+#     """Convert text to image and log the process"""  
+#     logging.info("Starting the conversion process.")  
+      
+#     # Convert text to Markdown (assume the text is in Markdown format)  
+#     html_content = markdown_to_html(text)  
+      
+#     # Wrap HTML header and style  
+#     html_content = f"""  
+#     <!DOCTYPE html>  
+#     <html lang="en">  
+#     <head>  
+#         <meta charset="UTF-8">  
+#         <title>Markdown to HTML Example</title>  
+#         <style>  
+#             body {{  
+#                 font-family: 'Arial', sans-serif;  
+#             }}  
+#         </style>  
+#     </head>  
+#     <body>  
+#         {html_content}  
+#     </body>  
+#     </html>  
+#     """  
+      
+#     # Get the directory of the current script  
+#     script_dir = os.path.dirname(os.path.abspath(__file__))  
+      
+#     # Save HTML to file  
+#     html_file = os.path.join(script_dir, 'example.html')  
+#     save_html_to_file(html_content, html_file)  
+#     logging.info(f"HTML content saved to {html_file}.")  
+      
+#     # Convert HTML to image  
+#     output_image_path = os.path.join(script_dir, output_image)  
+#     html_to_image(html_file, output_image_path)  
+#     logging.info(f"Image saved to {output_image_path}.")  
+      
+#     # Delete HTML file  
+#     os.remove(html_file)  
+#     logging.info(f"Temporary HTML file {html_file} deleted.")  
+      
+#     logging.info("Conversion process completed successfully.")  
   
 
 if __name__ == "__main__":
@@ -110,7 +153,7 @@ if __name__ == "__main__":
     - Item 3  
     
     [Click here](http://example.com) to visit the example website.  
-    """  
+    """   
     
     # 调用函数并输出日志  
     output_image = 'output.png'  
