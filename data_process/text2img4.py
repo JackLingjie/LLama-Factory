@@ -7,7 +7,7 @@ import logging
 # 配置日志  
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')  
   
-def markdown_to_html(input_text):  
+def markdown_to_html(input_text, css_file='mystyle.css'):  
     # 定义临时文件路径  
     md_file_path = 'temp.md'  
     html_file_path = 'temp.html'  
@@ -20,6 +20,7 @@ def markdown_to_html(input_text):
     pandoc_command = [  
         'pandoc',  
         '-s',  
+        '-c', css_file, 
         md_file_path,  
         '-o', html_file_path,  
         '--self-contained'  
@@ -50,7 +51,7 @@ def text_to_image(text, output_image, size=(800, 600), save_dir='text_images'):
         os.makedirs(output_path)  
   
     # Convert HTML to image using html2image  
-    hti = Html2Image(size=size, output_path=output_path)  
+    hti = Html2Image(size=size, output_path=output_path, temp_path="/home/lidong1/jianglingjie/temp")  
     # 设置浏览器路径（如果需要）  
     # hti.browser_executable = '/path/to/your/chrome-or-edge'  
   
