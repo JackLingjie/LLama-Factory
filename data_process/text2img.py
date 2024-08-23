@@ -52,10 +52,9 @@ def html_to_image(html_file, output_image):
         img = img.crop(img.getbbox())  # Crop blank areas  
         img.save(output_image)  
   
+  
 def text_to_image(text, output_image):  
-    """  
-    Convert text to image and log the process  
-    """  
+    """Convert text to image and log the process"""  
     logging.info("Starting the conversion process.")  
       
     # Convert text to Markdown (assume the text is in Markdown format)  
@@ -80,14 +79,18 @@ def text_to_image(text, output_image):
     </html>  
     """  
       
+    # Get the directory of the current script  
+    script_dir = os.path.dirname(os.path.abspath(__file__))  
+      
     # Save HTML to file  
-    html_file = 'example.html'  
+    html_file = os.path.join(script_dir, 'example.html')  
     save_html_to_file(html_content, html_file)  
     logging.info(f"HTML content saved to {html_file}.")  
       
     # Convert HTML to image  
-    html_to_image(html_file, output_image)  
-    logging.info(f"Image saved to {output_image}.")  
+    output_image_path = os.path.join(script_dir, output_image)  
+    html_to_image(html_file, output_image_path)  
+    logging.info(f"Image saved to {output_image_path}.")  
       
     # Delete HTML file  
     os.remove(html_file)  
@@ -95,65 +98,20 @@ def text_to_image(text, output_image):
       
     logging.info("Conversion process completed successfully.")  
   
-# def text_to_image(text, output_image):  
-#     """Convert text to image and log the process"""  
-#     logging.info("Starting the conversion process.")  
-      
-#     # Convert text to Markdown (assume the text is in Markdown format)  
-#     html_content = markdown_to_html(text)  
-      
-#     # Wrap HTML header and style  
-#     html_content = f"""  
-#     <!DOCTYPE html>  
-#     <html lang="en">  
-#     <head>  
-#         <meta charset="UTF-8">  
-#         <title>Markdown to HTML Example</title>  
-#         <style>  
-#             body {{  
-#                 font-family: 'Arial', sans-serif;  
-#             }}  
-#         </style>  
-#     </head>  
-#     <body>  
-#         {html_content}  
-#     </body>  
-#     </html>  
-#     """  
-      
-#     # Get the directory of the current script  
-#     script_dir = os.path.dirname(os.path.abspath(__file__))  
-      
-#     # Save HTML to file  
-#     html_file = os.path.join(script_dir, 'example.html')  
-#     save_html_to_file(html_content, html_file)  
-#     logging.info(f"HTML content saved to {html_file}.")  
-      
-#     # Convert HTML to image  
-#     output_image_path = os.path.join(script_dir, output_image)  
-#     html_to_image(html_file, output_image_path)  
-#     logging.info(f"Image saved to {output_image_path}.")  
-      
-#     # Delete HTML file  
-#     os.remove(html_file)  
-#     logging.info(f"Temporary HTML file {html_file} deleted.")  
-      
-#     logging.info("Conversion process completed successfully.")  
-  
+markdown_text = """  
+# Hello, World!  
 
+This is an example document written using **Markdown**.  
+
+- Item 1  
+- Item 2  
+- Item 3  
+
+[Click here](http://example.com) to visit the example website.  
+""" 
 if __name__ == "__main__":
     # 示例Markdown文本  
-    markdown_text = """  
-    # Hello, World!  
-    
-    This is an example document written using **Markdown**.  
-    
-    - Item 1  
-    - Item 2  
-    - Item 3  
-    
-    [Click here](http://example.com) to visit the example website.  
-    """   
+  
     
     # 调用函数并输出日志  
     output_image = 'output.png'  
