@@ -24,7 +24,6 @@ def html_to_image(html_file, output_image):
     chrome_options = Options()  
     chrome_options.add_argument("--headless")  # Headless mode  
     chrome_options.add_argument("--disable-gpu")  
-    chrome_options.add_argument("--window-size=1920x1080")  
     chrome_options.add_argument("--no-sandbox")  
       
     # Set ChromeDriver service  
@@ -36,7 +35,13 @@ def html_to_image(html_file, output_image):
     # Open HTML file  
     file_url = f"file://{os.path.abspath(html_file)}"  
     driver.get(file_url)  
-    time.sleep(2)
+    time.sleep(2)  
+      
+    # 调整窗口高度以适应内容  
+    total_height = driver.execute_script("return document.body.parentNode.scrollHeight")  
+    driver.set_window_size(600, total_height)  
+    time.sleep(1)  
+      
     # Take screenshot  
     screenshot = driver.get_screenshot_as_png()  
       
@@ -50,7 +55,7 @@ def html_to_image(html_file, output_image):
     # Use PIL to adjust image size  
     with Image.open(output_image) as img:  
         img = img.crop(img.getbbox())  # Crop blank areas  
-        img.save(output_image)  
+        img.save(output_image)   
   
   
 def text_to_image(text, output_image):  
@@ -109,7 +114,7 @@ markdown_text = \
 6. Challenge yourself: Set challenges like drawing objects from memory or a specific subject to improve your skills and keep your drawing practice interesting.
 7. Track your progress: Keep a record of your daily drawing practice and track your progress. This can be a source of motivation and help you see how far you've come.
 
-Remember, developing a habit takes time and patience. Stay consistent with your drawing practice, be flexible and open to trying new things, and with time, you'll develop a habit of daily drawing that brings you joy and satisfaction.  
+Remember, developing a habit takes time and patience. Stay consistent with your drawing practice, be flexible and open to trying new things, and with time, you'll develop a habit of daily drawing that brings you joy and satisfaction. 
 """ 
 if __name__ == "__main__":
     # 示例Markdown文本  

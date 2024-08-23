@@ -5,7 +5,7 @@ from PIL import Image
 import os  
 import markdown  
 import logging  
-import time
+  
 # 配置日志  
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')  
   
@@ -36,7 +36,7 @@ def html_to_image(html_file, output_image):
     # Open HTML file  
     file_url = f"file://{os.path.abspath(html_file)}"  
     driver.get(file_url)  
-    time.sleep(2)
+      
     # Take screenshot  
     screenshot = driver.get_screenshot_as_png()  
       
@@ -52,9 +52,10 @@ def html_to_image(html_file, output_image):
         img = img.crop(img.getbbox())  # Crop blank areas  
         img.save(output_image)  
   
-  
-def text_to_image(text, output_image):  
-    """Convert text to image and log the process"""  
+def text_to_image_with_log(text, output_image):  
+    """  
+    Convert text to image and log the process  
+    """  
     logging.info("Starting the conversion process.")  
       
     # Convert text to Markdown (assume the text is in Markdown format)  
@@ -79,42 +80,51 @@ def text_to_image(text, output_image):
     </html>  
     """  
       
-    # Get the directory of the current script  
-    script_dir = os.path.dirname(os.path.abspath(__file__))  
-      
     # Save HTML to file  
-    html_file = os.path.join(script_dir, 'example.html')  
+    html_file = 'example.html'  
     save_html_to_file(html_content, html_file)  
     logging.info(f"HTML content saved to {html_file}.")  
       
     # Convert HTML to image  
-    output_image_path = os.path.join(script_dir, output_image)  
-    html_to_image(html_file, output_image_path)  
-    logging.info(f"Image saved to {output_image_path}.")  
+    html_to_image(html_file, output_image)  
+    logging.info(f"Image saved to {output_image}.")  
       
     # Delete HTML file  
     os.remove(html_file)  
     logging.info(f"Temporary HTML file {html_file} deleted.")  
       
     logging.info("Conversion process completed successfully.")  
-  
-markdown_text = \
-"""Developing a daily habit of drawing can be challenging but with consistent practice and a few tips, it can become an enjoyable and rewarding part of your daily routine. Here are some strategies to help you develop the habit of drawing daily:
+def main():
+    markdown_text = """  
+    # Hello, World!  
 
-1. Set a specific time: Allocate a specific time of the day to draw. It could be in the morning, afternoon, or evening. Make drawing a part of your daily routine.
-2. Set a specific duration: Determine the amount of time you want to spend on drawing each day. It can be as little as 10 minutes or as long as an hour. Be consistent with the duration to help build the habit.
-3. Start small and simple: Don't try to create a masterpiece every day, start with simple and easy-to-do sketches. Focus on improving your skills gradually.
-4. Use a variety of tools and mediums: Experiment with different tools like pencils, pens, markers, and different mediums like paper, canvas, or digital apps to keep your drawing practice interesting and engaging.
-5. Take breaks and rest: Taking breaks and resting after some time of drawing can help you avoid burnout and stay motivated.
-6. Challenge yourself: Set challenges like drawing objects from memory or a specific subject to improve your skills and keep your drawing practice interesting.
-7. Track your progress: Keep a record of your daily drawing practice and track your progress. This can be a source of motivation and help you see how far you've come.
+    This is an example document written using **Markdown**.  
 
-Remember, developing a habit takes time and patience. Stay consistent with your drawing practice, be flexible and open to trying new things, and with time, you'll develop a habit of daily drawing that brings you joy and satisfaction.  
-""" 
-if __name__ == "__main__":
-    # 示例Markdown文本  
-  
-    
+    - Item 1  
+    - Item 2  
+    - Item 3  
+
+    [Click here](http://example.com) to visit the example website.  
+    """  
+
     # 调用函数并输出日志  
     output_image = 'output.png'  
-    text_to_image(markdown_text, output_image)  
+    text_to_image_with_log(markdown_text, output_image)  
+main()
+# if __name__ == "__main__":
+    # 示例Markdown文本  
+# markdown_text = """  
+# # Hello, World!  
+
+# This is an example document written using **Markdown**.  
+
+# - Item 1  
+# - Item 2  
+# - Item 3  
+
+# [Click here](http://example.com) to visit the example website.  
+# """  
+
+# # 调用函数并输出日志  
+# output_image = 'output.png'  
+# text_to_image_with_log(markdown_text, output_image)  

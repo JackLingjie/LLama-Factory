@@ -1,4 +1,6 @@
 from markdown import markdown  
+import tempfile
+import subprocess
 from html2image import Html2Image  
 import os  
 import logging  
@@ -6,40 +8,62 @@ import logging
 # 配置日志  
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')  
   
-def markdown_to_html(markdown_text):  
-    """Convert Markdown text to HTML"""  
-    html = markdown(markdown_text)  
-    return html  
+def markdown_to_html(input_text):  
+    # 使用临时文件存储 Markdown 和 HTML  
+    with tempfile.NamedTemporaryFile(delete=False, suffix='.md') as md_file:  
+        md_file.write(input_text.encode('utf-8'))  
+        md_file_path = md_file.name  
+  
+    html_file_path = md_file_path.replace('.md', '.html')  
+  
+    # 构建 pandoc 命令  
+    pandoc_command = [  
+        'pandoc',  
+        '-s',  
+        md_file_path,  
+        '-o', html_file_path,  
+        '--self-contained'  
+    ]  
+  
+    # 运行 pandoc 命令  
+    try:  
+        subprocess.run(pandoc_command, check=True)  
+        print(f'转换成功: {html_file_path}')  
+    except subprocess.CalledProcessError as e:  
+        print(f'转换失败: {e}')  
+        return None  
+    print(html_file_path)
+    return html_file_path
   
 def text_to_image(text, output_image, size=(800, 600), save_dir='text_images'):  
     """Convert text to image and log the process"""  
     logging.info("Starting the conversion process.")  
       
     # Convert text to Markdown (assume the text is in Markdown format)  
-    html_content = markdown_to_html(text)  
+    html_file_path = markdown_to_html(text)  
       
     # Wrap HTML header and style  
-    html_content = f"""  
-    <!DOCTYPE html>  
-    <html lang="en">  
-    <head>  
-        <meta charset="UTF-8">  
-        <title>Markdown to HTML Example</title>  
-        <style>  
-            body {{  
-                font-family: 'Arial', sans-serif;  
-                margin: 0;  
-                padding: 20px;  
-                background-color: white;  
-                color: black;  
-            }}  
-        </style>  
-    </head>  
-    <body>  
-        {html_content}  
-    </body>  
-    </html>  
-    """  
+    # html_content = f"""  
+    # <!DOCTYPE html>  
+    # <html lang="en">  
+    # <head>  
+    #     <meta charset="UTF-8">  
+    #     <title>Markdown to HTML Example</title>  
+    #     <style>  
+    #         body {{  
+    #             font-family: 'Arial', sans-serif;  
+    #             margin: 0;  
+    #             padding: 20px;  
+    #             background-color: white;  
+    #             color: black;  
+    #         }}  
+    #     </style>  
+    # </head>  
+    # <body>  
+    #     {html_content}  
+    # </body>  
+    # </html>  
+    # """  
     output_path = os.path.dirname(os.path.abspath(__file__)) 
     output_path = os.path.join(output_path, save_dir)
     # Convert HTML to image using html2image  
@@ -52,7 +76,8 @@ def text_to_image(text, output_image, size=(800, 600), save_dir='text_images'):
     # output_image = os.path.join(script_dir, output_image)    
     # output_image = 'data_process/red_page.png'
     # logging.info(f"Image saved to {output_image}.")    
-    hti.screenshot(html_str=html_content, save_as=output_image)  
+    # hti.screenshot(html_str=html_content, save_as=output_image)  
+    hti.screenshot(html_file=html_file_path, save_as=output_image)  
       
     logging.info(f"Image saved to {os.path.join(output_path, output_image)}.")  
       
