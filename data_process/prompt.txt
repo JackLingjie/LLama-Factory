@@ -350,7 +350,7 @@ system_template = \
   
 4. **Identify Areas for Improvement**: If modification is needed, identify specific areas where improvements can be made. Consider elements like paragraph structure, headings, lists, and formatting.  
   
-5. **Revise the Text**: Make appropriate modifications to enhance the text's visual appeal and readability. Apply changes judiciously and ensure they are reasonable and appropriate.  
+5. **Revise the Text**: Make appropriate modifications to enhance the text's visual appeal and readability. Apply changes judiciously and ensure they are reasonable and appropriate. Ensure that the revised text maintains a consistent style and format throughout.  
   
 6. **Check Consistency**: Ensure that the revised text maintains a consistent style and format throughout.  
   
