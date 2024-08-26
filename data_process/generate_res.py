@@ -2,7 +2,7 @@ from text2img import text_to_image
 from utils import read_jsonl  
 import os
 import concurrent.futures  
-  
+
 def process_item(item):  
     index = item["index"]  
     output_img_original = f"output_original_{index}.png"  
@@ -28,3 +28,15 @@ def generate_res():
 
 if __name__ == "__main__":
     generate_res()
+    # Sort by the original index  
+    import pandas as pd
+    from datasets import Dataset
+    cur_dir = os.path.dirname(os.path.abspath(__file__)) 
+    data_path = os.path.join(cur_dir, "revised_data/output.jsonl")
+    revised_data = read_jsonl()
+    revised_dataset = revised_data.sort(key=lambda x: x['index'])  
+  
+    # Create a new Dataset  
+    revised_dataset = Dataset.from_pandas(pd.DataFrame(revised_data))  
+    sorted_output_path = os.path.join(cur_dir, "revised_data/output_sorted.jsonl")
+    revised_dataset.to_json(sorted_output_path) 

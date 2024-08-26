@@ -36,6 +36,16 @@ API_INFOS = [
         "speed": 150,
         "model": "gpt-4o"
     },
+    {
+        "endpoints": "https://readineastus.openai.azure.com/",
+        "speed": 150,
+        "model": "gpt-4o"
+    },
+    {
+        "endpoints": "https://readineastus2.openai.azure.com/",
+        "speed": 150,
+        "model": "gpt-4o"
+    }
 ]
 
 
@@ -148,18 +158,18 @@ class Openai():
         return ""
 
 if __name__ == '__main__':
-    oai_clients = Openai(
-        apis=API_INFOS
-    )
-    res = oai_clients.call("你是gpt几？")
-    print(res)
+    # oai_clients = Openai(
+    #     apis=API_INFOS
+    # )
+    # res = oai_clients.call("你是gpt几？")
+    # print(res)
 
 
-    # for i in range(len(API_INFOS)):
-    #     print(API_INFOS[i])
-    #     oai_clients = Openai(
-    #         apis=[API_INFOS[i]]
-    #     )
-    #     res = oai_clients.call("hello")
-    #     # res = oai_clients.call(text)
-    #     print(res)
+    for i in range(len(API_INFOS)):
+        print(API_INFOS[i])
+        oai_clients = Openai(
+            apis=[API_INFOS[i]]
+        )
+        res = oai_clients.call("hello")
+        # res = oai_clients.call(text)
+        print(res)
