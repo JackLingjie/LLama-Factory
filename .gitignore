@@ -170,7 +170,6 @@ wandb/
 data/tulu_v2.json
 model_checkpoint/
 data_process/text_images
-data_process/revised_data/
 data_process/output.zip
 data_process/temp_mdhtmls
 data_process/text_images
