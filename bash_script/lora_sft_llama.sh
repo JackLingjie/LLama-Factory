@@ -58,3 +58,14 @@ llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048
 # export default template 4096 sft
 llamafactory-cli export bash_script/export_model/merge_lora_sft_default_template_4096.yaml
 
+# export default template wildchat
+llamafactory-cli export bash_script/export_model/merge_wildchat_sft_default_template.yaml
+
+## fullfinetune
+llamafactory-cli train bash_script/wildchatv1_full_sft_2048_default_template_test.yaml
+
+## fullfinetune
+llamafactory-cli train bash_script/wildchatv1_full_sft_2048_default_template_test.yaml
+
+FORCE_TORCHRUN=1 llamafactory-cli train bash_script/wildchatv1_full_sft_2048_default_template_test.yaml
+

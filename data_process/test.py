@@ -95,21 +95,27 @@ def text_to_image_with_log(text, output_image):
       
     logging.info("Conversion process completed successfully.")  
 def main():
-    markdown_text = """  
-    # Hello, World!  
+    cur_dir = os.path.dirname(os.path.abspath(__file__))
+    output_file = "revised_data/output.jsonl"  
+    output_file = os.path.join(cur_dir, output_file)
+    with open(output_file, 'r') as f:
+        data = f.read()
+        print(data)
+    # markdown_text = """  
+    # # Hello, World!  
 
-    This is an example document written using **Markdown**.  
+    # This is an example document written using **Markdown**.  
 
-    - Item 1  
-    - Item 2  
-    - Item 3  
+    # - Item 1  
+    # - Item 2  
+    # - Item 3  
 
-    [Click here](http://example.com) to visit the example website.  
-    """  
+    # [Click here](http://example.com) to visit the example website.  
+    # """  
 
-    # 调用函数并输出日志  
-    output_image = 'output.png'  
-    text_to_image_with_log(markdown_text, output_image)  
+    # # 调用函数并输出日志  
+    # output_image = 'output.png'  
+    # text_to_image_with_log(markdown_text, output_image)  
 main()
 # if __name__ == "__main__":
     # 示例Markdown文本  
