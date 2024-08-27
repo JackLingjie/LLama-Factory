@@ -69,3 +69,9 @@ llamafactory-cli train bash_script/wildchatv1_full_sft_2048_default_template_tes
 
 FORCE_TORCHRUN=1 llamafactory-cli train bash_script/wildchatv1_full_sft_2048_default_template_test.yaml
 
+# export default template wildchat v1 checkpoint 4000
+llamafactory-cli export bash_script/export_model/merge_wildchat_sft_default_template_v1_4000.yaml
+
+# export default template wildchat v1 checkpoint 3796
+llamafactory-cli export bash_script/export_model/merge_wildchat_sft_default_template_v2_3796.yaml
+
