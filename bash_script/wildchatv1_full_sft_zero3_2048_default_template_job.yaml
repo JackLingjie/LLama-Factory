@@ -16,7 +16,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/wildchat_v1_8b_2048_default_template/lora/sft
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/wildchat_v1_8b_2048_default_template_full_sft/full/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
