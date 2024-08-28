@@ -25,8 +25,8 @@ search:
   job_template:
     name: PRJ-0349-A54-1_.58_-bit-LLMs-test-scaling
     sku: 1xG8
-    mpi: True
-    process_count_per_node: 1
+    # mpi: True
+    # process_count_per_node: 1
     command:
     - pip install -e ".[torch,metrics]"
     # - pip install -e ".[torch,metrics]" # to update the latest version of the deepspeed
