@@ -34,8 +34,12 @@ def retry_merge_missing_data():
     revised_data_path = os.path.join(CUR_DIR, "revised_data/output_sorted.jsonl")
     revised_data = read_jsonl(revised_data_path)
     # not_revised_indices = [i for i, item in enumerate(revised_data) if item['revised_text'] == '']
-    not_revised_indices = [item['index'] for item in revised_data if item['revised_text'] == '']
+    not_revised_indices = [item['index'] for item in revised_data if item['gpt_answer'] == '']
     # Retry processing for missing values  
     clients = [Openai(apis=[API_INFOS[i]]) for i in range(len(API_INFOS))] 
     max_tokens = 2048
-    retry_data = retry_missing_values(not_revised_indices, clients, revised_data, user_template, system_template, max_tokens)  
+    output_file = "revised_data/output_retry.jsonl"  
+    output_file = os.path.join(CUR_DIR, output_file)
+    retry_data = retry_missing_values(not_revised_indices, clients, revised_data, user_template, system_template, max_tokens, output_file=output_file)  
+if __name__ == "__main__":
+    retry_merge_missing_data()

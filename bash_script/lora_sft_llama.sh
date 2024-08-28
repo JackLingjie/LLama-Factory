@@ -77,3 +77,7 @@ llamafactory-cli export bash_script/export_model/merge_wildchat_sft_default_temp
 # export default template wildchat v1 checkpoint 3796
 llamafactory-cli export bash_script/export_model/merge_wildchat_sft_default_template_v2_3796.yaml
 
+## ta_dpo
+CUDA_VISIBLE_DEVICES=1,2,3 torchrun --nproc_per_node=3 src/train.py bash_script/ta_tuluv2_dpo_default_template_test.yaml
+
+CUDA_VISIBLE_DEVICES=1,2,3 FORCE_TORCHRUN=1 llamafactory-cli train bash_script/ta_tuluv2_dpo_default_template_test.yaml

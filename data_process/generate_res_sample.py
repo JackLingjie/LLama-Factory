@@ -16,7 +16,7 @@ def generate_res():
     cur_dir = os.path.dirname(os.path.abspath(__file__))
     data_path = os.path.join(cur_dir, "revised_data/output_sorted.jsonl")
     revised_data = read_jsonl(data_path)  
-    revised_data = revised_data[:20]
+    revised_data = revised_data[:100]
     # 指定线程数，例如 4  
     max_workers = 20  
     
