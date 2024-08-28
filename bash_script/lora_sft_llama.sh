@@ -81,3 +81,4 @@ llamafactory-cli export bash_script/export_model/merge_wildchat_sft_default_temp
 CUDA_VISIBLE_DEVICES=1,2,3 torchrun --nproc_per_node=3 src/train.py bash_script/ta_tuluv2_dpo_default_template_test.yaml
 
 CUDA_VISIBLE_DEVICES=1,2,3 FORCE_TORCHRUN=1 llamafactory-cli train bash_script/ta_tuluv2_dpo_default_template_test.yaml
+CUDA_VISIBLE_DEVICES=1,2,3 FORCE_TORCHRUN=1 llamafactory-cli train bash_script/ta_rejected_llama3.1_instruct_dpo_2048_default_template_test.yaml

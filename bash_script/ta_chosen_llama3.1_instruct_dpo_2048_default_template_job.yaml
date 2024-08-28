@@ -1,5 +1,5 @@
 ### model
-model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/huggingface/Meta-Llama-3.1-8B-Instruct
+model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/sft_merge_checkpoints/Meta-Llama-3.1-8B-Instruct
 
 ### method
 stage: dpo
@@ -8,7 +8,7 @@ finetuning_type: lora
 lora_target: all
 pref_beta: 0.1
 pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
-deepspeed: examples/deepspeed/ds_z3_config.json
+deepspeed: examples/deepspeed/ds_z2_config.json
 
 ### dataset
 dataset: ta_chosen_job
