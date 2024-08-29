@@ -82,3 +82,16 @@ CUDA_VISIBLE_DEVICES=1,2,3 torchrun --nproc_per_node=3 src/train.py bash_script/
 
 CUDA_VISIBLE_DEVICES=1,2,3 FORCE_TORCHRUN=1 llamafactory-cli train bash_script/ta_tuluv2_dpo_default_template_test.yaml
 CUDA_VISIBLE_DEVICES=1,2,3 FORCE_TORCHRUN=1 llamafactory-cli train bash_script/ta_rejected_llama3.1_instruct_dpo_2048_default_template_test.yaml
+
+# export default template tachosen tuluv2
+llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048_ta_chosen.yaml
+
+# export default template tarejected tuluv2
+llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048_ta_rejected.yaml
+
+# export default template tachosen llama3 instruct
+llamafactory-cli export bash_script/export_model/merge_dpo_llama3.1_instruct_tachosen.yaml
+
+# export default template tarejected llama3 instruct
+llamafactory-cli export bash_script/export_model/merge_dpo_llama3.1_instruct_tarejected.yaml
+
