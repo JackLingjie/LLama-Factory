@@ -11,7 +11,7 @@ pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
 deepspeed: examples/deepspeed/ds_z2_config.json
 
 ### dataset
-dataset: ta_chosen_job
+dataset: ultrafeedback
 template: llama3
 cutoff_len: 2048
 max_samples: 64000
@@ -19,7 +19,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/ta_chosen_llama3.1_instruct_dpo_2048_default_template/lora/dpo
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/uf_llama3.1_instruct_dpo_2048_job/lora/dpo
 logging_steps: 10
 save_steps: 500
 plot_loss: true
@@ -37,10 +37,6 @@ ddp_timeout: 180000000
 
 ### eval
 val_size: 0.1
-<<<<<<< HEAD
 per_device_eval_batch_size: 2
-=======
-per_device_eval_batch_size: 4
->>>>>>> 8cc9711d0736813d9fbdb3faf2ad87afaffc3113
 eval_strategy: steps
 eval_steps: 500

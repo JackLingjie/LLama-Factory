@@ -38,6 +38,10 @@ ddp_timeout: 180000000
 
 ### eval
 val_size: 0.1
+<<<<<<< HEAD
 per_device_eval_batch_size: 2
+=======
+per_device_eval_batch_size: 4
+>>>>>>> 8cc9711d0736813d9fbdb3faf2ad87afaffc3113
 eval_strategy: steps
 eval_steps: 500
