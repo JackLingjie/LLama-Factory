@@ -2,12 +2,12 @@
 
 ### model
 model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/sft_merge_checkpoints/Meta-Llama-3.1-8B-Instruct
-adapter_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/ta_rejected_llama3.1_instruct_dpo_2048_default_template/lora/dpo
+adapter_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/uf_llama3.1_instruct_dpo_2048_job/lora/dpo
 template: llama3
 finetuning_type: lora
 
 ### export
-export_dir: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/sft_merge_checkpoints/ta_rejected_llama3.1_instruct_dpo_2048
+export_dir: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/sft_merge_checkpoints/uf_llama3.1_instruct_dpo_2048_job
 export_size: 2
 export_device: cpu
 export_legacy_format: false

@@ -95,3 +95,12 @@ llamafactory-cli export bash_script/export_model/merge_dpo_llama3.1_instruct_tac
 # export default template tarejected llama3 instruct
 llamafactory-cli export bash_script/export_model/merge_dpo_llama3.1_instruct_tarejected.yaml
 
+# export default template uf llama3 instruct
+llamafactory-cli export bash_script/export_model/merge_dpo_llama3.1_instruct_uf.yaml
+
+# export tulu merge dpo
+llamafactory-cli export bash_script/export_model/merge_dpo_merge_default_template_2048_ta_chosen.yaml
+
+# export ta rejected
+llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048_ta_rejected.yaml
+
