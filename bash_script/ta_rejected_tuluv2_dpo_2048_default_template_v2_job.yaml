@@ -12,7 +12,7 @@ pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
 deepspeed: examples/deepspeed/ds_z2_config.json
 
 ### dataset
-dataset: ta_chosen_job
+dataset: ta_rejected_v2_job
 template: default
 cutoff_len: 2048
 max_samples: 64000
@@ -20,7 +20,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/ta_chosen_tuluv2_dpo_2048_default_template/lora/dpo
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/ta_rejected_tuluv2_dpo_2048_default_template_v2/lora/dpo
 logging_steps: 10
 save_steps: 500
 plot_loss: true
@@ -38,6 +38,6 @@ ddp_timeout: 180000000
 
 ### eval
 val_size: 0.1
-per_device_eval_batch_size: 4
+per_device_eval_batch_size: 2
 eval_strategy: steps
 eval_steps: 500

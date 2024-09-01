@@ -500,6 +500,24 @@
       "rejected": "rejected"
     }
   },
+  "ta_rejected_v2_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_rejected_v2_-88_350.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "ta_rejected_v3_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_chosen_v3_-88_150.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
   "orca_pairs": {
     "hf_hub_url": "Intel/orca_dpo_pairs",
     "ranking": true,
