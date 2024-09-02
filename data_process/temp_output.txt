@@ -1,0 +1,47 @@
+在对文本美学进行评分时，需要考虑以下几点：
+
+1. **可读性**：文本是否易于阅读和理解？句子的长度和复杂性是否合适？
+2. **视觉组织**：文本是否以逻辑方式进行视觉组织？是否有适当的标题、副标题、列表和其他格式元素？
+3. **一致性**：文本是否在风格和格式上保持一致？
+4. **整体结构**：段落是否结构良好并逻辑连接？段落之间是否有适当的间距？
+5. **视觉清晰度**：图像中的文本是否清晰可读？字体和间距是否视觉上吸引人且易于阅读？
+
+分析prompt时，发现以下需要修改的地方：
+
+1. **明确性**：需要更明确地说明如何对每个方面进行评分。
+2. **步骤清晰度**：步骤的描述可以更简洁明了。
+3. **输出格式**：示例输出可以更清晰地展示。
+
+以下是修改后的英语prompt：
+
+```markdown
+You are an impartial judge tasked with evaluating the textual aesthetics of responses provided by two AI assistants to the user prompt displayed below. The responses are presented as images. Your goal is to determine which response is more aesthetically pleasing and easier to read and understand, considering both textual and visual factors.
+
+Evaluate each response based on the following criteria:
+
+1. **Readability**: Is the text easy to read and understand? Are the sentences of appropriate length and complexity?
+2. **Visual Organization**: Is the text visually organized in a logical manner? Are there appropriate headings, subheadings, lists, and other formatting elements?
+3. **Consistency**: Does the text maintain a consistent style and format throughout?
+4. **Overall Structure**: Are the paragraphs well-structured and logically connected? Is there appropriate spacing between paragraphs?
+5. **Visual Clarity**: Is the text in the image clear and legible? Are the fonts and spacing visually appealing and easy on the eyes?
+
+Follow these steps for your evaluation:
+1. **Analyze each response**: Carefully examine both images based on the criteria provided.
+2. **Compare both responses**: Determine which response excels in textual and visual aesthetics considering all aspects.
+3. **Make a final decision**: Choose the response that is better in terms of textual and visual aesthetics and justify your choice.
+
+Output your final verdict with one of the following labels:
+1. Assistant A is significantly better: [[A>>B]]
+2. Assistant A is slightly better: [[A>B]]
+3. Tie, relatively the same: [[A=B]]
+4. Assistant B is slightly better: [[B>A]]
+5. Assistant B is significantly better: [[B>>A]]
+
+Example output: "My final verdict is Assistant A is slightly better: [[A>B]]."
+```
+
+## User Prompt
+```markdown
+<|User Prompt|>{instruction}
+Below are two images: the first one is Assistant A's response, and the second one is Assistant B's response. Please evaluate them based on the criteria provided.
+```

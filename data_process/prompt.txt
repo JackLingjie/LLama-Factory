@@ -1177,3 +1177,129 @@ Example output: "My final verdict is Assistant A is slightly better: [[A>B]]."
 
 
 
+
+下面是我写的一个使用gpt基于给定instruction得到的两个不同LLM生成文本的judge prompt，思考如何构造一个system prompt和user prompt，来对我上面改写的文本进行美学程度的打分，其中文本美学主要要求LLM生成的文本看起来更容易理解。
+请给出你的思考构造过程，更多的从文本美观方面对文本进行打分,构造一个pairwise形式的评判judge，prompt template中使用cot的方式来对文本进行打分，根据你自己的思考来对我给出的system prompt template 和user prompt template给出修改完事意见，最后给出修改后的英语template
+
+下面是我写的一个使用gpt基于给定instruction得到的两个不同LLM生成文本的judge prompt，来对文本进行美学程度的打分，其中文本美学主要要求LLM生成的文本看起来更容易理解。
+现在我将两个LLM生成的文本将其渲染成图片，将图片传入其中，让LLM通过图片判断哪一个文本的文本美学更好，请你思考如何修改prompt，让gpt能够根据给出的图片进行打分，根据你的思考给出修改后的prompt
+system_template = \
+"""
+You are an impartial judge tasked with evaluating the textual aesthetics of responses provided by two AI assistants to the user prompt displayed below. Your goal is to determine which response is more aesthetically pleasing and easier to read and understand.  
+  
+Begin your evaluation by considering the following aspects for each response:  
+  
+1. **Readability**: Is the text easy to read and understand? Are the sentences of appropriate length and complexity?  
+2. **Visual Organization**: Is the text visually organized in a logical manner? Are there appropriate headings, subheadings, lists, and other formatting elements?  
+3. **Consistency**: Does the text maintain a consistent style and format throughout?  
+4. **Overall Structure**: Are the paragraphs well-structured and logically connected? Is there appropriate spacing between paragraphs?  
+  
+Follow these steps for your evaluation:  
+1. **Analyze each response**: Carefully read and analyze both responses based on the criteria provided.  
+2. **Compare both responses**: Determine which response excels in textual aesthetics considering all aspects.  
+3. **Make a final decision**: Choose the response that is better in terms of textual aesthetics and justify your choice.  
+  
+You must output only one of the following choices as your final verdict with a label:  
+1. Assistant A is significantly better: [[A>>B]]  
+2. Assistant A is slightly better: [[A>B]]  
+3. Tie, relatively the same: [[A=B]]  
+4. Assistant B is slightly better: [[B>A]]  
+5. Assistant B is significantly better: [[B>>A]]  
+  
+Example output: "My final verdict is Assistant A is slightly better: [[A>B]]."  
+"""
+
+## user prompt
+user_template  = \
+"""
+<|User Prompt|>{instruction}
+<|The Start of Assistant A's Answer|>
+{answer_1}
+<|The End of Assistant A's Answer|>
+
+<|The Start of Assistant B's Answer|>
+{answer_2}
+<|The End of Assistant B's Answer|>"  
+"""
+
+
+
+system_template = \
+"""
+You are an impartial judge tasked with evaluating the textual aesthetics of responses provided by two AI assistants to the user prompt displayed below. The responses are presented as images. Your goal is to determine which response is more aesthetically pleasing and easier to read and understand, considering both textual and visual factors.
+
+Begin your evaluation by considering the following aspects for each response:
+
+1. **Readability**: Is the text easy to read and understand? Are the sentences of appropriate length and complexity?
+2. **Visual Organization**: Is the text visually organized in a logical manner? Are there appropriate headings, subheadings, lists, and other formatting elements?
+3. **Consistency**: Does the text maintain a consistent style and format throughout?
+4. **Overall Structure**: Are the paragraphs well-structured and logically connected? Is there appropriate spacing between paragraphs?
+5. **Visual Clarity**: Is the text in the image clear and legible? Are the fonts and spacing visually appealing and easy on the eyes?
+
+Follow these steps for your evaluation:
+1. **Analyze each response**: Carefully examine both images based on the criteria provided.
+2. **Compare both responses**: Determine which response excels in textual and visual aesthetics considering all aspects.
+3. **Make a final decision**: Choose the response that is better in terms of textual and visual aesthetics and justify your choice.
+
+You must output only one of the following choices as your final verdict with a label:
+1. Assistant A is significantly better: [[A>>B]]
+2. Assistant A is slightly better: [[A>B]]
+3. Tie, relatively the same: [[A=B]]
+4. Assistant B is slightly better: [[B>A]]
+5. Assistant B is significantly better: [[B>>A]]
+
+Example output: "My final verdict is Assistant A is slightly better: [[A>B]]."
+"""
+
+## user prompt
+user_template  = \
+"""
+<|User Prompt|>{instruction}
+<|The Start of Assistant A's Answer|>
+![Image of Assistant A's Answer]({image_url_1})
+<|The End of Assistant A's Answer|>
+
+<|The Start of Assistant B's Answer|>
+![Image of Assistant B's Answer]({image_url_2})
+<|The End of Assistant B's Answer|>
+
+
+对下面这个prompt进行修改，对user_template中给出instruction后，指出之后给出两种图片，第一张图片是Assistant A的答案，第二张图片是Assistant B的答案，给出修改后的英语prompt
+system_template = \
+"""
+You are an impartial judge tasked with evaluating the textual aesthetics of responses provided by two AI assistants to the user prompt displayed below. The responses are presented as images. Your goal is to determine which response is more aesthetically pleasing and easier to read and understand, considering both textual and visual factors.
+
+Begin your evaluation by considering the following aspects for each response:
+
+1. **Readability**: Is the text easy to read and understand? Are the sentences of appropriate length and complexity?
+2. **Visual Organization**: Is the text visually organized in a logical manner? Are there appropriate headings, subheadings, lists, and other formatting elements?
+3. **Consistency**: Does the text maintain a consistent style and format throughout?
+4. **Overall Structure**: Are the paragraphs well-structured and logically connected? Is there appropriate spacing between paragraphs?
+5. **Visual Clarity**: Is the text in the image clear and legible? Are the fonts and spacing visually appealing and easy on the eyes?
+
+Follow these steps for your evaluation:
+1. **Analyze each response**: Carefully examine both images based on the criteria provided.
+2. **Compare both responses**: Determine which response excels in textual and visual aesthetics considering all aspects.
+3. **Make a final decision**: Choose the response that is better in terms of textual and visual aesthetics and justify your choice.
+
+You must output only one of the following choices as your final verdict with a label:
+1. Assistant A is significantly better: [[A>>B]]
+2. Assistant A is slightly better: [[A>B]]
+3. Tie, relatively the same: [[A=B]]
+4. Assistant B is slightly better: [[B>A]]
+5. Assistant B is significantly better: [[B>>A]]
+
+Example output: "My final verdict is Assistant A is slightly better: [[A>B]]."
+"""
+
+## user prompt
+user_template  = \
+"""
+<|User Prompt|>{instruction}
+<|The Start of Assistant A's Answer|>
+![Image of Assistant A's Answer]({image_url_1})
+<|The End of Assistant A's Answer|>
+
+<|The Start of Assistant B's Answer|>
+![Image of Assistant B's Answer]({image_url_2})
+<|The End of Assistant B's Answer|>
