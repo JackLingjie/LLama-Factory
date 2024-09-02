@@ -20,15 +20,15 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/ta_rejected_tuluv2_dpo_2048_default_template_v2/lora/dpo
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/ta_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v2/lora/dpo
 logging_steps: 10
 save_steps: 500
 plot_loss: true
 overwrite_output_dir: true
 
 ### train
-per_device_train_batch_size: 2
-gradient_accumulation_steps: 4
+per_device_train_batch_size: 1
+gradient_accumulation_steps: 8
 learning_rate: 5.0e-6
 num_train_epochs: 2.0
 lr_scheduler_type: cosine
@@ -38,6 +38,6 @@ ddp_timeout: 180000000
 
 ### eval
 val_size: 0.1
-per_device_eval_batch_size: 2
+per_device_eval_batch_size: 1
 eval_strategy: steps
 eval_steps: 500
