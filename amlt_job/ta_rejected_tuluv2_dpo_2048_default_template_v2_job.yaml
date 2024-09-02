@@ -33,7 +33,7 @@ search:
     - pip install deepspeed==0.14.4
     - echo $${rank}
     - bash amlt_job/mount.sh
-    - pip install -U flash-attn --no-build-isolation
+    - pip install flash-attn==2.4.1
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
     - FORCE_TORCHRUN=1 llamafactory-cli train bash_script/ta_rejected_tuluv2_dpo_2048_default_template_v2_job.yaml
     submit_args:
