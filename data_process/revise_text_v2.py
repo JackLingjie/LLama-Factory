@@ -119,8 +119,8 @@ def main():
     clients = [Openai(apis=[API_INFOS[i]]) for i in range(len(API_INFOS))]  
     print(f"clients number: {len(clients)}")
     export_data = get_data()
-    sample_data = export_data.select(range(20))
-    # sample_data = export_data # all
+    # sample_data = export_data.select(range(20))
+    sample_data = export_data # all
     # user_template = "User: {instruction}\nCompletion: {completion}"  
     # system_template = "You are a helpful assistant."  
     max_tokens = 2048  
@@ -157,5 +157,5 @@ def main():
     revised_dataset.to_json(sorted_output_path) 
 if __name__ == "__main__":
     main()
-    from generate_res import generate_res
-    generate_res("output_sorted_v2")
+    # from generate_res import generate_res
+    # generate_res("output_sorted_v2")
