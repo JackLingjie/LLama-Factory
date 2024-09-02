@@ -12,7 +12,7 @@ pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
 deepspeed: examples/deepspeed/ds_z3_config.json
 
 ### dataset
-dataset: ta_chosen_job
+dataset: ta_rejected_v2_job
 template: default
 cutoff_len: 1024
 max_samples: 100

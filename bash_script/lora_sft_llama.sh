@@ -104,3 +104,5 @@ llamafactory-cli export bash_script/export_model/merge_dpo_merge_default_templat
 # export ta rejected
 llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048_ta_rejected.yaml
 
+llamafactory-cli train bash_script/ta_tuluv2_dpo_2048_default_template_test.yaml
+ 

@@ -12,9 +12,9 @@ def process_item(item):
     output_img = f"output_{index}.png"  
     text_to_image(item["revised_text"], output_img, save_dir="revised_response", temp_dir="revised_temp")  
 
-def generate_res():
+def generate_res(file='output_sorted'):
     cur_dir = os.path.dirname(os.path.abspath(__file__))
-    data_path = os.path.join(cur_dir, "revised_data/output_sorted.jsonl")
+    data_path = os.path.join(cur_dir, f"revised_data/{file}.jsonl")
     revised_data = read_jsonl(data_path)  
     
     # 指定线程数，例如 4  
