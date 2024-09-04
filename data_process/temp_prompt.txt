@@ -1,40 +1,54 @@
-下面是我写的一个使用gpt基于给定instruction得到的两个不同LLM生成文本的judge prompt，来对文本进行美学程度的打分，其中文本美学主要要求LLM生成的文本看起来更容易理解。
-现在我将两个LLM生成的文本将其渲染成图片，将图片传入其中，让LLM通过图片判断哪一个文本的文本美学更好，这里没有文本1和文本2，因此最终的结果是第一个图片和第二个图片作比较，同时因为给出的是图片，所以也可以加入视觉的因素进行分析，请你思考如何修改prompt，让gpt能够根据给出的图片进行打分，根据你的思考给出修改后的prompt,
-system_template = \
-"""
-You are an impartial judge tasked with evaluating the textual aesthetics of responses provided by two AI assistants to the user prompt displayed below. Your goal is to determine which response is more aesthetically pleasing and easier to read and understand.  
-  
-Begin your evaluation by considering the following aspects for each response:  
-  
-1. **Readability**: Is the text easy to read and understand? Are the sentences of appropriate length and complexity?  
-2. **Visual Organization**: Is the text visually organized in a logical manner? Are there appropriate headings, subheadings, lists, and other formatting elements?  
-3. **Consistency**: Does the text maintain a consistent style and format throughout?  
-4. **Overall Structure**: Are the paragraphs well-structured and logically connected? Is there appropriate spacing between paragraphs?  
-  
-Follow these steps for your evaluation:  
-1. **Analyze each response**: Carefully read and analyze both responses based on the criteria provided.  
-2. **Compare both responses**: Determine which response excels in textual aesthetics considering all aspects.  
-3. **Make a final decision**: Choose the response that is better in terms of textual aesthetics and justify your choice.  
-  
-You must output only one of the following choices as your final verdict with a label:  
-1. Assistant A is significantly better: [[A>>B]]  
-2. Assistant A is slightly better: [[A>B]]  
-3. Tie, relatively the same: [[A=B]]  
-4. Assistant B is slightly better: [[B>A]]  
-5. Assistant B is significantly better: [[B>>A]]  
-  
-Example output: "My final verdict is Assistant A is slightly better: [[A>B]]."  
-"""
+对于以下这个代码，将revised_data中indices_to_discard索引的数据中的[{"prompt": item["prompt"], "chosen": item["response"], "rejected": item["rejected"]加入到textual_aesthetics_rejected中，给出修改后的代码
+from datasets import load_dataset, Dataset
+import pandas as pd
+import json
+data = read_jsonl("revised_data/output_sorted_v2.jsonl")
+not_revised = [item['index'] for item in data if item['revised_text'] == '']
+ds = load_dataset("HuggingFaceH4/ultrafeedback_binarized", split="train_prefs")
+def get_instruct_response(item):
+    # item["instruction"] = item['chosen'][0]["content"]
+    item["response"] = item['chosen'][1]["content"]
+    return item
+ds = ds.map(get_instruct_response, batch_size=1024, num_proc=8)
+export_data = ds.select_columns(["prompt", "response"])
 
-## user prompt
-user_template  = \
-"""
-<|User Prompt|>{instruction}
-<|The Start of Assistant A's Answer|>
-{answer_1}
-<|The End of Assistant A's Answer|>
+not_revised = [item['index'] for item in data if item['revised_text'] == '']
+# datalen
+# data
+indices = set([item['index'] for item in data])
+# original_indices = set(range(export_data.shape[0]))
+# print(f"index complete: {original_indices - indices}")
+null_response_indices = [item['index'] for item in data if item['gpt_answer'].strip() == '']
+null_revised_indices = [item['index'] for item in data if item['revised_text'].strip() == '']
+noneed_revised_indices = [item['index'] for item in data if item['does_it_need_modification'].strip() == 'N']
+same_revised_text_indices = [item['index'] for item in data if item['response'].strip() == item['revised_text'].strip()]
 
-<|The Start of Assistant B's Answer|>
-{answer_2}
-<|The End of Assistant B's Answer|>"  
-"""
+# print(len(null_response))
+# print(len(not_revised))
+print(f"null_response_indices:{len(null_response_indices)}")
+print(f"null_revised_indices:{len(null_revised_indices)}")
+print(f"noneed_revised_indices:{len(noneed_revised_indices)}")
+print(f"same_revised_text_indices:{len(same_revised_text_indices)}")
+# 使用集合的交集操作  
+indices_to_discard  = set(null_response_indices) | set(null_revised_indices) | set(noneed_revised_indices) | set(same_revised_text_indices)   
+print(f"indices_to_discard: {len(indices_to_discard)}")
+# filter length 
+indices_to_discard = indices_to_discard | set(out_of_range_texts_indices)
+indices_to_discard = list(indices_to_discard)
+print(f"indices_to_discard add length: {len(indices_to_discard)}")
+temp_data = data
+# temp_ds = ds.select(range(10))
+for i, item in enumerate(ds):
+    temp_data[i]['rejected'] = item['rejected'][1]['content']
+    temp_data[i]['instruct'] = item['prompt']
+    temp_data[i]['chosen'] = item['chosen']
+revised_data = [item for item in temp_data if item["index"] not in indices_to_discard]
+print(f"length of revised data: {len(revised_data)}")
+textual_aesthetics_chosen = [{"prompt": item["prompt"], "chosen": item["revised_text"], "rejected": item["response"]} for item in revised_data]
+# with open("/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_chosen_v4_{lower}_{upper}.json", 'w') as f:
+#     json.dump(textual_aesthetics_chosen, f, indent=4)
+textual_aesthetics_rejected = [{"prompt": item["prompt"], "chosen": item["revised_text"], "rejected": item["rejected"]} for item in revised_data]
+with open(f"/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_v2_rejected_v2_{lower}_{upper}.json", 'w') as f:
+    json.dump(textual_aesthetics_rejected, f, indent=4)
+print(f"/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_v2_rejected_v2_{lower}_{upper}.json")
+print(f"textual_aesthetics_chosen:{len(textual_aesthetics_chosen)}  textual_aesthetics_rejected:{len(textual_aesthetics_rejected)}")

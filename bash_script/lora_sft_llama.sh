@@ -115,4 +115,5 @@ llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048
 # export ta rejected v3
 llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048_ta_rejected_v3.yaml
 
- 
+# export llama3.1 ta rejected v2
+llamafactory-cli export bash_script/export_model/merge_dpo_llama3.1_instruct_tarejected_v2.yaml
