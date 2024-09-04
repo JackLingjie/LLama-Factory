@@ -574,6 +574,51 @@
       "rejected": "rejected"
     }
   },
+  "ta_rejected_v4_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_rejected_v4_-88_350_add_uf.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "ta_v2_rejected_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_rejected_v2.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "ta_v2_rejected_v2_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_v2_rejected_v2_-118_290.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "ta_v2_rejected_v3_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_v2_rejected_v3_-80_350.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "ta_v2_rejected_v4_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_v2_rejected_v4_-118_350_add_uf_origin.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
   "orca_pairs": {
     "hf_hub_url": "Intel/orca_dpo_pairs",
     "ranking": true,
