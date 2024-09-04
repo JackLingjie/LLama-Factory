@@ -9,7 +9,7 @@ flash_attn: fa2
 deepspeed: examples/deepspeed/ds_z3_config.json
 
 ### dataset
-dataset: data/dataset_info.json
+dataset: glan_v2_glanchat_jsonl_v2
 template: default
 cutoff_len: 1024
 overwrite_cache: true
@@ -18,7 +18,7 @@ streaming: true
 max_steps: 1000
 
 ### output
-output_dir: /saves/glan_v2_glanchat_v2_8b_2048_default_template/fullft_lr5e6_e3/sft
+output_dir: saves/glan_v2_glanchat_v2_8b_2048_default_template/fullft_lr5e6_e3/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
