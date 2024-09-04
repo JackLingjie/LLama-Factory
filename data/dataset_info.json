@@ -108,6 +108,20 @@
       "system_tag": "system"
     }
   },
+  "glan_v2_glanchat_jsonl_v2": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/glanv2_glanchatv2.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  },
   "glan_v2": {
     "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/glanv2.json",
     "formatting": "sharegpt",
