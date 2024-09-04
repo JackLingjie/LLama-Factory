@@ -9,7 +9,7 @@ flash_attn: fa2
 deepspeed: examples/deepspeed/ds_z3_config.json
 
 ### dataset
-dataset: glan_v2_glanchat_v2
+dataset: glan_v2_glanchat_jsonl_v2
 template: default
 cutoff_len: 2048
 # max_samples: 135000
@@ -37,7 +37,3 @@ ddp_timeout: 180000000
 
 ### eval
 do_eval: false
-val_size: 0
-per_device_eval_batch_size: 2
-eval_strategy: steps
-eval_steps: 1000
