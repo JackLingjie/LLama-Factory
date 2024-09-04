@@ -1,0 +1,13 @@
+### Note: DO NOT use quantized model or quantization_bit when merging lora adapters
+
+### model
+model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/huggingface/Meta-Llama-3.1-8B
+adapter_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8/lora/dpo
+template: default
+finetuning_type: lora
+
+### export
+export_dir: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/sft_merge_checkpoints/ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8
+export_size: 2
+export_device: cpu
+export_legacy_format: false
