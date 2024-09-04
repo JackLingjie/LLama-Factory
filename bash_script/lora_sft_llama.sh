@@ -115,4 +115,4 @@ llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048
 # export ta rejected v3
 llamafactory-cli export bash_script/export_model/merge_dpo_default_template_2048_ta_rejected_v3.yaml
 
- 
+FORCE_TORCHRUN=1 llamafactory-cli train bash_script/glanv2_glanchatv2_full_sft_2048_default_template_job_lr5e6_e3_test.yaml
