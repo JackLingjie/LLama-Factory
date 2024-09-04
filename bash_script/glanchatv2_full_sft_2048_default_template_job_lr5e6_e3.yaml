@@ -12,12 +12,12 @@ deepspeed: examples/deepspeed/ds_z3_config.json
 dataset: glanchat_v2
 template: default
 cutoff_len: 2048
-max_samples: 135000
+# max_samples: 135000
 overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/glanchat_v2_8b_2048_default_template/fullft_lr5e6_e3/sft
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/glanchat_v2_8b_2048_default_template/fullft_lr5e6_e3_fx/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
@@ -27,7 +27,7 @@ overwrite_output_dir: true
 per_device_train_batch_size: 1
 gradient_accumulation_steps: 8
 learning_rate: 5.0e-6
-num_train_epochs: 5.0
+num_train_epochs: 3.0
 lr_scheduler_type: cosine
 warmup_ratio: 0.1
 bf16: true
