@@ -4,11 +4,16 @@ set -x
 
 # 定义模型名称的数组  
 model_names=(
-    "ta_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v4" 
-    "ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8" 
-    "ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
-    "ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v3"
-    "ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v4"
+    "ta_v2_rejected_noneed_length_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
+    "ta_v2_rejected_noneed_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
+    "ta_v2_chosen_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
+    "ta_v2_chosen_tuluv2_dpo_2048_default_template_bsz1_acc8_v5"
+    "ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v5"
+    # "ta_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v4" 
+    # "ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8" 
+    # "ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
+    # "ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v3"
+    # "ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v4"
 )  # 替换成你的模型名称列表  
   
 # 定义YAML文件路径  
