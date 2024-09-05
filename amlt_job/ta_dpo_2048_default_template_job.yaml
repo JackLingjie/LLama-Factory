@@ -70,9 +70,10 @@ search:
   job_template:
     name: PRJ-0349-A54-1_.58_-bit-LLMs-test-scaling
     sku: 1x40G8
+    # sku: 2x40G8-A100-IB-NvLink
     identity: managed
     # mpi: True
-    # process_count_per_node: 1
+    # process_count_per_node: 8
     command:
     - pip install -e ".[torch,metrics]"
     - pip install deepspeed==0.14.4
@@ -87,6 +88,7 @@ search:
     # - ls /mnt/conversationhub
     # - ls /mnt/conversationhubhot
     # - FORCE_TORCHRUN=1 llamafactory-cli train bash_script/{rank}
+    # - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bash_script/{rank}
     - torchrun --nproc_per_node=8 src/train.py bash_script/{rank}
     submit_args:
       env:
