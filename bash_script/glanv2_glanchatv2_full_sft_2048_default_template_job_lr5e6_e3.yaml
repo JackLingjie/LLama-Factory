@@ -7,7 +7,9 @@ do_train: true
 finetuning_type: full
 flash_attn: fa2
 deepspeed: examples/deepspeed/ds_z3_config.json
-
+accelerator_config:
+  dispatch_batches: false
+  
 ### dataset
 dataset: glan_v2_glanchat_jsonl_v2
 template: default
