@@ -41,8 +41,7 @@ def run_dpo(
 ):
     tokenizer_module = load_tokenizer(model_args)
     tokenizer = tokenizer_module["tokenizer"]
-    dataset_module = get_dataset(model_args, data_args, training_args, stage="rm", **tokenizer_module)
-    print(f"dataset_module: {dataset_module}")
+    dataset_module = get_dataset(model_args, data_args, training_args, stage="dpolist", **tokenizer_module)
     model = load_model(tokenizer, model_args, finetuning_args, training_args.do_train)
 
     data_collator = PairwiseDataCollatorWithPadding(
@@ -54,13 +53,10 @@ def run_dpo(
     # Create reference model
     if finetuning_args.use_ref_model:
         if finetuning_args.ref_model is None and (not training_args.do_train):  # use the model itself
-            print(f"use refer model itself")
             ref_model = model
         else:
-            print(f"use given refer model")
             ref_model = create_ref_model(model_args, finetuning_args)
     else:
-        print(f"no refer model")
         ref_model = None
 
     # Update arguments

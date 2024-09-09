@@ -678,7 +678,16 @@
       "rejected": "rejected"
     }
   },
-
+  "ta_list_dpo_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_v2_rejected_v5_-180_470.json",
+    "tripledpo":true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "middle": "middle",
+      "rejected": "rejected"
+    }
+  },
   "orca_pairs": {
     "hf_hub_url": "Intel/orca_dpo_pairs",
     "ranking": true,
