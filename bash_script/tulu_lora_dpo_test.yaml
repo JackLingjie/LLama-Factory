@@ -1,6 +1,6 @@
 ### model
 model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/huggingface/Meta-Llama-3.1-8B
-adapter_name_or_path: saves/tulu_v2_8b_test/lora/sft
+adapter_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/tulu_v2_8b_2048_default_template/lora/sft
 
 ### method
 stage: dpo

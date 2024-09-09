@@ -88,6 +88,15 @@ def get_preprocess_and_print_func(
             data_args=data_args,
         )
         print_function = partial(print_pairwise_dataset_example, tokenizer=tokenizer)
+    elif stage == "listdpo":
+        preprocess_func = partial(
+            preprocess_pairwise_dataset,
+            template=template,
+            tokenizer=tokenizer,
+            processor=processor,
+            data_args=data_args
+        )
+        print_function = partial(print_pairwise_dataset_example, tokenizer=tokenizer)
     elif stage == "kto":
         preprocess_func = partial(
             preprocess_feedback_dataset,

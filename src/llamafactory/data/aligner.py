@@ -87,6 +87,17 @@ def convert_alpaca(
                 {"role": Role.ASSISTANT.value, "content": examples[dataset_attr.chosen][i]},
                 {"role": Role.ASSISTANT.value, "content": examples[dataset_attr.rejected][i]},
             ]
+        elif (
+            dataset_attr.tripledpo
+            and isinstance(examples[dataset_attr.chosen][i], str)
+            and isinstance(examples[dataset_attr.midddle][i], str)
+            and isinstance(examples[dataset_attr.rejected][i], str)
+        ):  # listwise example
+            response = [
+                {"role": Role.ASSISTANT.value, "content": examples[dataset_attr.chosen][i]},
+                {"role": Role.ASSISTANT.value, "content": examples[dataset_attr.midddle][i]},
+                {"role": Role.ASSISTANT.value, "content": examples[dataset_attr.rejected][i]},
+            ]
         elif dataset_attr.response and isinstance(examples[dataset_attr.response][i], str):  # normal example
             response = [{"role": Role.ASSISTANT.value, "content": examples[dataset_attr.response][i]}]
         else:  # unsupervised
