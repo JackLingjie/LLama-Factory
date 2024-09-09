@@ -110,6 +110,37 @@ class PairwiseDataCollatorWithPadding(DataCollatorForSeq2Seq):
 
         return super().__call__(concatenated_features)
 
+@dataclass
+class ListwiseDataCollatorWithPadding(DataCollatorForSeq2Seq):
+    r"""
+    Data collator for pairwise data.
+    """
+
+    def __call__(self, features: Sequence[Dict[str, Any]]) -> Dict[str, "torch.Tensor"]:
+        r"""
+        Pads batched data to the longest sequence in the batch.
+
+        We generate 2 * n examples where the first n examples represent chosen examples and
+        the last n examples represent rejected examples.
+        """
+        concatenated_features = []
+        for key in ("chosen", "middle", "rejected"):
+            for feature in features:
+                target_feature = {
+                    "input_ids": feature["{}_input_ids".format(key)],
+                    "attention_mask": feature["{}_attention_mask".format(key)],
+                    "labels": feature["{}_labels".format(key)],
+                }
+                if "pixel_values" in feature:
+                    target_feature["pixel_values"] = feature["pixel_values"]
+
+                if "{}_token_type_ids".format(key) in feature:
+                    target_feature["token_type_ids"] = feature["{}_token_type_ids".format(key)]
+
+                concatenated_features.append(target_feature)
+
+        return super().__call__(concatenated_features)
+
 
 @dataclass
 class KTODataCollatorWithPadding(DataCollatorForSeq2Seq):

@@ -24,6 +24,7 @@ from .processors.supervised import (
     print_supervised_dataset_example,
 )
 from .processors.unsupervised import preprocess_unsupervised_dataset, print_unsupervised_dataset_example
+from .processors.listwise import preprocess_listwise_dataset, print_listwise_dataset_example
 
 
 if TYPE_CHECKING:
@@ -35,7 +36,7 @@ if TYPE_CHECKING:
 
 def get_preprocess_and_print_func(
     data_args: "DataArguments",
-    stage: Literal["pt", "sft", "rm", "ppo", "kto"],
+    stage: Literal["pt", "sft", "rm", "ppo", "kto", "listdpo"],
     template: "Template",
     tokenizer: "PreTrainedTokenizer",
     processor: Optional["ProcessorMixin"],
@@ -90,13 +91,13 @@ def get_preprocess_and_print_func(
         print_function = partial(print_pairwise_dataset_example, tokenizer=tokenizer)
     elif stage == "listdpo":
         preprocess_func = partial(
-            preprocess_pairwise_dataset,
+            preprocess_listwise_dataset,
             template=template,
             tokenizer=tokenizer,
             processor=processor,
-            data_args=data_args
+            data_args=data_args,
         )
-        print_function = partial(print_pairwise_dataset_example, tokenizer=tokenizer)
+        print_function = partial(print_listwise_dataset_example, tokenizer=tokenizer)
     elif stage == "kto":
         preprocess_func = partial(
             preprocess_feedback_dataset,
