@@ -88,7 +88,7 @@ def convert_alpaca(
                 {"role": Role.ASSISTANT.value, "content": examples[dataset_attr.rejected][i]},
             ]
         elif (
-            dataset_attr.tripledpo
+            dataset_attr.listdpo
             and isinstance(examples[dataset_attr.chosen][i], str)
             and isinstance(examples[dataset_attr.midddle][i], str)
             and isinstance(examples[dataset_attr.rejected][i], str)

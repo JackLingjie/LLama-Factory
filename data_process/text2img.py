@@ -80,56 +80,40 @@ def text_to_image(text, output_image, size=(1280, 1080), save_dir='text_images',
     logging.info("Conversion process completed successfully.")  
   
 markdown_text = \
-"""Absolutely! Welcome to GPT-ART mode! I'm excited to help you create generative art using Python's turtle graphics. Let's start by setting up a simple turtle environment, and then we'll draw a magnificent piece of art using loops, functions, and some creative experimentation.
-
-Make sure you have the `turtle` module installed for Python. You can install it with:
-
-```python
-pip install PythonTurtle
-```
-
-Now, let's create a colorful spiral pattern using the turtle module:
-
-```python
-import turtle
-import random
-
-# Set up the screen
-screen = turtle.Screen()
-screen.bgcolor("black")
-
-# Create a turtle
-art_turtle = turtle.Turtle()
-art_turtle.speed(0)
-
-# Define colors for the art
-colors = ["red", "blue", "yellow", "green", "orange", "purple", "white"]
-
-# Function to draw a spiral pattern
-def draw_spiral(t, size):
-    t.pendown()
-    for _ in range(4):
-        t.forward(size)
-        t.right(90)
-    t.penup()
-    t.right(10)
-
-# Main loop to create the art
-for _ in range(360 // 10):
-    art_turtle.color(random.choice(colors))  # Change the color randomly
-    size = random.randint(10, 150)  # Change the size randomly
-    draw_spiral(art_turtle, size)
-    art_turtle.forward(10)
-    art_turtle.left(10)
-
-# Hide the turtle and display the art
-art_turtle.hideturtle()
-turtle.done()
-```
-
-This **program** sets up a turtle environment, defines a spiral function, and proceeds to create a colorful spiral pattern by iteratively drawing squares and rotating the turtle artist. The colors and dimensions of the squares are selected randomly, resulting in a unique piece of art every time you run the program.
-
-Feel free to modify the code, experiment with the colors, shapes, and functions to create your own unique artwork!
+"""
+\documentclass{article}  
+\usepackage{amsmath}  
+\begin{document}  
+  
+根据Plackett-Luce模型你可以使用LaTeX代码在文档中渲染这个公式。以下是完整的LaTeX代码：  
+  
+```latex  
+\documentclass{article}  
+\usepackage{amsmath}  
+  
+\begin{document}  
+  
+根据Plackett-Luce模型，当K=3时，我们需要考虑三个动作 \(y，当 \(K=3\) 时，\(p^*(y_1 \succ y_2 \succ y_3 | x)\) 的公式如下：  
+  
+\begin{align}  
+    p^*(y_1 \succ y_2 \succ y_3 | x) &= p^*(y_1 | x) \cdot p^*(y_2 | y_1, x)_1, y_2, y_3\) 的排序概率。推导如下：  
+  
+首先计算 \(y_1\) 在所有动作中被选中的概率：  
+  
+\[  
+p^*(y_1 | x) = \frac{\exp \left( \beta \log \frac{\pi^*(y_1|x)}{\pi_{\text{ref}}(y_1|x \cdot p^*(y_3 | y_1, y_2, x) \\  
+    &= \frac{\exp \left( \beta \log \frac{\pi^*(y_1|x)}{\pi_{\text{ref}}(y_1|x)} \right)}{\exp \left( \beta \log \frac{\pi^*(y_1|x)}{\pi_{\text{ref}}(y_1|x)} \right) + \exp \left( \beta \log \frac{\pi^*(y_2|x)}{\pi_{\text{ref}}(y_2|x)} \right) + \exp \left( \beta \)} \right)}{\exp \left( \beta \log \frac{\pi^*(ylog \frac{\pi^*(y_3|x)}{\pi_{\text{ref}}(y_3|x)} \right)} \\  
+    &\quad \cdot \frac{\exp \left( \beta \log \frac{\pi^*(y_2|x)}{\pi_{\text{ref}}(y_2|x)} \right)}{\_1|x)}{\pi_{\text{ref}}(y_1|x)} \right) + \exp \left( \beta \log \frac{\pi^*(y_2|x)}{\pi_{\text{ref}}(y_2exp \left( \beta \log \frac{\pi^*(y_2|x)}{\pi_{\text{ref}}(y_2|x)} \right) + \exp \left( \beta \log \frac{\pi^*(y_3|x)}{\pi_{\text{ref}}(y_3|x)} \right|x)} \right) + \exp \left( \beta \log \frac{\pi^*(y_3|x)}{\pi_{\text{ref}}(y_3|x)} \right)}  
+\]  
+  
+接下来在剩余的动作中计算 \(y_2\) 被选中的概率（假设 \(y_1\) 已经被选中）：  
+  
+\[  
+p^*(y_2 | y_1, x) = \frac{\exp \left( \beta \log \frac{\pi^*(y_2|x)}{\pi_{\text{ref}}(y_2|x)} \right)}{\exp \left( \beta \log \frac{\pi^*(y_2|x)}{\pi_{\text{ref)} \\  
+    &\quad \cdot 1  
+\end{align}  
+  
+\end{document}  
 """  
   
 if __name__ == "__main__":  

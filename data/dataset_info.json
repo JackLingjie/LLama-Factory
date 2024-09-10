@@ -679,8 +679,8 @@
     }
   },
   "ta_list_dpo_job": {
-    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_v2_rejected_v5_-180_470.json",
-    "tripledpo":true,
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_triple_v2_-88_350_noneed.json",
+    "listdpo":true,
     "columns": {
       "prompt": "prompt",
       "chosen": "chosen",

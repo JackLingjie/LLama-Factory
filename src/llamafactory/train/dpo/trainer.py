@@ -158,7 +158,6 @@ class CustomDPOTrainer(DPOTrainer):
             chosen_rewards = self.beta * policy_chosen_logps.to(self.accelerator.device).detach()
             rejected_rewards = self.beta * policy_rejected_logps.to(self.accelerator.device).detach()
         else:
-            print("use dpo loss")
             losses, chosen_rewards, rejected_rewards = self.dpo_loss(
                 policy_chosen_logps, policy_rejected_logps, reference_chosen_logps, reference_rejected_logps
             )
@@ -183,11 +182,10 @@ class CustomDPOTrainer(DPOTrainer):
             all_logps = all_logps / valid_length
 
         batch_size = batch["input_ids"].size(0) // 2
-        chosen_logps, middle_logps, rejected_logps = all_logps.split(batch_size, dim=0)  
-        chosen_logits, middle_logits, rejected_logits = all_logits.split(batch_size, dim=0)  
-        chosen_length, middle_length, rejected_length = valid_length.split(batch_size, dim=0) 
-
-        return chosen_logps, middle_logps, rejected_logps, chosen_logits, middle_logits, rejected_logits, chosen_logps / chosen_length  
+        chosen_logps, rejected_logps = all_logps.split(batch_size, dim=0)
+        chosen_logits, rejected_logits = all_logits.split(batch_size, dim=0)
+        chosen_length, _ = valid_length.split(batch_size, dim=0)
+        return chosen_logps, rejected_logps, chosen_logits, rejected_logits, chosen_logps / chosen_length
 
     def compute_reference_log_probs(
         self, model: "PreTrainedModel", batch: Dict[str, "torch.Tensor"]
@@ -196,7 +194,7 @@ class CustomDPOTrainer(DPOTrainer):
         Computes log probabilities of the reference model.
         """
         if not self.finetuning_args.use_ref_model:
-            return None, None, None  
+            return None, None
 
         if self.ref_model is None:
             ref_model = model
@@ -205,10 +203,10 @@ class CustomDPOTrainer(DPOTrainer):
             ref_model = self.ref_model
             ref_context = nullcontext()
 
-        with torch.no_grad(), ref_context:  
-            reference_chosen_logps, reference_middle_logps, reference_rejected_logps, *_ = self.concatenated_forward(ref_model, batch)  
-  
-        return reference_chosen_logps, reference_middle_logps, reference_rejected_logps  
+        with torch.no_grad(), ref_context:
+            reference_chosen_logps, reference_rejected_logps, *_ = self.concatenated_forward(ref_model, batch)
+
+        return reference_chosen_logps, reference_rejected_logps
 
     def get_batch_loss_metrics(
         self,
@@ -219,28 +217,25 @@ class CustomDPOTrainer(DPOTrainer):
         r"""
         Computes the DPO loss and other metrics for the given batch of inputs for train or test.
         """
-        metrics = {}  
-        (  
-            policy_chosen_logps,  
-            policy_middle_logps,  
-            policy_rejected_logps,  
-            policy_chosen_logits,  
-            policy_middle_logits,  
-            policy_rejected_logits,  
-            policy_chosen_logps_avg,  
-        ) = self.concatenated_forward(model, batch)  
+        metrics = {}
+        (
+            policy_chosen_logps,
+            policy_rejected_logps,
+            policy_chosen_logits,
+            policy_rejected_logits,
+            policy_chosen_logps_avg,
+        ) = self.concatenated_forward(model, batch)
 
-        reference_chosen_logps, reference_middle_logps, reference_rejected_logps = self.compute_reference_log_probs(model, batch)  
-        chosen_losses, middle_losses, chosen_rewards, middle_rewards, rejected_rewards = self.compute_preference_loss(  
-            policy_chosen_logps,  
-            policy_middle_logps,  
-            policy_rejected_logps,  
-            reference_chosen_logps,  
-            reference_middle_logps,  
-            reference_rejected_logps,  
+        reference_chosen_logps, reference_rejected_logps = self.compute_reference_log_probs(model, batch)
+        losses, chosen_rewards, rejected_rewards = self.compute_preference_loss(
+            policy_chosen_logps,
+            policy_rejected_logps,
+            reference_chosen_logps,
+            reference_rejected_logps,
         )
         sft_loss = -policy_chosen_logps_avg
         if self.ftx_gamma > 1e-6:
+            print(f"self.ftx_gamma: {self.ftx_gamma}")
             losses += self.ftx_gamma * sft_loss
 
         reward_accuracies = (chosen_rewards > rejected_rewards).float()
