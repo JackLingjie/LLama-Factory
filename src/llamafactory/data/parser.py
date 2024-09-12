@@ -34,6 +34,7 @@ class DatasetAttr:
     dataset_name: str
     formatting: Literal["alpaca", "sharegpt"] = "alpaca"
     ranking: bool = False
+    listdpo: bool = False
     # extra configs
     subset: Optional[str] = None
     split: str = "train"
@@ -46,6 +47,7 @@ class DatasetAttr:
     # rlhf columns
     chosen: Optional[str] = None
     rejected: Optional[str] = None
+    middle: Optional[str] = None
     kto_tag: Optional[str] = None
     # alpaca columns
     prompt: Optional[str] = "instruction"
@@ -120,13 +122,14 @@ def get_dataset_list(dataset_names: Optional[Sequence[str]], dataset_dir: str) -
 
         dataset_attr.set_attr("formatting", dataset_info[name], default="alpaca")
         dataset_attr.set_attr("ranking", dataset_info[name], default=False)
+        dataset_attr.set_attr("listdpo", dataset_info[name], default=False)
         dataset_attr.set_attr("subset", dataset_info[name])
         dataset_attr.set_attr("split", dataset_info[name], default="train")
         dataset_attr.set_attr("folder", dataset_info[name])
         dataset_attr.set_attr("num_samples", dataset_info[name])
 
         if "columns" in dataset_info[name]:
-            column_names = ["system", "tools", "images", "chosen", "rejected", "kto_tag"]
+            column_names = ["system", "tools", "images", "chosen", "rejected", "kto_tag", "middle"]
             if dataset_attr.formatting == "alpaca":
                 column_names.extend(["prompt", "query", "response", "history"])
             else:

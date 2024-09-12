@@ -89,7 +89,7 @@ def get_preprocess_and_print_func(
             data_args=data_args,
         )
         print_function = partial(print_pairwise_dataset_example, tokenizer=tokenizer)
-    elif stage == "listdpo":
+    elif stage == "dpo_list":
         preprocess_func = partial(
             preprocess_listwise_dataset,
             template=template,

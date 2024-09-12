@@ -125,4 +125,8 @@ CUDA_VISIBLE_DEVICES=1,2,3 llamafactory-cli train bash_script/glanchatv2_full_sf
 
 llamafactory-cli train bash_script/tulu_lora_dpo_test.yaml | tee debug.log
 
+llamafactory-cli train bash_script/tulu_lora_dpo_test_debug.yaml
+
+llamafactory-cli train bash_script/tulu_lora_dpo_list_test.yaml
+
 

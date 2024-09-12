@@ -32,7 +32,7 @@ if TYPE_CHECKING:
     from ...hparams import DataArguments, FinetuningArguments
 
 
-def run_dpo(
+def run_dpo_list(
     model_args: "ModelArguments",
     data_args: "DataArguments",
     training_args: "Seq2SeqTrainingArguments",
@@ -41,10 +41,9 @@ def run_dpo(
 ):
     tokenizer_module = load_tokenizer(model_args)
     tokenizer = tokenizer_module["tokenizer"]
-    dataset_module = get_dataset(model_args, data_args, training_args, stage="dpolist", **tokenizer_module)
+    dataset_module = get_dataset(model_args, data_args, training_args, stage="dpo_list", **tokenizer_module)
     model = load_model(tokenizer, model_args, finetuning_args, training_args.do_train)
 
-    print(f"dataset_module: {dataset_module}")
     data_collator = ListwiseDataCollatorWithPadding(
         tokenizer=tokenizer,
         pad_to_multiple_of=8,
@@ -62,7 +61,6 @@ def run_dpo(
 
     # Update arguments
     training_args.remove_unused_columns = False  # important for pairwise dataset
-
     # Initialize our Trainer
     trainer = CustomDPOTrainer(
         model=model,
