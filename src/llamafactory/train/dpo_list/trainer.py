@@ -393,9 +393,9 @@ class CustomDPOTrainer(DPOTrainer):
             rejected_logratios = policy_rejected_logps - reference_rejected_logps
 
             # Ensure no negative values before taking exp  
-            chosen_logratios = torch.clamp(chosen_logratios, min=-10, max=10)  
-            middle_logratios = torch.clamp(middle_logratios, min=-10, max=10)  
-            rejected_logratios = torch.clamp(rejected_logratios, min=-10, max=10)  
+            # chosen_logratios = torch.clamp(chosen_logratios, min=-10, max=10)  
+            # middle_logratios = torch.clamp(middle_logratios, min=-10, max=10)  
+            # rejected_logratios = torch.clamp(rejected_logratios, min=-10, max=10)  
             # pi_logratios = policy_middle_logps - policy_rejected_logps
             # ref_logratios = reference_middle_logps - reference_rejected_logps
 
@@ -412,18 +412,18 @@ class CustomDPOTrainer(DPOTrainer):
             r3 = torch.exp(self.beta * rejected_logratios)
 
             # Avoid division by zero  
-            denom = r1 + r2 + r3  
-            denom = torch.clamp(denom, min=1e-10) 
+            # denom = r1 + r2 + r3  
+            # denom = torch.clamp(denom, min=1e-10) 
+            # p1  = r1 / denom 
 
-            # p1  = r1 / (r1 + r2 + r3)
-            p1  = r1 / denom  
+            p1  = r1 / (r1 + r2 + r3) 
             logits_p1 = torch.log(p1)
             # part two
             # p2 = pi_logratios - ref_logratios
             # logits_p2 = F.logsigmoid(self.beta * p2)
-            # p2 = r2 / (r2 + r3)
+            p2 = r2 / (r2 + r3)
             # logits_p2 = torch.log(p2)
-            p2 = r2 / torch.clamp(r2 + r3, min=1e-10)  
+            # p2 = r2 / torch.clamp(r2 + r3, min=1e-10)  
             logits_p2 = torch.log(p2)  
             losses = -(logits_p1 + logits_p2)
 
