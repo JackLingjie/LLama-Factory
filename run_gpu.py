@@ -30,6 +30,6 @@ def matrix_multiplication(args):
         time.sleep(args.interval)
  
 if __name__ == "__main__":
-    # usage: python matrix_multiplication_gpus.py --size 20000 --gpus 4 --interval 0.01
+    # usage: python run_gpu.py --size 20000 --gpus 4 --interval 0.01
     args = parse_args()
     matrix_multiplication(args)
