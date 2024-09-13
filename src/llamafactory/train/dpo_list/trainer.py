@@ -40,9 +40,9 @@ if TYPE_CHECKING:
 from trl.trainer.dpo_config import FDivergenceType, FDivergenceConstants
 from trl.trainer.utils import cap_exp
 
-from ...extras.logging import get_logger
+# from ...extras.logging import get_logger
 
-logger = get_logger(__name__)  
+# logger = get_logger(__name__)  
 
 # def setup_combined_logger(logger_name: str, output_dir: str) -> logging.Logger:  
 #     print("setup logger")  
