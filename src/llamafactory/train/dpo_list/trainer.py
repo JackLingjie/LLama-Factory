@@ -40,27 +40,28 @@ if TYPE_CHECKING:
 from trl.trainer.dpo_config import FDivergenceType, FDivergenceConstants
 from trl.trainer.utils import cap_exp
 
-from ...extras.logging import LoggerHandler, get_logger,logging
+from ...extras.logging import get_logger
 
+logger = get_logger(__name__)  
 
-def setup_combined_logger(logger_name: str, output_dir: str) -> logging.Logger:  
-    print("setup logger")  
-    logger = get_logger(logger_name)  
+# def setup_combined_logger(logger_name: str, output_dir: str) -> logging.Logger:  
+#     print("setup logger")  
+#     logger = get_logger(logger_name)  
       
-    # 移除现有的处理程序  
-    for handler in logger.handlers[:]:  
-        if isinstance(handler, LoggerHandler):  
-            logger.removeHandler(handler)  
-            handler.close()  # 确保处理程序被正确关闭  
+#     # 移除现有的处理程序  
+#     for handler in logger.handlers[:]:  
+#         if isinstance(handler, LoggerHandler):  
+#             logger.removeHandler(handler)  
+#             handler.close()  # 确保处理程序被正确关闭  
       
-    # 添加自定义的LoggerHandler  
-    file_handler = LoggerHandler(output_dir)  
-    logger.addHandler(file_handler)  
+#     # 添加自定义的LoggerHandler  
+#     file_handler = LoggerHandler(output_dir)  
+#     logger.addHandler(file_handler)  
       
-    return logger 
+#     return logger 
 enable_debug = False
-if enable_debug:
-    logger = setup_combined_logger('my_app', './list_dpo_original_debug.log')  
+# if enable_debug:
+#     logger = setup_combined_logger('my_app', './list_dpo_original_debug.log')  
 
 ## NOTE(debug)
 def check_for_nans(tensor, name):  
@@ -227,8 +228,8 @@ class CustomDPOTrainer(DPOTrainer):
     def compute_preference_loss(
         self,
         policy_chosen_logps: "torch.Tensor",
-        policy_rejected_logps: "torch.Tensor",
         policy_middle_logps: "torch.Tensor",
+        policy_rejected_logps: "torch.Tensor",
         reference_chosen_logps: Optional["torch.Tensor"],
         policy_middle_logits:  Optional["torch.Tensor"],
         reference_rejected_logps: Optional["torch.Tensor"],
@@ -388,16 +389,16 @@ class CustomDPOTrainer(DPOTrainer):
             The losses tensor contains the DPO loss for each example in the batch.  
             The chosen_rewards, middle_rewards, and rejected_rewards tensors contain the rewards for the chosen, middle, and rejected responses, respectively.  
         """ 
-        chosen_logratios = policy_chosen_logps.to(self.accelerator.device) - (
-            not self.reference_free
-        ) * reference_chosen_logps.to(self.accelerator.device)
-        # middle_logratios = policy_middle_logps.to(self.accelerator.device) - (not self.reference_free) * reference_middle_logps.to(self.accelerator.device)  
-        middle_logratios = policy_middle_logps.to(self.accelerator.device) - (  
-            not self.reference_free  
-        ) * reference_middle_logps.to(self.accelerator.device) 
-        rejected_logratios = policy_rejected_logps.to(self.accelerator.device) - (
-            not self.reference_free
-        ) * reference_rejected_logps.to(self.accelerator.device)
+        # chosen_logratios = policy_chosen_logps.to(self.accelerator.device) - (
+        #     not self.reference_free
+        # ) * reference_chosen_logps.to(self.accelerator.device)
+        # # middle_logratios = policy_middle_logps.to(self.accelerator.device) - (not self.reference_free) * reference_middle_logps.to(self.accelerator.device)  
+        # middle_logratios = policy_middle_logps.to(self.accelerator.device) - (  
+        #     not self.reference_free  
+        # ) * reference_middle_logps.to(self.accelerator.device) 
+        # rejected_logratios = policy_rejected_logps.to(self.accelerator.device) - (
+        #     not self.reference_free
+        # ) * reference_rejected_logps.to(self.accelerator.device)
 
         if self.f_divergence_type == FDivergenceType.ALPHA_DIVERGENCE.value:
             # The alpha-divergence formula: (1 - u^-alpha) / alpha
@@ -417,9 +418,9 @@ class CustomDPOTrainer(DPOTrainer):
             # else:
             #     ref_logratios = reference_chosen_logps - reference_rejected_logps
 
-            chosen_logratios = policy_chosen_logps - reference_chosen_logps
-            middle_logratios = policy_middle_logps - reference_middle_logps
-            rejected_logratios = policy_rejected_logps - reference_rejected_logps
+            chosen_logratios = policy_chosen_logps.to(self.accelerator.device) - reference_chosen_logps.to(self.accelerator.device)
+            middle_logratios = policy_middle_logps.to(self.accelerator.device) - reference_middle_logps.to(self.accelerator.device)
+            rejected_logratios = policy_rejected_logps.to(self.accelerator.device) - reference_rejected_logps.to(self.accelerator.device)
             if enable_debug:
                 logger.info(f"chosen_logratios: {chosen_logratios}")
                 logger.info(f"policy_chosen_logps: {policy_chosen_logps}")
@@ -433,14 +434,14 @@ class CustomDPOTrainer(DPOTrainer):
                 logger.info(f"policy_rejected_logps: {policy_rejected_logps}")
                 logger.info(f"reference_rejected_logps: {reference_rejected_logps}")
             # Ensure no negative values before taking exp  
-            chosen_logratios = torch.clamp(chosen_logratios, min=-1000, max=100)  
-            middle_logratios = torch.clamp(middle_logratios, min=-1000, max=100)  
-            rejected_logratios = torch.clamp(rejected_logratios, min=-1000, max=100)  
+            # chosen_logratios = torch.clamp(chosen_logratios, min=-1000, max=100)  
+            # middle_logratios = torch.clamp(middle_logratios, min=-1000, max=100)  
+            # rejected_logratios = torch.clamp(rejected_logratios, min=-1000, max=100)  
             # pi_logratios = policy_middle_logps - policy_rejected_logps
             # ref_logratios = reference_middle_logps - reference_rejected_logps
 
             chosen_logratios = chosen_logratios.to(self.accelerator.device)
-            middle_logratios = middle_logratios.to(self.accelerator.device)
+            # middle_logratios = middle_logratios.to(self.accelerator.device)
             rejected_logratios = rejected_logratios.to(self.accelerator.device)
 
             # pi_logratios = pi_logratios.to(self.accelerator.device)
@@ -448,29 +449,40 @@ class CustomDPOTrainer(DPOTrainer):
 
             # part one
             r1 = torch.exp(self.beta * chosen_logratios)
-            r2 = torch.exp(self.beta * middle_logratios)
+            # r2 = torch.exp(self.beta * middle_logratios)
             r3 = torch.exp(self.beta * rejected_logratios)
 
+            r1 = r1.to(self.accelerator.device)
+            # r2 = r2.to(self.accelerator.device)
+            r3 = r3.to(self.accelerator.device)
             # Avoid division by zero  
-            denom = r1 + r2 + r3  
-            denom = torch.clamp(denom, min=1e-10) 
-            p1  = r1 / denom 
-            p1 = torch.clamp(p1, min=1e-3)
+            # denom = r1 + r2 + r3  
+            # denom = torch.clamp(denom, min=1e-10) 
+            # p1  = r1 / denom 
+            # p1 = torch.clamp(p1, min=1e-3)
             # p1  = r1 / (r1 + r2 + r3) 
-            logits_p1 = torch.log(p1)
+            # logits_p1 = torch.log(p1)
             # part two
             # p2 = pi_logratios - ref_logratios
             # logits_p2 = F.logsigmoid(self.beta * p2)
             # p2 = r2 / (r2 + r3)
             # logits_p2 = torch.log(p2)
-            p2 = r2 / torch.clamp(r2 + r3, min=1e-10)  
-            p2 = torch.clamp(p2, min=1e-3)
-            logits_p2 = torch.log(p2)  
-            losses = -(logits_p1 + logits_p2)
+            # p2 = r2 / torch.clamp(r2 + r3, min=1e-10)  
+            # p2 = torch.clamp(p2, min=1e-3)
+            # logits_p2 = torch.log(p2)  
+            # losses = -(logits_p1 + logits_p2)
+            # losses = -logits_p2
             # losses = -logits_p1
+            p3 = r1 / (r1 + r3)
+            logits_p3 = torch.log(p3)
+            losses = -logits_p3
             if enable_debug:
                 # logger.info(f"logits_p1: {logits_p1}, logits_p2:{logits_p2}")
-                logger.info(f"logits_p1: {logits_p1}")
+                logger.info(f"r1: {r1}")
+                # logger.info(f"r2: {r2}")
+                logger.info(f"r3: {r3}")
+                logger.info(f"p3: {p3}")
+                logger.info(f"losses: {losses}")
 
 
         chosen_rewards = (
