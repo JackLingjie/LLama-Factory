@@ -9,6 +9,7 @@ finetuning_type: lora
 lora_target: all
 pref_beta: 0.1
 pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
+max_grad_norm: 1
 
 ### dataset
 dataset: ta_list_dpo_job
