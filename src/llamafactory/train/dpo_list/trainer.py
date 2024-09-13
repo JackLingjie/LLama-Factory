@@ -463,10 +463,11 @@ class CustomDPOTrainer(DPOTrainer):
             # logits_p2 = F.logsigmoid(self.beta * p2)
             # p2 = r2 / (r2 + r3)
             # logits_p2 = torch.log(p2)
-            # p2 = r2 / torch.clamp(r2 + r3, min=1e-10)  
-            # logits_p2 = torch.log(p2)  
-            # losses = -(logits_p1 + logits_p2)
-            losses = -logits_p1
+            p2 = r2 / torch.clamp(r2 + r3, min=1e-10)  
+            p2 = torch.clamp(p2, min=1e-3)
+            logits_p2 = torch.log(p2)  
+            losses = -(logits_p1 + logits_p2)
+            # losses = -logits_p1
             if enable_debug:
                 # logger.info(f"logits_p1: {logits_p1}, logits_p2:{logits_p2}")
                 logger.info(f"logits_p1: {logits_p1}")
