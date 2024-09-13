@@ -9,7 +9,7 @@ finetuning_type: lora
 lora_target: all
 pref_beta: 0.1
 pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
-deepspeed: examples/deepspeed/ds_z2_config.json
+max_grad_norm: 1
 
 ### dataset
 dataset: ta_list_dpo_job
@@ -20,7 +20,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/tulu_v2_8b_default_template_dpo_list/lora/dpo
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/tulu_v2_8b_default_template_dpo_list_grad1/lora/dpo
 logging_steps: 10
 save_steps: 500
 plot_loss: true
