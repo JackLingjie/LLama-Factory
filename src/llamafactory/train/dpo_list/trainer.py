@@ -40,6 +40,28 @@ if TYPE_CHECKING:
 from trl.trainer.dpo_config import FDivergenceType, FDivergenceConstants
 from trl.trainer.utils import cap_exp
 
+from ...extras.logging import LoggerHandler, get_logger,logging
+
+
+def setup_combined_logger(logger_name: str, output_dir: str) -> logging.Logger:  
+    print("setup logger")  
+    logger = get_logger(logger_name)  
+      
+    # 移除现有的处理程序  
+    for handler in logger.handlers[:]:  
+        if isinstance(handler, LoggerHandler):  
+            logger.removeHandler(handler)  
+            handler.close()  # 确保处理程序被正确关闭  
+      
+    # 添加自定义的LoggerHandler  
+    file_handler = LoggerHandler(output_dir)  
+    logger.addHandler(file_handler)  
+      
+    return logger 
+enable_debug = False
+if enable_debug:
+    logger = setup_combined_logger('my_app', './list_dpo_original_debug.log')  
+
 ## NOTE(debug)
 def check_for_nans(tensor, name):  
     if torch.isnan(tensor).any():  
@@ -245,7 +267,7 @@ class CustomDPOTrainer(DPOTrainer):
         """
         if self.finetuning_args.use_ref_model:
             batch = {k: v.detach().clone() for k, v in batch.items()}  # avoid error
-
+        
         all_logits: "torch.Tensor" = model(**batch, return_dict=True, use_cache=False).logits.to(torch.float32)
 
         all_logps, valid_length = get_batch_logps(logits=all_logits, labels=batch["labels"])
@@ -256,6 +278,13 @@ class CustomDPOTrainer(DPOTrainer):
         chosen_logits, middle_logits, rejected_logits = all_logits.split(batch_size, dim=0)  
         chosen_length, middle_length, rejected_length = valid_length.split(batch_size, dim=0) 
 
+        if enable_debug:
+            logger.info(f"batch inputs: {batch}")
+            logger.info(f"all_logps: {all_logps}")
+            logger.info(f"valid_length: {valid_length}")
+            logger.info(f"chosen_logps: {chosen_logps}")
+            logger.info(f"middle_logps: {middle_logps}")
+            logger.info(f"rejected_logps: {rejected_logps}")
         # if check_for_nans(chosen_logps, "chosen_logps") or check_for_nans(middle_logps, "middle_logps") or check_for_nans(rejected_logps, "rejected_logps"):  
         #     print("NaNs found in concatenated_forward") 
 
@@ -391,11 +420,22 @@ class CustomDPOTrainer(DPOTrainer):
             chosen_logratios = policy_chosen_logps - reference_chosen_logps
             middle_logratios = policy_middle_logps - reference_middle_logps
             rejected_logratios = policy_rejected_logps - reference_rejected_logps
+            if enable_debug:
+                logger.info(f"chosen_logratios: {chosen_logratios}")
+                logger.info(f"policy_chosen_logps: {policy_chosen_logps}")
+                logger.info(f"reference_chosen_logps: {reference_chosen_logps}")            
 
+                logger.info(f"middle_logratios: {middle_logratios}")
+                logger.info(f"policy_middle_logps: {policy_middle_logps}")
+                logger.info(f"reference_middle_logps: {reference_middle_logps}")
+
+                logger.info(f"rejected_logratios: {rejected_logratios}")
+                logger.info(f"policy_rejected_logps: {policy_rejected_logps}")
+                logger.info(f"reference_rejected_logps: {reference_rejected_logps}")
             # Ensure no negative values before taking exp  
-            # chosen_logratios = torch.clamp(chosen_logratios, min=-10, max=10)  
-            # middle_logratios = torch.clamp(middle_logratios, min=-10, max=10)  
-            # rejected_logratios = torch.clamp(rejected_logratios, min=-10, max=10)  
+            chosen_logratios = torch.clamp(chosen_logratios, min=-1000, max=100)  
+            middle_logratios = torch.clamp(middle_logratios, min=-1000, max=100)  
+            rejected_logratios = torch.clamp(rejected_logratios, min=-1000, max=100)  
             # pi_logratios = policy_middle_logps - policy_rejected_logps
             # ref_logratios = reference_middle_logps - reference_rejected_logps
 
@@ -412,21 +452,24 @@ class CustomDPOTrainer(DPOTrainer):
             r3 = torch.exp(self.beta * rejected_logratios)
 
             # Avoid division by zero  
-            # denom = r1 + r2 + r3  
-            # denom = torch.clamp(denom, min=1e-10) 
-            # p1  = r1 / denom 
-
-            p1  = r1 / (r1 + r2 + r3) 
+            denom = r1 + r2 + r3  
+            denom = torch.clamp(denom, min=1e-10) 
+            p1  = r1 / denom 
+            p1 = torch.clamp(p1, min=1e-3)
+            # p1  = r1 / (r1 + r2 + r3) 
             logits_p1 = torch.log(p1)
             # part two
             # p2 = pi_logratios - ref_logratios
             # logits_p2 = F.logsigmoid(self.beta * p2)
-            p2 = r2 / (r2 + r3)
+            # p2 = r2 / (r2 + r3)
             # logits_p2 = torch.log(p2)
             # p2 = r2 / torch.clamp(r2 + r3, min=1e-10)  
-            logits_p2 = torch.log(p2)  
-            losses = -(logits_p1 + logits_p2)
-
+            # logits_p2 = torch.log(p2)  
+            # losses = -(logits_p1 + logits_p2)
+            losses = -logits_p1
+            if enable_debug:
+                # logger.info(f"logits_p1: {logits_p1}, logits_p2:{logits_p2}")
+                logger.info(f"logits_p1: {logits_p1}")
 
 
         chosen_rewards = (
