@@ -166,7 +166,7 @@ class CustomDPOTrainer(DPOTrainer):
         reference_chosen_logps: Optional["torch.Tensor"],
         policy_middle_logits:  Optional["torch.Tensor"],
         reference_rejected_logps: Optional["torch.Tensor"],
-    ) -> Tuple["torch.Tensor", "torch.Tensor", "torch.Tensor"]:
+    ) -> Tuple["torch.Tensor", "torch.Tensor", "torch.Tensor","torch.Tensor", "torch.Tensor", "torch.Tensor"]:
         r"""
         Computes loss for preference learning.
         """
@@ -193,7 +193,7 @@ class CustomDPOTrainer(DPOTrainer):
 
     def concatenated_forward(
         self, model: "PreTrainedModel", batch: Dict[str, "torch.Tensor"]
-    ) -> Tuple["torch.Tensor", "torch.Tensor", "torch.Tensor", "torch.Tensor", "torch.Tensor"]:
+    ) -> Tuple["torch.Tensor", "torch.Tensor", "torch.Tensor", "torch.Tensor", "torch.Tensor", "torch.Tensor", "torch.Tensor"]:
         r"""
         Computes the sum log probabilities of the labels under given logits if loss_type is not IPO, ORPO or SimPO.
 
@@ -309,7 +309,7 @@ class CustomDPOTrainer(DPOTrainer):
         reference_chosen_logps: torch.FloatTensor,  
         reference_middle_logps: torch.FloatTensor,  
         reference_rejected_logps: torch.FloatTensor,  
-) -> Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]:  
+) -> Tuple[torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor, torch.FloatTensor]:  
         """Compute the DPO loss for a batch of policy and reference model log probabilities using Plackett-Luce Model.  
     
         Args:  
