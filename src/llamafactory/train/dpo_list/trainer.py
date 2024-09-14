@@ -45,7 +45,7 @@ from ...extras.logging import get_logger
 logger = get_logger(__name__)  
 
 
-enable_debug = False
+enable_debug = True
 
 
 ## NOTE(debug)
@@ -294,6 +294,7 @@ class CustomDPOTrainer(DPOTrainer):
         metrics["{}logits/chosen".format(prefix)] = policy_chosen_logits.detach().mean().cpu()
         metrics["{}logits/logits_p1".format(prefix)] = logits_p1.detach().mean().cpu()
         metrics["{}logits/logits_p2".format(prefix)] = logits_p2.detach().mean().cpu()
+        logger.info(f"metrics: {metrics}")
         if self.loss_type == "orpo":
             metrics["{}sft_loss".format(prefix)] = sft_loss.detach().mean().cpu()
             metrics["{}odds_ratio_loss".format(prefix)] = ((losses - sft_loss) / self.beta).detach().mean().cpu()
