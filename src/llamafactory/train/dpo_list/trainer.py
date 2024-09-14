@@ -45,7 +45,7 @@ from ...extras.logging import get_logger
 logger = get_logger(__name__)  
 
 
-enable_debug = True
+enable_debug = False
 
 
 ## NOTE(debug)
@@ -410,8 +410,8 @@ class CustomDPOTrainer(DPOTrainer):
             # losses = -logits_p1
             p3 = r1 / (r1 + r3)
             logits_p3 = torch.log(p3)
-            logits_p1 = torch.tensor([0, 0, 0, 0]).to(self.accelerator.device) 
-            logits_p2 = torch.tensor([0, 0, 0, 0]).to(self.accelerator.device)   
+            logits_p1 = torch.tensor([-0.0222, -2.0782, -0.6932, -0.5227]).to(self.accelerator.device) 
+            logits_p2 = torch.tensor([-0.0222, -2.0782, -0.6932, -0.5227]).to(self.accelerator.device)   
             losses = -logits_p3
             if enable_debug:
                 # logger.info(f"logits_p1: {logits_p1}, logits_p2:{logits_p2}")
