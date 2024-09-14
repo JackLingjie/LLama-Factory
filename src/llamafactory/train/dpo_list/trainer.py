@@ -40,28 +40,13 @@ if TYPE_CHECKING:
 from trl.trainer.dpo_config import FDivergenceType, FDivergenceConstants
 from trl.trainer.utils import cap_exp
 
-# from ...extras.logging import get_logger
+from ...extras.logging import get_logger
 
-# logger = get_logger(__name__)  
+logger = get_logger(__name__)  
 
-# def setup_combined_logger(logger_name: str, output_dir: str) -> logging.Logger:  
-#     print("setup logger")  
-#     logger = get_logger(logger_name)  
-      
-#     # 移除现有的处理程序  
-#     for handler in logger.handlers[:]:  
-#         if isinstance(handler, LoggerHandler):  
-#             logger.removeHandler(handler)  
-#             handler.close()  # 确保处理程序被正确关闭  
-      
-#     # 添加自定义的LoggerHandler  
-#     file_handler = LoggerHandler(output_dir)  
-#     logger.addHandler(file_handler)  
-      
-#     return logger 
+
 enable_debug = False
-# if enable_debug:
-#     logger = setup_combined_logger('my_app', './list_dpo_original_debug.log')  
+
 
 ## NOTE(debug)
 def check_for_nans(tensor, name):  
@@ -73,58 +58,6 @@ def check_for_nans(tensor, name):
         return True  
     return False 
 
-# def get_batch_logps(  
-#     logits: "torch.Tensor",   
-#     labels: "torch.Tensor",   
-#     label_pad_token_id: int = IGNORE_INDEX  
-# ) -> Tuple["torch.Tensor", "torch.Tensor"]:  
-#     r"""  
-#     Computes the log probabilities of the given labels under the given logits.  
-#     Returns:  
-#         logps: A tensor of shape (batch_size,) containing the sum of log probabilities.  
-#         valid_length: A tensor of shape (batch_size,) containing the number of non-masked tokens.  
-#     """  
-#     if logits.shape[:-1] != labels.shape:  
-#         raise ValueError("Logits (batchsize x seqlen) and labels must have the same shape.")  
-      
-#     # Check for NaNs/Infs in inputs  
-#     if check_for_nans(logits, "logits") or check_for_nans(labels, "labels"):  
-#         print("NaNs/Infs found in input tensors")  
-  
-#     labels = labels[:, 1:].clone()  
-#     logits = logits[:, :-1, :]  
-      
-#     # Check for NaNs/Infs after slicing  
-#     if check_for_nans(logits, "logits (sliced)") or check_for_nans(labels, "labels (sliced)"):  
-#         print("NaNs/Infs found after slicing")  
-  
-#     loss_mask = labels != label_pad_token_id  
-#     labels[labels == label_pad_token_id] = 0  # dummy token  
-      
-#     # Check for NaNs/Infs after mask and label adjustment  
-#     if check_for_nans(loss_mask, "loss_mask") or check_for_nans(labels, "labels (masked)"):  
-#         print("NaNs/Infs found after mask and label adjustment")  
-  
-#     log_softmax_logits = logits.log_softmax(-1)  
-      
-#     # Check for NaNs/Infs after log_softmax  
-#     if check_for_nans(log_softmax_logits, "log_softmax_logits"):  
-#         print("NaNs/Infs found after log_softmax")  
-  
-#     per_token_logps = torch.gather(log_softmax_logits, dim=2, index=labels.unsqueeze(2)).squeeze(2)  
-      
-#     # Check for NaNs/Infs after gather  
-#     if check_for_nans(per_token_logps, "per_token_logps"):  
-#         print("NaNs/Infs found after gather")  
-  
-#     logps = (per_token_logps * loss_mask).sum(-1)  
-#     valid_length = loss_mask.sum(-1)  
-      
-#     # Check for NaNs/Infs in outputs  
-#     if check_for_nans(logps, "logps") or check_for_nans(valid_length, "valid_length"):  
-#         print("NaNs/Infs found in outputs")  
-  
-#     return logps, valid_length 
 
 class CustomDPOTrainer(DPOTrainer):
     def __init__(
@@ -252,11 +185,11 @@ class CustomDPOTrainer(DPOTrainer):
             # losses, chosen_rewards, rejected_rewards = self.dpo_loss(
             #     policy_chosen_logps, policy_rejected_logps, reference_chosen_logps, reference_rejected_logps
             # )
-            losses, chosen_rewards, middle_rewards, rejected_rewards = self.dpo_loss(
+            losses, chosen_rewards, middle_rewards, rejected_rewards, logits_p1, logits_p2 = self.dpo_loss(
                 policy_chosen_logps, policy_middle_logps, policy_rejected_logps, reference_chosen_logps, policy_middle_logits, reference_rejected_logps
             )
 
-        return losses, chosen_rewards, middle_rewards, rejected_rewards
+        return losses, chosen_rewards, middle_rewards, rejected_rewards, logits_p1, logits_p2 
 
     def concatenated_forward(
         self, model: "PreTrainedModel", batch: Dict[str, "torch.Tensor"]
@@ -333,7 +266,7 @@ class CustomDPOTrainer(DPOTrainer):
         ) = self.concatenated_forward(model, batch)  
 
         reference_chosen_logps, reference_middle_logps, reference_rejected_logps = self.compute_reference_log_probs(model, batch)  
-        losses, chosen_rewards, middle_rewards, rejected_rewards = self.compute_preference_loss(  
+        losses, chosen_rewards, middle_rewards, rejected_rewards, logits_p1, logits_p2  = self.compute_preference_loss(  
             policy_chosen_logps,  
             policy_middle_logps,  
             policy_rejected_logps,  
@@ -359,6 +292,8 @@ class CustomDPOTrainer(DPOTrainer):
         metrics["{}logits/rejected".format(prefix)] = policy_rejected_logits.detach().mean().cpu()
         metrics["{}logits/middle".format(prefix)] = policy_middle_logits.detach().mean().cpu()
         metrics["{}logits/chosen".format(prefix)] = policy_chosen_logits.detach().mean().cpu()
+        metrics["{}logits/logits_p1".format(prefix)] = logits_p1.detach().mean().cpu()
+        metrics["{}logits/logits_p2".format(prefix)] = logits_p2.detach().mean().cpu()
         if self.loss_type == "orpo":
             metrics["{}sft_loss".format(prefix)] = sft_loss.detach().mean().cpu()
             metrics["{}odds_ratio_loss".format(prefix)] = ((losses - sft_loss) / self.beta).detach().mean().cpu()
@@ -439,7 +374,7 @@ class CustomDPOTrainer(DPOTrainer):
             # rejected_logratios = torch.clamp(rejected_logratios, min=-1000, max=100)  
             # pi_logratios = policy_middle_logps - policy_rejected_logps
             # ref_logratios = reference_middle_logps - reference_rejected_logps
-
+        if self.loss_type == "sigmoid":
             chosen_logratios = chosen_logratios.to(self.accelerator.device)
             # middle_logratios = middle_logratios.to(self.accelerator.device)
             rejected_logratios = rejected_logratios.to(self.accelerator.device)
@@ -475,6 +410,7 @@ class CustomDPOTrainer(DPOTrainer):
             # losses = -logits_p1
             p3 = r1 / (r1 + r3)
             logits_p3 = torch.log(p3)
+            logits_p1, logits_p2 = 0, 0
             losses = -logits_p3
             if enable_debug:
                 # logger.info(f"logits_p1: {logits_p1}, logits_p2:{logits_p2}")
@@ -484,6 +420,51 @@ class CustomDPOTrainer(DPOTrainer):
                 logger.info(f"p3: {p3}")
                 logger.info(f"losses: {losses}")
 
+        elif self.loss_type == "hinge":
+            chosen_logratios = chosen_logratios.to(self.accelerator.device)
+            middle_logratios = middle_logratios.to(self.accelerator.device)
+            rejected_logratios = rejected_logratios.to(self.accelerator.device)
+
+            # pi_logratios = pi_logratios.to(self.accelerator.device)
+            # ref_logratios = ref_logratios.to(self.accelerator.device)
+
+            # part one
+            r1 = torch.exp(self.beta * chosen_logratios)
+            r2 = torch.exp(self.beta * middle_logratios)
+            r3 = torch.exp(self.beta * rejected_logratios)
+
+            r1 = r1.to(self.accelerator.device)
+            r2 = r2.to(self.accelerator.device)
+            r3 = r3.to(self.accelerator.device)
+            # Avoid division by zero  
+            denom = r1 + r2 + r3  
+            denom = torch.clamp(denom, min=1e-10) 
+            p1  = r1 / denom 
+            p1 = torch.clamp(p1, min=1e-3)
+            # p1  = r1 / (r1 + r2 + r3) 
+            logits_p1 = torch.log(p1)
+            # part two
+            # p2 = pi_logratios - ref_logratios
+            # logits_p2 = F.logsigmoid(self.beta * p2)
+            p2 = r2 / (r2 + r3)
+            # logits_p2 = torch.log(p2)
+            p2 = r2 / torch.clamp(r2 + r3, min=1e-10)  
+            # p2 = torch.clamp(p2, min=1e-3)
+            logits_p2 = torch.log(p2)  
+            losses = -(logits_p1 + logits_p2)
+            # losses = -logits_p2
+            # losses = -logits_p1
+            # p3 = r1 / (r1 + r3)
+            # logits_p3 = torch.log(p3)
+            # losses = -logits_p3
+            if enable_debug:
+                # logger.info(f"logits_p1: {logits_p1}, logits_p2:{logits_p2}")
+                logger.info(f"r1: {r1}")
+                logger.info(f"r2: {r2}")
+                logger.info(f"r3: {r3}")
+                logger.info(f"p1: {p1}")
+                logger.info(f"p1: {p2}")
+                logger.info(f"losses: {losses}")
 
         chosen_rewards = (
             self.beta
@@ -505,4 +486,4 @@ class CustomDPOTrainer(DPOTrainer):
             ).detach()
         )
 
-        return losses, chosen_rewards, middle_rewards, rejected_rewards
+        return losses, chosen_rewards, middle_rewards, rejected_rewards, logits_p1, logits_p2
