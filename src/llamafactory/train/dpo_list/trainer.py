@@ -295,6 +295,7 @@ class CustomDPOTrainer(DPOTrainer):
         metrics["{}logits/logits_p1".format(prefix)] = logits_p1.detach().mean().cpu()
         metrics["{}logits/logits_p2".format(prefix)] = logits_p2.detach().mean().cpu()
         logger.info(f"metrics: {metrics}")
+        print(f"metrics: {metrics}")
         if self.loss_type == "orpo":
             metrics["{}sft_loss".format(prefix)] = sft_loss.detach().mean().cpu()
             metrics["{}odds_ratio_loss".format(prefix)] = ((losses - sft_loss) / self.beta).detach().mean().cpu()
