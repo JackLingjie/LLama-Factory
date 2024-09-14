@@ -688,6 +688,25 @@
       "rejected": "rejected"
     }
   },
+  "ta_list_dpo_debug": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_triple_v2_-88_350_debug.json",
+    "listdpo":true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "middle": "middle",
+      "rejected": "rejected"
+    }
+  },
+  "ta_list_dpo_rejected_debug": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_rejected_v2_-88_350_debug.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
   "orca_pairs": {
     "hf_hub_url": "Intel/orca_dpo_pairs",
     "ranking": true,
