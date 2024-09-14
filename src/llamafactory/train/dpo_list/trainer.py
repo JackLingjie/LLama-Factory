@@ -69,6 +69,7 @@ class CustomDPOTrainer(DPOTrainer):
         disable_dropout: bool = True,
         **kwargs,
     ):
+        print("debug info: CustomDPOTrainer")
         if disable_dropout:
             disable_dropout_in_model(model)
             if ref_model is not None:
