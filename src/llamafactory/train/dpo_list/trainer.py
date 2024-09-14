@@ -96,7 +96,8 @@ class CustomDPOTrainer(DPOTrainer):
         self.ftx_gamma = finetuning_args.pref_ftx
         self.label_smoothing = finetuning_args.dpo_label_smoothing
         self.simpo_gamma = finetuning_args.simpo_gamma
-
+        self.list_dpo_method = finetuning_args.list_dpo_method
+        logger.info(f"list_dpo_method: {self.list_dpo_method}")
         Trainer.__init__(self, model=model, **kwargs)
         if not hasattr(self, "accelerator"):
             raise AttributeError("Please update `transformers`.")
@@ -374,7 +375,7 @@ class CustomDPOTrainer(DPOTrainer):
             # rejected_logratios = torch.clamp(rejected_logratios, min=-1000, max=100)  
             # pi_logratios = policy_middle_logps - policy_rejected_logps
             # ref_logratios = reference_middle_logps - reference_rejected_logps
-        if self.loss_type == "sigmoid":
+        if self.list_dpo_method == "test":
             chosen_logratios = chosen_logratios.to(self.accelerator.device)
             # middle_logratios = middle_logratios.to(self.accelerator.device)
             rejected_logratios = rejected_logratios.to(self.accelerator.device)
@@ -421,7 +422,7 @@ class CustomDPOTrainer(DPOTrainer):
                 logger.info(f"p3: {p3}")
                 logger.info(f"losses: {losses}")
 
-        elif self.loss_type == "hinge":
+        elif self.list_dpo_method == "v1":
             chosen_logratios = chosen_logratios.to(self.accelerator.device)
             middle_logratios = middle_logratios.to(self.accelerator.device)
             rejected_logratios = rejected_logratios.to(self.accelerator.device)
@@ -453,11 +454,45 @@ class CustomDPOTrainer(DPOTrainer):
             # p2 = torch.clamp(p2, min=1e-3)
             logits_p2 = torch.log(p2)  
             losses = -(logits_p1 + logits_p2)
-            # losses = -logits_p2
-            # losses = -logits_p1
-            # p3 = r1 / (r1 + r3)
-            # logits_p3 = torch.log(p3)
-            # losses = -logits_p3
+            if enable_debug:
+                # logger.info(f"logits_p1: {logits_p1}, logits_p2:{logits_p2}")
+                logger.info(f"r1: {r1}")
+                logger.info(f"r2: {r2}")
+                logger.info(f"r3: {r3}")
+                logger.info(f"p1: {p1}")
+                logger.info(f"p2: {p2}")
+                logger.info(f"logits_p1:{logits_p1}")
+                logger.info(f"logits_p2:{logits_p2}")
+                logger.info(f"losses: {losses}")
+
+        elif self.list_dpo_method == "v2":
+            chosen_logratios = chosen_logratios.to(self.accelerator.device)
+            middle_logratios = middle_logratios.to(self.accelerator.device)
+            rejected_logratios = rejected_logratios.to(self.accelerator.device)
+
+
+            # part one
+            r1 = torch.exp(self.beta * chosen_logratios)
+            r2 = torch.exp(self.beta * middle_logratios)
+            r3 = torch.exp(self.beta * rejected_logratios)
+
+            r1 = r1.to(self.accelerator.device)
+            r2 = r2.to(self.accelerator.device)
+            r3 = r3.to(self.accelerator.device)
+            # Avoid division by zero  
+            denom = r1 + r2 + r3  
+            # denom = torch.clamp(denom, min=1e-10) 
+            p1  = r1 / denom 
+            # p1 = torch.clamp(p1, min=1e-3)
+            # p1  = r1 / (r1 + r2 + r3) 
+            logits_p1 = torch.log(p1)
+            # part two
+            # p2 = pi_logratios - ref_logratios
+            # logits_p2 = F.logsigmoid(self.beta * p2)
+            p2 = r2 / (r2 + r3)
+
+            logits_p2 = torch.log(p2)  
+            losses = -(logits_p1 + logits_p2)
             if enable_debug:
                 # logger.info(f"logits_p1: {logits_p1}, logits_p2:{logits_p2}")
                 logger.info(f"r1: {r1}")

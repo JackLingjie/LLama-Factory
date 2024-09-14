@@ -144,6 +144,10 @@ class RLHFArguments:
         default="sigmoid",
         metadata={"help": "The type of DPO loss to use."},
     )
+    list_dpo_method: str = field(
+        default="v1",
+        metadata={"help": "The implementation method of DPO listwise training."},
+    )
     dpo_label_smoothing: float = field(
         default=0.0,
         metadata={"help": "The robust DPO label smoothing parameter in cDPO that should be between 0 and 0.5."},
