@@ -44,7 +44,7 @@ from ...extras.logging import get_logger
 
 logger = get_logger(__name__)  
 
-enable_debug = False
+enable_debug = True
 
 class CustomDPOTrainer(DPOTrainer):
     def __init__(
@@ -482,5 +482,5 @@ class CustomDPOTrainer(DPOTrainer):
                 - reference_rejected_logps.to(self.accelerator.device)
             ).detach()
         )
-
+        print("here")
         return losses, chosen_rewards, rejected_rewards

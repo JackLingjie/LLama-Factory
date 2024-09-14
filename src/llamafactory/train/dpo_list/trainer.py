@@ -488,5 +488,5 @@ class CustomDPOTrainer(DPOTrainer):
                 - reference_rejected_logps.to(self.accelerator.device)
             ).detach()
         )
-
+        print("here")
         return losses, chosen_rewards, middle_rewards, rejected_rewards, logits_p1, logits_p2
