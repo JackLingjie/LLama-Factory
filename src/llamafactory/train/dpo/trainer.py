@@ -40,30 +40,11 @@ if TYPE_CHECKING:
 from trl.trainer.dpo_config import FDivergenceType, FDivergenceConstants
 from trl.trainer.utils import cap_exp
 
-from ...extras.logging import LoggerHandler, get_logger, logging, reset_logging
+from ...extras.logging import get_logger
 
-  
-def setup_combined_logger(logger_name: str, output_dir: str) -> logging.Logger:  
-    print("setup logger")  
-    logger = get_logger(logger_name)  
-      
-    # 移除现有的处理程序  
-    for handler in logger.handlers[:]:  
-        if isinstance(handler, LoggerHandler):  
-            logger.removeHandler(handler)  
-            handler.close()  # 确保处理程序被正确关闭  
-      
-    # 添加自定义的LoggerHandler  
-    file_handler = LoggerHandler(output_dir)  
-    logger.addHandler(file_handler)  
-      
-    return logger  
-  
-# # 设置日志记录器  
-# reset_logging()  
-# logger = setup_combined_logger('my_app', './list_dpo_pairwise.log')  
+logger = get_logger(__name__)  
 
-# print("dpo")
+enable_debug = False
 
 class CustomDPOTrainer(DPOTrainer):
     def __init__(
@@ -215,13 +196,13 @@ class CustomDPOTrainer(DPOTrainer):
         chosen_logps, rejected_logps = all_logps.split(batch_size, dim=0)
         chosen_logits, rejected_logits = all_logits.split(batch_size, dim=0)
         chosen_length, _ = valid_length.split(batch_size, dim=0)
-
-        logger.info(f"batch inputs: {batch}")
-        logger.info(f"all_logps: {all_logps}")
-        logger.info(f"valid_length: {valid_length}")
-        logger.info(f"chosen_logps: {chosen_logps}")
-        # logger.info(f"middle_logps: {middle_logps}")
-        logger.info(f"rejected_logps: {rejected_logps}")
+        if enable_debug: 
+            logger.info(f"batch inputs: {batch}")
+            logger.info(f"all_logps: {all_logps}")
+            logger.info(f"valid_length: {valid_length}")
+            logger.info(f"chosen_logps: {chosen_logps}")
+            # logger.info(f"middle_logps: {middle_logps}")
+            logger.info(f"rejected_logps: {rejected_logps}")
         return chosen_logps, rejected_logps, chosen_logits, rejected_logits, chosen_logps / chosen_length
 
     def compute_reference_log_probs(
@@ -312,21 +293,13 @@ class CustomDPOTrainer(DPOTrainer):
             The losses tensor contains the DPO loss for each example in the batch.
             The chosen_rewards and rejected_rewards tensors contain the rewards for the chosen and rejected responses, respectively.
         """
-        chosen_logratios = policy_chosen_logps.to(self.accelerator.device) - (
-            not self.reference_free
-        ) * reference_chosen_logps.to(self.accelerator.device)
-        rejected_logratios = policy_rejected_logps.to(self.accelerator.device) - (
-            not self.reference_free
-        ) * reference_rejected_logps.to(self.accelerator.device)
+        # chosen_logratios = policy_chosen_logps.to(self.accelerator.device) - (
+        #     not self.reference_free
+        # ) * reference_chosen_logps.to(self.accelerator.device)
+        # rejected_logratios = policy_rejected_logps.to(self.accelerator.device) - (
+        #     not self.reference_free
+        # ) * reference_rejected_logps.to(self.accelerator.device)
 
-        logger.info(f"chosen_logratios: {chosen_logratios}")
-        logger.info(f"policy_chosen_logps: {policy_chosen_logps}")
-        logger.info(f"reference_chosen_logps: {reference_chosen_logps}")            
-
-
-        logger.info(f"rejected_logratios: {rejected_logratios}")
-        logger.info(f"policy_rejected_logps: {policy_rejected_logps}")
-        logger.info(f"reference_rejected_logps: {reference_rejected_logps}")
         
         if self.f_divergence_type == FDivergenceType.ALPHA_DIVERGENCE.value:
             # The alpha-divergence formula: (1 - u^-alpha) / alpha
@@ -341,16 +314,17 @@ class CustomDPOTrainer(DPOTrainer):
             logits = (cap_exp(rejected_logratios * -alpha_coef) - cap_exp(chosen_logratios * -alpha_coef)) / alpha_coef
         else:
             # print("f_divergence_type reverse")
-            pi_logratios = policy_chosen_logps - policy_rejected_logps
+            # pi_logratios = policy_chosen_logps - policy_rejected_logps
             if self.reference_free:
                 ref_logratios = torch.tensor([0], dtype=pi_logratios.dtype, device=pi_logratios.device)
             else:
                 # print("logits subtraction")
-                ref_logratios = reference_chosen_logps - reference_rejected_logps
+                # ref_logratios = reference_chosen_logps - reference_rejected_logps
+                pass
 
-            pi_logratios = pi_logratios.to(self.accelerator.device)
-            ref_logratios = ref_logratios.to(self.accelerator.device)
-            logits = pi_logratios - ref_logratios
+            # pi_logratios = pi_logratios.to(self.accelerator.device)
+            # ref_logratios = ref_logratios.to(self.accelerator.device)
+            # logits = pi_logratios - ref_logratios
 
             if self.f_divergence_type == FDivergenceType.JS_DIVERGENCE.value:
                 # The js-divergence formula: log(2 * u / (1 + u))
@@ -374,13 +348,29 @@ class CustomDPOTrainer(DPOTrainer):
             )
         elif self.loss_type == "hinge":
             # print("use hinge")
-            chosen_logratios = policy_chosen_logps - reference_chosen_logps
+            chosen_logratios = policy_chosen_logps.to(self.accelerator.device) - reference_chosen_logps.to(self.accelerator.device)
             # middle_logratios = policy_middle_logps - reference_middle_logps
-            rejected_logratios = policy_rejected_logps - reference_rejected_logps
+            rejected_logratios = policy_rejected_logps.to(self.accelerator.device) - reference_rejected_logps.to(self.accelerator.device)
             r1 = torch.exp(self.beta * chosen_logratios)
+            r1 = r1.to(self.accelerator.device)
             r2 = torch.exp(self.beta * rejected_logratios)
+            r2 = r2.to(self.accelerator.device)
             p1 = r1 / (r1 + r2)
             losses = -torch.log(p1)
+            if enable_debug: 
+                logger.info(f"chosen_logratios: {chosen_logratios}")
+                logger.info(f"policy_chosen_logps: {policy_chosen_logps}")
+                logger.info(f"reference_chosen_logps: {reference_chosen_logps}")            
+
+
+                logger.info(f"rejected_logratios: {rejected_logratios}")
+                logger.info(f"policy_rejected_logps: {policy_rejected_logps}")
+                logger.info(f"reference_rejected_logps: {reference_rejected_logps}")
+            if enable_debug: 
+                logger.info(f"r1: {r1}")
+                logger.info(f"r2: {r2}")
+                logger.info(f"p1: {p1}")
+                logger.info(f"losses: {losses}")
             # losses = (
             #     -F.logsigmoid(self.beta * logits) * (1 - self.label_smoothing)
             #     + F.logsigmoid(-self.beta * logits) * self.label_smoothing
