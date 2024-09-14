@@ -56,21 +56,52 @@ class LoggerHandler(logging.Handler):
         return super().close()
 
 
-def get_logger(name: str) -> logging.Logger:
-    r"""
-    Gets a standard logger with a stream hander to stdout.
-    """
-    formatter = logging.Formatter(
-        fmt="%(asctime)s - %(levelname)s - %(name)s - %(message)s", datefmt="%m/%d/%Y %H:%M:%S"
-    )
-    handler = logging.StreamHandler(sys.stdout)
-    handler.setFormatter(formatter)
+# def get_logger(name: str) -> logging.Logger:
+#     r"""
+#     Gets a standard logger with a stream hander to stdout.
+#     """
+#     formatter = logging.Formatter(
+#         fmt="%(asctime)s - %(levelname)s - %(name)s - %(message)s", datefmt="%m/%d/%Y %H:%M:%S"
+#     )
+#     handler = logging.StreamHandler(sys.stdout)
+#     handler.setFormatter(formatter)
 
-    logger = logging.getLogger(name)
-    logger.setLevel(logging.INFO)
-    logger.addHandler(handler)
+#     logger = logging.getLogger(name)
+#     logger.setLevel(logging.INFO)
+#     logger.addHandler(handler)
 
-    return logger
+#     return logger
+from datetime import datetime
+def get_logger(name: str) -> logging.Logger:  
+    """  
+    Gets a standard logger with a stream handler to stdout and file handler with timestamped filename.  
+    """  
+    formatter = logging.Formatter(  
+        fmt="%(asctime)s - %(levelname)s - %(name)s - %(message)s", datefmt="%m/%d/%Y %H:%M:%S"  
+    )  
+      
+    # Stream handler for stdout  
+    stream_handler = logging.StreamHandler(sys.stdout)  
+    stream_handler.setFormatter(formatter)  
+      
+    logger = logging.getLogger(name)  
+    logger.setLevel(logging.INFO)  
+      
+    # Add the stream handler to the logger  
+    logger.addHandler(stream_handler)  
+      
+    # Create a log file with a timestamp  
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")  
+    log_file = f'./logs/debug_log.txt'  
+      
+    # If log_file is provided, add a file handler  
+    if log_file:  
+        os.makedirs(os.path.dirname(log_file), exist_ok=True)  
+        file_handler = logging.FileHandler(log_file, encoding='utf-8')  
+        file_handler.setFormatter(formatter)  
+        logger.addHandler(file_handler)  
+      
+    return logger  
 
 
 def reset_logging() -> None:
