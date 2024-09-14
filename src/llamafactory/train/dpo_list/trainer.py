@@ -69,7 +69,6 @@ class CustomDPOTrainer(DPOTrainer):
         disable_dropout: bool = True,
         **kwargs,
     ):
-        print("debug info: CustomDPOTrainer")
         if disable_dropout:
             disable_dropout_in_model(model)
             if ref_model is not None:
@@ -287,17 +286,14 @@ class CustomDPOTrainer(DPOTrainer):
         metrics["{}rewards/rejected".format(prefix)] = rejected_rewards.mean().cpu()
         metrics["{}rewards/accuracies".format(prefix)] = reward_accuracies.mean().cpu()
         metrics["{}rewards/margins".format(prefix)] = (chosen_rewards - rejected_rewards).mean().cpu()
-        # metrics["{}logps/rejected".format(prefix)] = policy_rejected_logps.detach().mean().cpu()
-        # metrics["{}logps/middle".format(prefix)] = reference_middle_logps.detach().mean().cpu()
-        # metrics["{}logps/chosen".format(prefix)] = policy_chosen_logps.detach().mean().cpu()
-        # metrics["{}logits/rejected".format(prefix)] = policy_rejected_logits.detach().mean().cpu()
-        # metrics["{}logits/middle".format(prefix)] = policy_middle_logits.detach().mean().cpu()
-        # metrics["{}logits/chosen".format(prefix)] = policy_chosen_logits.detach().mean().cpu()
-        metrics["{}logits/test".format(prefix)] = 914
+        metrics["{}logps/rejected".format(prefix)] = policy_rejected_logps.detach().mean().cpu()
+        metrics["{}logps/middle".format(prefix)] = reference_middle_logps.detach().mean().cpu()
+        metrics["{}logps/chosen".format(prefix)] = policy_chosen_logps.detach().mean().cpu()
+        metrics["{}logits/rejected".format(prefix)] = policy_rejected_logits.detach().mean().cpu()
+        metrics["{}logits/middle".format(prefix)] = policy_middle_logits.detach().mean().cpu()
+        metrics["{}logits/chosen".format(prefix)] = policy_chosen_logits.detach().mean().cpu()
         metrics["{}logits/logits_p1".format(prefix)] = logits_p1.detach().mean().cpu()
         metrics["{}logits/logits_p2".format(prefix)] = logits_p2.detach().mean().cpu()
-        logger.info(f"metrics: {metrics}")
-        print(f"metrics: {metrics}")
         if self.loss_type == "orpo":
             metrics["{}sft_loss".format(prefix)] = sft_loss.detach().mean().cpu()
             metrics["{}odds_ratio_loss".format(prefix)] = ((losses - sft_loss) / self.beta).detach().mean().cpu()
@@ -489,5 +485,4 @@ class CustomDPOTrainer(DPOTrainer):
                 - reference_rejected_logps.to(self.accelerator.device)
             ).detach()
         )
-        print("here")
         return losses, chosen_rewards, middle_rewards, rejected_rewards, logits_p1, logits_p2
