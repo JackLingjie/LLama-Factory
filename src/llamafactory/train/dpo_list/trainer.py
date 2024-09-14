@@ -45,7 +45,7 @@ from ...extras.logging import get_logger
 logger = get_logger(__name__)  
 
 
-enable_debug = False
+enable_debug = True
 
 
 ## NOTE(debug)
@@ -292,8 +292,8 @@ class CustomDPOTrainer(DPOTrainer):
         metrics["{}logits/rejected".format(prefix)] = policy_rejected_logits.detach().mean().cpu()
         metrics["{}logits/middle".format(prefix)] = policy_middle_logits.detach().mean().cpu()
         metrics["{}logits/chosen".format(prefix)] = policy_chosen_logits.detach().mean().cpu()
-        metrics["{}logits/logits_p1".format(prefix)] = logits_p1.cpu()
-        metrics["{}logits/logits_p2".format(prefix)] = logits_p2.cpu()
+        metrics["{}logits/logits_p1".format(prefix)] = logits_p1.detach().mean().cpu()
+        metrics["{}logits/logits_p2".format(prefix)] = logits_p2.detach().mean().cpu()
         if self.loss_type == "orpo":
             metrics["{}sft_loss".format(prefix)] = sft_loss.detach().mean().cpu()
             metrics["{}odds_ratio_loss".format(prefix)] = ((losses - sft_loss) / self.beta).detach().mean().cpu()
@@ -410,7 +410,8 @@ class CustomDPOTrainer(DPOTrainer):
             # losses = -logits_p1
             p3 = r1 / (r1 + r3)
             logits_p3 = torch.log(p3)
-            logits_p1, logits_p2 = 0, 0
+            logits_p1 = torch.tensor([0, 0, 0, 0]).to(self.accelerator.device) 
+            logits_p2 = torch.tensor([0, 0, 0, 0]).to(self.accelerator.device)   
             losses = -logits_p3
             if enable_debug:
                 # logger.info(f"logits_p1: {logits_p1}, logits_p2:{logits_p2}")
@@ -464,6 +465,8 @@ class CustomDPOTrainer(DPOTrainer):
                 logger.info(f"r3: {r3}")
                 logger.info(f"p1: {p1}")
                 logger.info(f"p2: {p2}")
+                logger.info(f"logits_p1:{logits_p1}")
+                logger.info(f"logits_p2:{logits_p2}")
                 logger.info(f"losses: {losses}")
 
         chosen_rewards = (
