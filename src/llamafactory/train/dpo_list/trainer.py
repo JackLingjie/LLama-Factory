@@ -463,7 +463,7 @@ class CustomDPOTrainer(DPOTrainer):
                 logger.info(f"r2: {r2}")
                 logger.info(f"r3: {r3}")
                 logger.info(f"p1: {p1}")
-                logger.info(f"p1: {p2}")
+                logger.info(f"p2: {p2}")
                 logger.info(f"losses: {losses}")
 
         chosen_rewards = (
