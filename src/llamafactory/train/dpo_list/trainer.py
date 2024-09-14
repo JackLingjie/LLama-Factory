@@ -292,8 +292,8 @@ class CustomDPOTrainer(DPOTrainer):
         metrics["{}logits/rejected".format(prefix)] = policy_rejected_logits.detach().mean().cpu()
         metrics["{}logits/middle".format(prefix)] = policy_middle_logits.detach().mean().cpu()
         metrics["{}logits/chosen".format(prefix)] = policy_chosen_logits.detach().mean().cpu()
-        metrics["{}logits/logits_p1".format(prefix)] = logits_p1.mean().cpu()
-        metrics["{}logits/logits_p2".format(prefix)] = logits_p2.mean().cpu()
+        metrics["{}logits/logits_p1".format(prefix)] = logits_p1.cpu()
+        metrics["{}logits/logits_p2".format(prefix)] = logits_p2.cpu()
         if self.loss_type == "orpo":
             metrics["{}sft_loss".format(prefix)] = sft_loss.detach().mean().cpu()
             metrics["{}odds_ratio_loss".format(prefix)] = ((losses - sft_loss) / self.beta).detach().mean().cpu()
