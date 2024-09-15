@@ -120,7 +120,6 @@ CUDA_VISIBLE_DEVICES=1,2,3 FORCE_TORCHRUN=1 llamafactory-cli train bash_script/g
 # export llama3.1 ta rejected v2
 llamafactory-cli export bash_script/export_model/merge_dpo_llama3.1_instruct_tarejected_v2.yaml
 
-FORCE_TORCHRUN=1 llamafactory-cli train bash_script/glanv2_glanchatv2_full_sft_2048_default_template_job_lr5e6_e3_test2.yaml
+CUDA_VISIBLE_DEVICES=1,2,3 llamafactory-cli train bash_script/glanchatv2_full_sft_glan_v2_2048_default_template_job_lr5e6_e3_test.yaml
 
-torchrun --nproc_per_node=1 src/train.py bash_script/glanv2_glanchatv2_full_sft_2048_default_template_job_lr5e6_e3_test2.yaml
 
