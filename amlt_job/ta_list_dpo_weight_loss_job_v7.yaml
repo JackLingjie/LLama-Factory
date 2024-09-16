@@ -15,8 +15,8 @@ description: listwise_loss_weight
 
 target:
   service: sing
-  name: msrresrchvc
-  resource_group: gcr-singularity-resrch
+  name: msroctovc
+  resource_group: gcr-singularity-octo
   # workspace_name: Workspace_NLC
   workspace_name: NLC_Workspace
 
