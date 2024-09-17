@@ -9,15 +9,16 @@ finetuning_type: lora
 lora_target: all
 pref_beta: 0.1
 pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
-max_grad_norm: 1
+# max_grad_norm: 0.1
 
 ### dataset
-dataset: ta_list_dpo_job
+dataset: ta_list_dpo_debug
 template: default
 cutoff_len: 1024
 max_samples: 1000
 overwrite_cache: true
 preprocessing_num_workers: 16
+list_dpo_method: v2
 
 ### output
 output_dir: saves/tulu_v2_8b_default_template_dpo_list/lora/dpo
