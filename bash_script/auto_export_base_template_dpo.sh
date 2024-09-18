@@ -4,8 +4,16 @@ set -x
 
 # 定义模型名称的数组  
 model_names=(
-    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v2"
-    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v3"
+    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v9"
+    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v10"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v7"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v4"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v5"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v6"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v8"
+    # "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v1"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v2"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v3"
     # "ta_v2_rejected_noneed_length_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
     # "ta_v2_rejected_noneed_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
     # "ta_v2_chosen_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
