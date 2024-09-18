@@ -6,7 +6,7 @@ stage: dpo
 do_train: true
 finetuning_type: full
 flash_attn: fa2
-deepspeed: examples/deepspeed/ds_z2_config.json
+deepspeed: examples/deepspeed/ds_z3_config.json
 
 ### dataset
 dataset: magpie_dpo_v0.1
