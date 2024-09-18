@@ -124,4 +124,5 @@ CUDA_VISIBLE_DEVICES=1,2,3 llamafactory-cli train bash_script/glanchatv2_full_sf
 
 llamafactory-cli train bash_script/glanchat_v2.1_8b_2048_default_template_8500_dpo_job.yaml
 
+FORCE_TORCHRUN=1 llamafactory-cli train bash_script/glanchat_v2.1_8b_2048_default_template_8500_dpo_fullft_job.yaml
 

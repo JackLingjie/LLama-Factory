@@ -2,7 +2,7 @@
 model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/glanchat_v2.1_8b_2048_default_template/fullft_lr5e6_e3/sft/checkpoint-8500
 
 ### method
-stage: sft
+stage: dpo
 do_train: true
 finetuning_type: full
 flash_attn: fa2
