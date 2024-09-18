@@ -699,7 +699,25 @@
     }
   },
   "ta_list_dpo_rejected_debug": {
-    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_rejected_v2_-88_350_debug.json",
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_rejected_tribledpo_-88_350.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "ta_list_dpo_uf_debug": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_uf_tribledpo_-88_350.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "ta_list_dpo_chosen_debug": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_chosen_tribledpo_-88_350.json",
     "ranking": true,
     "columns": {
       "prompt": "prompt",
