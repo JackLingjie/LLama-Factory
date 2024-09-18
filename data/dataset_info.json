@@ -108,6 +108,15 @@
       "system_tag": "system"
     }
   },
+  "magpie_dpo_v0.1": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/magpie_dpo_v0.1.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
   "glan_v2.1_glanchat": {
     "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/glanchatv2.1.jsonl",
     "formatting": "sharegpt",
