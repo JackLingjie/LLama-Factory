@@ -109,7 +109,7 @@
     }
   },
   "magpie_dpo_v0.1": {
-    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/magpie_dpo_v0.1.json",
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/magpie_dpo_v0.1.jsonl",
     "ranking": true,
     "columns": {
       "prompt": "prompt",
