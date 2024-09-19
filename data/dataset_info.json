@@ -561,6 +561,15 @@
       "rejected": "rejected"
     }
   },
+  "ta_chosen_job_v2": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_chosen_v2_-88_350.json",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
   "ta_rejected_job": {
     "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/textual_aesthetics_rejected.json",
     "ranking": true,
