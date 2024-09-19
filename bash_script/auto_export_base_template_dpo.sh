@@ -4,8 +4,13 @@ set -x
 
 # 定义模型名称的数组  
 model_names=(
-    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v9"
-    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v10"
+    "tulu_2048_default_template_trible_uf_dpo"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v11"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v12"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v13"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v14"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v9"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v10"
     # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v7"
     # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v4"
     # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v5"
