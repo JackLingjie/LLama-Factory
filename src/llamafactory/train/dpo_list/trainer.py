@@ -881,6 +881,40 @@ class CustomDPOTrainer(DPOTrainer):
             logits_p2 = torch.log(p2)  
             losses = -(logits_p1 + logits_p2)
 
+        elif self.list_dpo_method == "v15":
+            chosen_logratios = chosen_logratios.to(self.accelerator.device)
+            middle_logratios = middle_logratios.to(self.accelerator.device)
+            rejected_logratios = rejected_logratios.to(self.accelerator.device)
+
+            # pi_logratios = pi_logratios.to(self.accelerator.device)
+            # ref_logratios = ref_logratios.to(self.accelerator.device)
+
+            # part one
+            r1 = torch.exp(self.beta * chosen_logratios)
+            r2 = torch.exp(self.beta * middle_logratios)
+            r3 = torch.exp(self.beta * rejected_logratios)
+
+            r1 = r1.to(self.accelerator.device)
+            r2 = r2.to(self.accelerator.device)
+            r3 = r3.to(self.accelerator.device)
+            # Avoid division by zero  
+            # denom = r1 + r2 + r3  
+            denom = r1 + r3
+            denom = torch.clamp(denom, min=1e-10) 
+            p1  = r1 / denom 
+            p1 = torch.clamp(p1, min=1e-10)
+            # p1  = r1 / (r1 + r2 + r3) 
+            logits_p1 = torch.log(p1)
+            # part two
+            # p2 = pi_logratios - ref_logratios
+            # logits_p2 = F.logsigmoid(self.beta * p2)
+            # p2 = r2 / (r2 + r3)
+            # logits_p2 = torch.log(p2)
+            p2 = r2 / torch.clamp(r2 + r3, min=1e-10)  
+            # p2 = torch.clamp(p2, min=1e-3)
+            logits_p2 = torch.log(p2)  
+            losses = -(logits_p1 + logits_p2)
+
         chosen_rewards = (
             self.beta
             * (
