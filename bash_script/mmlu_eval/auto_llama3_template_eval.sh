@@ -6,7 +6,7 @@ set -x
 PARAMS=( 
     "ta_rejected_llama3.1_instruct_2048_default_template_v2"
     "ta_rejected_llama3.1_instruct_2048_default_template_v2-500"
-    "ta_chosen_llama3.1_instruct_dpo_2048_v2"
+    # "ta_chosen_llama3.1_instruct_dpo_2048_v2"
     # "Meta-Llama-3.1-8B-Instruct"
     # "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v4"
     # "uf_llama3.1_instruct_dpo_2048_job"
