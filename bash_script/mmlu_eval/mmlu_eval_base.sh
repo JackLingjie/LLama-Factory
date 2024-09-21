@@ -7,8 +7,7 @@ MODEL_NAME=${1:-$DEFAULT_MODEL_NAME}
 CUDA_VISIBLE_DEVICES=0 llamafactory-cli eval \
 --model_name_or_path /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/sft_merge_checkpoints/${MODEL_NAME} \
 --template fewshot \
---task mmlu \
---split validation \
+--task mmlu_test \
 --lang en \
 --n_shot 5 \
 --batch_size 16
