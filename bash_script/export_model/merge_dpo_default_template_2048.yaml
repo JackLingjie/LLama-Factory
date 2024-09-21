@@ -2,7 +2,7 @@
 
 ### model
 model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/huggingface/Meta-Llama-3.1-8B
-adapter_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/tulu_v2_8b_default_template_dpo/lora/dpo
+adapter_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/tulu_v2_8b_2048_default_template_dpo/lora/dpo
 template: default
 finetuning_type: lora
 

@@ -8,7 +8,6 @@ finetuning_type: lora
 lora_target: all
 pref_beta: 0.1
 pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
-deepspeed: examples/deepspeed/ds_z2_config.json
 
 ### dataset
 dataset: ta_list_dpo_uf_debug
