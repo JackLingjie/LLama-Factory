@@ -108,5 +108,5 @@ search:
       # values: ['ta_chosen_llama3.1_instruct_dpo_2048_default_template_job.yaml', 'ta_chosen_tuluv2_dpo_2048_default_template_job.yaml', 'ta_rejected_llama3.1_instruct_dpo_2048_default_template_job.yaml', 'ta_rejected_tuluv2_dpo_2048_default_template_job.yaml']
       # values: ['ta_rejected_tuluv2_dpo_2048_default_template_job.yaml', 'ta_rejected_tuluv2_dpo_2048_default_template_v2_job.yaml', 'ta_rejected_tuluv2_dpo_2048_default_template_v3_job.yaml']
       # values: ['glanchatv2_full_sft_2048_default_template_job_lr5e6_e3.yaml', 'glanv2_full_sft_2048_default_template_job_lr5e6_e3.yaml', 'glanv2_glanchatv2_full_sft_2048_default_template_job_lr5e6_e3.yaml']
-      values: ["uf_llama3.1_instruct_dpo_2048_job_ta_chosen.yaml", "uf_llama3.1_instruct_dpo_2048_job_ta_rejected.yaml"]
+      values: ["uf_llama3.1_instruct_dpo_2048_job_ta_chosen.yaml", "uf_llama3.1_instruct_dpo_2048_job_ta_rejected.yaml", "tulu_llama3_instruct_lora_dpo_list_hinge_bsz1_job_v6.yaml", "tulu_llama3_instruct_lora_dpo_list_hinge_bsz1_job_v9.yaml", "tulu_llama3_instruct_lora_dpo_list_hinge_bsz1_job_v10.yaml", "tulu_llama3_instruct_lora_dpo_list_hinge_bsz1_job_v11.yaml", "tulu_llama3_instruct_lora_dpo_list_hinge_bsz1_job_v15.yaml"]
 
