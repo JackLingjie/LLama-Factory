@@ -4,8 +4,9 @@ set -x
 
 # 定义模型名称的数组  
 model_names=(
-    "tulu_2048_default_template_trible_chosen_ta_dpo"
-    "tulu_2048_default_template_trible_rejected_ta_dpo"
+    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v15"
+    # "tulu_2048_default_template_trible_chosen_ta_dpo"
+    # "tulu_2048_default_template_trible_rejected_ta_dpo"
     # "tulu_2048_default_template_trible_uf_dpo"
     # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v11"
     # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v12"
