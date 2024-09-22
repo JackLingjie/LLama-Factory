@@ -4,10 +4,11 @@ set -x
 
 # 参数列表  
 PARAMS=( 
-    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v14"
-    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v14-1500"
-    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v11"
-    "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v11_1500"
+    "ta_chosen_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v14"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v14-1500"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v11"
+    # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v11_1500"
     # "tulu_v2_8b_2048_default_template_sft"
 #   "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v5_1500"
 #   "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v10"
