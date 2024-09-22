@@ -1,0 +1,19 @@
+执行参数: uf_llama3.1_instruct_dpo_2048_trible_ta_rejected
+[2024-09-22 10:59:09,838] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cuda (auto detect)
+[93m [WARNING] [0m async_io requires the dev libaio .so object and headers but these were not found.
+[93m [WARNING] [0m async_io: please install the libaio-dev package with apt
+[93m [WARNING] [0m If libaio is already installed (perhaps from source), try setting the CFLAGS and LDFLAGS environment variables to where it can be found.
+[93m [WARNING] [0m Please specify the CUTLASS repo directory as environment variable $CUTLASS_PATH
+[93m [WARNING] [0m sparse_attn requires a torch version >= 1.5 and < 2.0 but detected 2.4
+[93m [WARNING] [0m using untested triton version (3.0.0), only 1.0.0 is known to be compatible
+09/22/2024 10:59:17 - INFO - llamafactory.data.template - Replace eos token: <|eot_id|>
+09/22/2024 10:59:17 - INFO - llamafactory.model.patcher - Using KV cache for faster generation.
+09/22/2024 11:05:40 - INFO - llamafactory.model.model_utils.attention - Using torch SDPA for faster training and inference.
+09/22/2024 11:05:40 - INFO - llamafactory.model.loader - all params: 8,030,261,248
+        Average: 68.41
+           STEM: 58.81
+Social Sciences: 77.54
+     Humanities: 64.72
+          Other: 74.03
+----------------------------------------
+所有任务已完成。
