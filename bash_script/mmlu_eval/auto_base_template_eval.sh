@@ -4,7 +4,7 @@ set -x
 
 # 参数列表  
 PARAMS=( 
-    "Meta-Llama-3.1-8B"
+    # "Meta-Llama-3.1-8B"
     # "ta_chosen_llama3.1_instruct_dpo_2048_v2"
     # "Meta-Llama-3.1-8B-Instruct"
     # "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v4"

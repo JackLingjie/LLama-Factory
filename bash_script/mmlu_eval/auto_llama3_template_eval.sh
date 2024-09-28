@@ -4,6 +4,10 @@ set -x
 
 # 参数列表  
 PARAMS=( 
+    "Meta-Llama-3.1-70B-Instruct"
+    "ta_llama3_instruct_70B_zero3_dpo_list_bsz1_trible_debug_v1"
+    "ta_llama3_instruct_70B_zero3_dpo_list_bsz1_trible_debug_v1_1500"
+    "ta_llama3_instruct_70B_zero3_dpo_list_bsz1_trible_debug_v1_1000"  
     # "uf_llama3.1_instruct_dpo_2048_trible"
     # "uf_llama3.1_instruct_dpo_2048_trible_ta_chosen"
     # "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v6"
@@ -13,8 +17,8 @@ PARAMS=(
     # "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v15"
     # "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v15_1500"
     # "uf_llama3.1_instruct_dpo_2048_trible_ta_rejected"
-    "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v3"
-    "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v3_1500"    
+    # "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v3"
+    # "ta_llama3_instruct_dpo_list_bsz1_trible_debug_v3_1500"    
     # "ta_rejected_llama3.1_instruct_2048_default_template_v2"
     # "ta_rejected_llama3.1_instruct_2048_default_template_v2-500"
     # "ta_chosen_llama3.1_instruct_dpo_2048_v2"
