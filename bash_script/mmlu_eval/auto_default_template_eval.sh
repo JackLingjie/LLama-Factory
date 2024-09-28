@@ -5,6 +5,7 @@ set -x
 # 参数列表  
 PARAMS=( 
     "ta_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8"
+    "ta_v2_rejected_noneed_length_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
     # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v15"
     # "tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v11"
     # "ta_v2_chosen_tuluv2_dpo_2048_default_template_bsz1_acc8_v2"
