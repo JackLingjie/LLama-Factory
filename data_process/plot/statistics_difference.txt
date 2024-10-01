@@ -1,0 +1,5 @@
+min: -1024
+25th_percentile: -7.0
+median: 13.0
+75th_percentile: 54.0
+max: 2673

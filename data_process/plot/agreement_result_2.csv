@@ -1,0 +1,11 @@
+,Meta-Llama-3.1-8B-Instruct,Meta-Llama-3.1-70B-Instruct,Qwen2-72B-Instruct,tulu-2-dpo-70b,Average
+Lingjie-70B vs shaohanh-70B,0.68,0.84,0.76,0.96,0.81
+Lingjie-70B vs Label3-70B,0.78,0.76,0.82,0.92,0.82
+Lingjie-70B vs text_70B,0.54,0.66,0.7,0.86,0.6900000000000001
+Lingjie-70B vs image_70B,0.6,0.62,0.62,0.76,0.6499999999999999
+shaohanh-70B vs Label3-70B,0.7,0.8,0.78,0.92,0.8
+shaohanh-70B vs text_70B,0.62,0.62,0.76,0.86,0.715
+shaohanh-70B vs image_70B,0.52,0.62,0.54,0.74,0.605
+Label3-70B vs text_70B,0.56,0.72,0.74,0.84,0.715
+Label3-70B vs image_70B,0.64,0.6,0.7,0.78,0.6799999999999999
+text_70B vs image_70B,0.48,0.54,0.58,0.68,0.5700000000000001

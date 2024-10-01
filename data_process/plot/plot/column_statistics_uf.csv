@@ -1,0 +1,4 @@
+Column,25th Percentile,50th Percentile,75th Percentile,Min,Max
+Chosen Length,94.0,288.0,489.0,1,2700
+Rejected Length,65.0,220.0,435.0,1,1068
+Mean Length,91.0,257.5,455.5,1.0,1530.5

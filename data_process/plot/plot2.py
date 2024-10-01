@@ -26,9 +26,9 @@ for column, marker, color in zip(columns_to_plot, markers, colors):
     plt.plot(df['DPO Loss'], df[column], marker=marker, label=column, color=color, linestyle='-', linewidth=2, markersize=8)  
   
 # 设置图表标题和标签  
-plt.xlabel('w2:w1 Ratio', fontsize=14)  # 改进后的x轴标签  
-plt.ylabel('TA Score', fontsize=14)  # 改进后的y轴标签  
-plt.title('TA Scores vs w2:w1 Ratio', fontsize=16)  # 改进后的标题  
+plt.xlabel('w2:w1', fontsize=14)  
+plt.ylabel('Score', fontsize=14)  
+plt.title('Various Metrics vs w2:w1', fontsize=16)  
 plt.legend(fontsize=12)  
 plt.grid(True, linestyle='--', alpha=0.7)  
   
@@ -37,7 +37,7 @@ plt.xticks(fontsize=12)
 plt.yticks(fontsize=12)  
   
 # 保存图表为高分辨率的PDF文件  
-plt.savefig('ta_scores_vs_w2_w1_ratio.pdf', dpi=1000, bbox_inches='tight')  
+plt.savefig('metrics_vs_w2_w1.pdf', dpi=300, bbox_inches='tight')  
   
 # 显示图表  
 plt.show()  

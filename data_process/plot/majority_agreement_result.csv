@@ -1,0 +1,4 @@
+,Meta-Llama-3.1-8B-Instruct,Meta-Llama-3.1-70B-Instruct,Qwen2-72B-Instruct,tulu-2-dpo-70b,Average
+Lingjie,0.82,0.72,0.62,0.48,0.66
+Shaohanh,0.82,0.74,0.6,0.5,0.665
+Label3_8B,0.78,0.7,0.64,0.48,0.65

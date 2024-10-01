@@ -1,0 +1,11 @@
+Unnamed: 0,Meta-Llama-3.1-8B-Instruct,Meta-Llama-3.1-70B-Instruct,Qwen2-72B-Instruct,tulu-2-dpo-70b,Average
+Lingjie vs Shaohanh,0.72,0.66,0.76,0.88,0.7825
+Lingjie vs Label3_8B,0.7,0.74,0.84,0.92,0.8099999999999999
+Lingjie vs gpt4_text,0.56,0.5,0.68,0.8,0.6625000000000001
+Lingjie vs gpt4_image,0.62,0.7,0.6,0.74,0.6575
+Shaohanh vs Label3_8B,0.74,0.68,0.76,0.92,0.7875
+Shaohanh vs gpt4_text,0.58,0.6,0.64,0.84,0.69
+Shaohanh vs gpt4_image,0.52,0.58,0.56,0.78,0.6075
+Label3_8B vs gpt4_text,0.64,0.48,0.82,0.88,0.71
+Label3_8B vs gpt4_image,0.64,0.68,0.7,0.78,0.69
+gpt4_text vs gpt4_image,0.62,0.56,0.7,0.78,0.6175

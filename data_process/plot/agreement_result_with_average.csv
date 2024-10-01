@@ -1,0 +1,4 @@
+Unnamed: 0,Meta-Llama-3.1-8B-Instruct,Meta-Llama-3.1-70B-Instruct,Qwen2-72B-Instruct,tulu-2-dpo-70b,Average
+Lingjie vs Shaohanh,0.72,0.66,0.76,0.88,0.7825
+Lingjie vs Label3_8B,0.7,0.74,0.84,0.92,0.8099999999999999
+Shaohanh vs Label3_8B,0.74,0.68,0.76,0.92,0.7875
