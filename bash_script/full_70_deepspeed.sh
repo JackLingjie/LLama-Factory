@@ -1,0 +1,2 @@
+deepspeed --num_gpus 8 --num_nodes 8 --hostfile bash_script/config_files/hostfile \
+src/train.py bash_script/glanchatv2_70B_debug_full_sft_2048_default_template_job.yaml --deepspeed examples/deepspeed/ds_z3_config.json
