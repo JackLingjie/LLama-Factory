@@ -39,7 +39,7 @@ environment:
   # image: hangbo/pytorch-2.23dev:xformers_s2
   # image: amlt-sing/acpt-2.3.1-py3.10-cuda12.1
   # image: amlt-sing/acpt-2.4.0-py3.10-cuda12.1 
-  image: amlt-sing/acpt-2.3.1-py3.10-cuda12.1
+  image: amlt-sing/acpt-rocm6.1_ubuntu20.04_py3.9_pytorch2.1.2
   # image: amlt-sing/acpt-rocm6.1_ubuntu20.04_py3.9_pytorch2.1.2
   setup:
   - echo "master_addr:" "$$MASTER_ADDR"
