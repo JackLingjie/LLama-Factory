@@ -1,4 +1,0 @@
-执行参数: tulu_v2_8b_default_template_dpo_list_bsz1_trible_debug_v15
-[2024-09-22 16:04:28,093] [WARNING] [real_accelerator.py:162:get_accelerator] Setting accelerator to CPU. If you have GPU or other accelerator, we were unable to detect it.
-[2024-09-22 16:04:28,101] [INFO] [real_accelerator.py:203:get_accelerator] Setting ds_accelerator to cpu (auto detect)
-09/22/2024 16:04:31 - INFO - llamafactory.model.patcher - Using KV cache for faster generation.
