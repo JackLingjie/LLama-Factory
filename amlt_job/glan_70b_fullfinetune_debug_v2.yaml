@@ -44,7 +44,6 @@ environment:
   - echo "node_rank:" $$OMPI_COMM_WORLD_RANK
   - pip install -e ".[torch,metrics]"
   - pip install deepspeed==0.14.4
-  - echo $${rank}
   # - bash amlt_job/sas_mount.sh
   # - pip install -U flash-attn --no-build-isolation
   - pip install -U flash-attn==2.4.2 --no-build-isolation
@@ -90,6 +89,7 @@ search:
     # - pip install tensorboard
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
     - ls /mnt/lingjiejiang
+    - echo $${rank}
     # - ls /mnt/msranlp
     # - ls /mnt/nlcredstone
     # - ls /mnt/conversationhub
