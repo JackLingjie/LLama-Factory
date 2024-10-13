@@ -1,5 +1,10 @@
 evaluation/mmlu/mmlu.zip  
 data/dpo_en_demo.json  
+data/c4_demo.json
+data/dpo_zh_demo.json 
+data/alpaca_en_demo.json
+data_process/plot/plot.ipynb
+data/kto_en_demo.json
 evaluation/ceval/ceval.zip  
 evaluation/cmmlu/cmmlu.zip  
 data/wiki_demo.txt  
