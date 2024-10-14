@@ -1,3 +1,5 @@
+#!/bin/bash  
+
 deepspeed --num_gpus 8 --num_nodes 8 --hostfile bash_script/config_files/hostfile \
 src/train.py \
 --model_name_or_path /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/sft_merge_checkpoints/Llama-3.1-70B \
