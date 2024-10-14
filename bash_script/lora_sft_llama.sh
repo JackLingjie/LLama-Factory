@@ -130,3 +130,4 @@ llamafactory-cli train bash_script/tulu_lora_dpo_test_debug.yaml
 llamafactory-cli train bash_script/tulu_lora_dpo_list_test.yaml
 
 
+llamafactory-cli train bash_script/tulu_lora_dpo_test_fa2.yaml
