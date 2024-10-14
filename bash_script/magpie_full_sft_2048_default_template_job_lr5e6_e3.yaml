@@ -11,13 +11,13 @@ deepspeed: examples/deepspeed/ds_z3_config.json
 ### dataset
 dataset: magpie_sft_v0.1
 template: default
-cutoff_len: 2048
+cutoff_len: 8192
 # max_samples: 135000
 overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/magpie_8b_2048_default_template/fullft_lr5e6_e3/sft
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/magpie_8b_2048_default_template/fullft_lr2e5_e2/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
@@ -25,8 +25,8 @@ overwrite_output_dir: true
 
 ### train
 per_device_train_batch_size: 1
-gradient_accumulation_steps: 8
-learning_rate: 5.0e-6
+gradient_accumulation_steps: 256
+learning_rate: 2.0e-5
 num_train_epochs: 2.0
 lr_scheduler_type: cosine
 warmup_ratio: 0.1
@@ -34,7 +34,7 @@ bf16: true
 ddp_timeout: 180000000
 
 ### eval
-val_size: 0.1
+val_size: 0.001
 per_device_eval_batch_size: 2
 eval_strategy: steps
 eval_steps: 1000
