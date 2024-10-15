@@ -96,6 +96,8 @@ search:
     # - ls /mnt/conversationhubhot
     # - FORCE_TORCHRUN=1 llamafactory-cli train bash_script/{rank}
     # - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bash_script/{rank}
+    - sudo apt-get install dos2unix
+    - dos2unix bash_script/full_70_deepspeed_run.sh
     - chmod +x bash_script/full_70_deepspeed_run.sh  
     - source bash_script/full_70_deepspeed_run.sh  
     # - sleep infinity
