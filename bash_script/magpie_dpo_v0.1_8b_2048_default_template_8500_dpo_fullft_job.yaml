@@ -1,5 +1,6 @@
 ### model
-model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/magpie_8b_2048_default_template/fullft_lr2e5_e2/sft/checkpoint-536
+# model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/magpie_8b_2048_default_template/fullft_lr2e5_e2/sft/checkpoint-536
+model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/glanchat_v2.1_8b_2048_default_template/fullft_lr5e6_e3/sft/checkpoint-9918
 
 ### method
 stage: dpo
@@ -18,7 +19,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/magpie_dpo_v0.1_8b_2048_default_template_dpo_ckpt536/fullft/dpo
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/magpie_dpo_v0.1_8b_2048_default_template_dpo_glanchatv2.1_ckpt9918/fullft/dpo
 logging_steps: 1
 save_steps: 100
 plot_loss: true
