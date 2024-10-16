@@ -97,9 +97,9 @@ search:
     # - FORCE_TORCHRUN=1 llamafactory-cli train bash_script/{rank}
     # - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bash_script/{rank}
     - sudo apt-get install dos2unix
-    - dos2unix bash_script/full_70_deepspeed_run.sh
-    - chmod +x bash_script/full_70_deepspeed_run.sh  
-    - source bash_script/full_70_deepspeed_run.sh  
+    - dos2unix bash_script/{rank} 
+    - chmod +x bash_script/{rank}  
+    - source bash_script/{rank} 
     # - sleep infinity
     # - torchrun --nproc_per_node=8 src/train.py bash_script/{rank}
     priority: High
@@ -118,5 +118,5 @@ search:
       # values: ['ta_chosen_llama3.1_instruct_dpo_2048_default_template_job.yaml', 'ta_chosen_tuluv2_dpo_2048_default_template_job.yaml', 'ta_rejected_llama3.1_instruct_dpo_2048_default_template_job.yaml', 'ta_rejected_tuluv2_dpo_2048_default_template_job.yaml']
       # values: ['ta_rejected_tuluv2_dpo_2048_default_template_job.yaml', 'ta_rejected_tuluv2_dpo_2048_default_template_v2_job.yaml', 'ta_rejected_tuluv2_dpo_2048_default_template_v3_job.yaml']
       # values: ['glanchatv2_full_sft_2048_default_template_job_lr5e6_e3.yaml', 'glanv2_full_sft_2048_default_template_job_lr5e6_e3.yaml', 'glanv2_glanchatv2_full_sft_2048_default_template_job_lr5e6_e3.yaml']
-      values: [0]
+      values: ["full_70_deepspeed_run_debug2.sh"]
 
