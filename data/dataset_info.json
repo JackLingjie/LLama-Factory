@@ -117,6 +117,15 @@
       "rejected": "rejected"
     }
   },
+  "glan_dpo_v0.1": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/glanchatv2.sampled_100k.output_r3.fx.eval.completion.merged.jsonl.scored.jsonl",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
   "xxmath_reason_v0.1": {
     "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/xxmath_reason_sft_v0.1.jsonl",
     "formatting": "sharegpt",
