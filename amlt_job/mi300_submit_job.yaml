@@ -4,8 +4,8 @@ target:
   service: sing
   name: msroctovc
   resource_group: gcr-singularity-octo
-  # workspace_name: Workspace_NLC
-  workspace_name: NLC_Workspace
+  workspace_name: Workspace_NLC
+  # workspace_name: NLC_Workspace
 
 
 environment:
@@ -24,6 +24,9 @@ storage:
   lingjiejiang:
     storage_account_name: msranlpintern
     container_name: lingjiejiang
+  msranlp:
+    storage_account_name: msranlp
+    container_name: unilm
 
 code:
   local_dir: $CONFIG_DIR/..
@@ -57,9 +60,15 @@ search:
     - pip install -e ".[torch,metrics]"
     - pip install deepspeed==0.14.4
     - rocm-smi
-    - git clone https://github.com/ROCm/flash-attention.git
-    - cd flash-attention/
-    - GPU_ARCHS=gfx942 python setup.py install #MI300 series
+    - export PATH=$$PATH:/home/aiscuser/.local/bin
+    - sudo chmod -R 777 /opt/conda/bin
+    - sudo chmod -R 777 /opt/conda/share
+    - sudo apt update ; sudo apt install amd-smi-lib
+    #- pip install --user torch==2.4 --index-url https://download.pytorch.org/whl/rocm6.1
+    # fix error: NameError: name 'amdsmi' is not defined
+    #- pip uninstall pynvml nvidia-ml-py -y
+    # cache the wheel file
+    - pip install /mnt/msranlp/amd/flash_attn-2.6.3+torch2.1+rocm6.1-cp39-cp39-linux_x86_64.whl
     - echo $${rank}
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
     - pip install transformers
@@ -77,11 +86,7 @@ search:
     - torchrun --nproc_per_node=8 src/train.py bash_script/{rank}
     submit_args:
       env:
-        {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
-      container_args:
-        shm_size: 256g
-    tags: [Project_Name:1.58-bit-LLMs, ProjectID:PRJ-0349-A54, Experiment:BitNet-scaling]
-
+        SHARED_MEMORY_PERCENT: 1.0
   type: grid
   max_trials: 500
   params:
@@ -96,5 +101,7 @@ search:
       # values: ['magpie_full_sft_2048_default_template_job_lr5e6_e3.yaml']
       # values: ['magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job.yaml']
       # values: ['xxmath_reason_full_sft_2048_default_template_job_lr5e6_e3y.yaml']
-      values: ['magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job.yaml']
+      # values: ['magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job.yaml']
+      # values: ['glan_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job_e2.yaml', 'glan_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job.yaml']
+      values: ['magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job_beta.yaml', 'magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job_bsz64.yaml', 'magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job_bsz256.yaml', 'magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job_lr1.yaml', 'magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job_lr2.yaml', 'magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job_lr3.yaml']
 
