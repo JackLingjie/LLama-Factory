@@ -1,5 +1,5 @@
 ### model
-model_name_or_path: bitnet/bitnet-1.58-2B-2T
+model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/bitnet-2B/
 
 ### method
 stage: sft
