@@ -125,6 +125,15 @@ def register_model_group(
 
 register_model_group(
     models={
+        "bitnet-2B": {
+            DownloadSource.DEFAULT: "bitnet/bitnet-1.58-2B-2T",
+        },
+    },
+    template="llama3",
+)
+
+register_model_group(
+    models={
         "Aya-23-8B-Chat": {
             DownloadSource.DEFAULT: "CohereForAI/aya-23-8B",
         },
