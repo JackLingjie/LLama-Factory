@@ -603,6 +603,7 @@ _register_template(
     format_user=StringFormatter(slots=["Human: {{content}}\nAssistant:"]),
     format_system=StringFormatter(slots=["{{content}}\n"]),
     format_separator=EmptyFormatter(slots=["\n"]),
+    format_prefix=EmptyFormatter(slots=[{"bos_token"}]),
 )
 
 
