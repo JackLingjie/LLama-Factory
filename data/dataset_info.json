@@ -94,6 +94,20 @@
       "system_tag": "system"
     }
   },
+  "glan2": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/glan2.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  },
   "magpie_sft_v0.1": {
     "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/magpie_sft_v0.1.jsonl",
     "formatting": "sharegpt",
