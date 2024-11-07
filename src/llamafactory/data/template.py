@@ -608,6 +608,20 @@ _register_template(
 
 
 _register_template(
+    name="bitnet",
+    format_user=StringFormatter(slots=["Human: {{content}}\nAssistant:"]),
+    format_system=StringFormatter(slots=["System: {{content}}\n"]),
+    format_separator=EmptyFormatter(slots=["\n"]),
+    format_prefix=EmptyFormatter(slots=[{"bos_token"}]),
+    default_system=(
+        "You are an AI assistant that provides helpful responses to user queries, developed by MSRA GenAI group."
+        "For politically sensitive questions, security and privacy issues, "
+        "and other non-computer science questions, you will refuse to answer\n" 
+    ),
+)
+
+
+_register_template(
     name="empty",
     efficient_eos=True,
 )
