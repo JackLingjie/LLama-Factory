@@ -72,6 +72,7 @@ search:
     - pip install -e ".[torch,metrics]"
     - pip install deepspeed==0.14.4
     - echo $${rank}
+    - pip install -U transformers
     # - bash amlt_job/sas_mount.sh
     # - pip install -U flash-attn --no-build-isolation
     - pip install -U flash-attn==2.4.2 --no-build-isolation
@@ -96,5 +97,11 @@ search:
   params:
     - name: rank
       spec: discrete
-      values: ['bitnet_glan2_2048_default_template_2e5_4k.yaml','bitnet_glan2_2048_default_template_2e5_8k.yaml','bitnet_glan2_2048_default_template_2e5_12k.yaml']
+      # values: ['bitnet_glan2_2048_default_template_2e5_4k.yaml','bitnet_glan2_2048_default_template_2e5_8k.yaml','bitnet_glan2_2048_default_template_2e5_12k.yaml']
+      # values: ['bitnet_glan2_2048_default_template_1e5_8k.yaml','bitnet_glan2_2048_default_template_2e6_4k.yaml','bitnet_glan2_2048_default_template_2e6_8k.yaml','bitnet_glan2_2048_default_template_2e6_12k.yaml','bitnet_glan2_2048_default_template_5e6_8k.yaml', 'bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
+      # values: ['bitnet_glan2_2048_default_template_1e5_8k.yaml','bitnet_glan2_2048_default_template_2e6_4k.yaml','bitnet_glan2_2048_default_template_2e6_8k.yaml', 'bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
+      # values: ['bitnet_glan2_2048_default_template_1e5_8k.yaml','bitnet_glan2_2048_default_template_2e6_4k.yaml','bitnet_glan2_2048_default_template_2e6_8k.yaml', 'bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
+      values: ['bitnet_glan1.5_2048_default_template_5e6_2k.yaml']
+      # values: ['bitnet_glan2_2048_default_template_1e6_4k.yaml', 'bitnet_glan2_2048_default_template_1e6_12k.yaml', 'bitnet_glan2_2048_default_template_1e6_8k.yaml']
+      # values: ['bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
 

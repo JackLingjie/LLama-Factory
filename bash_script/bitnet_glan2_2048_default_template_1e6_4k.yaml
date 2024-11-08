@@ -1,0 +1,40 @@
+### model
+model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/bitnet-2B-v0/
+
+### method
+stage: sft
+do_train: true
+finetuning_type: full
+flash_attn: fa2
+
+### dataset
+dataset: glan2-1108
+template: bitnet
+cutoff_len: 2048
+overwrite_cache: true
+preprocessing_num_workers: 1
+streaming: true
+split_batches: true
+
+### output
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan2-1108_2048_default_template/lr1e6_4kstep/sft
+logging_steps: 10
+save_steps: 500
+plot_loss: true
+overwrite_output_dir: true
+
+### train
+per_device_train_batch_size: 8
+gradient_accumulation_steps: 8
+learning_rate: 1.0e-6
+lr_scheduler_type: cosine
+warmup_ratio: 0.1
+bf16: true
+ddp_timeout: 180000000
+max_steps: 4000
+
+### eval
+val_size: 1000
+per_device_eval_batch_size: 8
+eval_strategy: steps
+eval_steps: 1000
