@@ -6,15 +6,14 @@ stage: sft
 do_train: true
 finetuning_type: full
 flash_attn: fa2
+# deepspeed: examples/deepspeed/ds_z2_config.json
 
 ### dataset
 dataset: glan2-1108
 template: bitnet
 cutoff_len: 2048
 overwrite_cache: true
-preprocessing_num_workers: 1
-streaming: true
-split_batches: true
+preprocessing_num_workers: 32
 
 ### output
 output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan2-1108_2048_default_template/lr2e5_4kstep/sft
@@ -24,8 +23,8 @@ plot_loss: true
 overwrite_output_dir: true
 
 ### train
-per_device_train_batch_size: 8
-gradient_accumulation_steps: 8
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 16
 learning_rate: 2.0e-5
 lr_scheduler_type: cosine
 warmup_ratio: 0.1

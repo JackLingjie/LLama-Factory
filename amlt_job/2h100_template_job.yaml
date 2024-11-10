@@ -63,11 +63,10 @@ storage:
 search:
   job_template:
     name: PRJ-0349-A54-1_.58_-bit-LLMs-test-scaling
-    sku: 1xG8
-    # sku: 2x40G8-A100-IB-NvLink
+    sku: 2xG8
     identity: managed
-    # mpi: True
-    # process_count_per_node: 8
+    mpi: True
+    process_count_per_node: 1
     command:
     - pip install -e ".[torch,metrics]"
     - pip install deepspeed==0.14.4
@@ -78,13 +77,8 @@ search:
     - pip install -U flash-attn==2.4.2 --no-build-isolation
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
     - ls /mnt/lingjiejiang
-    # - ls /mnt/msranlp
-    # - ls /mnt/nlcredstone
-    # - ls /mnt/conversationhub
-    # - ls /mnt/conversationhubhot
     # - FORCE_TORCHRUN=1 llamafactory-cli train bash_script/{rank}
-    # - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bash_script/{rank}
-    - torchrun --nproc_per_node=8 src/train.py bash_script/{rank}
+    - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bash_script/{rank}
     submit_args:
       env:
         {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
@@ -97,17 +91,5 @@ search:
   params:
     - name: rank
       spec: discrete
-      # values: ['bitnet_glan2_2048_default_template_2e5_4k.yaml','bitnet_glan2_2048_default_template_2e5_8k.yaml','bitnet_glan2_2048_default_template_2e5_12k.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_8k.yaml','bitnet_glan2_2048_default_template_2e6_4k.yaml','bitnet_glan2_2048_default_template_2e6_8k.yaml','bitnet_glan2_2048_default_template_2e6_12k.yaml','bitnet_glan2_2048_default_template_5e6_8k.yaml', 'bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_8k.yaml','bitnet_glan2_2048_default_template_2e6_4k.yaml','bitnet_glan2_2048_default_template_2e6_8k.yaml', 'bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_8k.yaml','bitnet_glan2_2048_default_template_2e6_4k.yaml','bitnet_glan2_2048_default_template_2e6_8k.yaml', 'bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_5e6_2k.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_5e6_2k_nostream.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_4k.yaml', 'bitnet_glan2_2048_default_template_2e5_4k.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_16k.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_5e6_2k_nostream.yaml']
-      values: ['bitnet_glan1.6_2048_default_template_5e6_10k.yaml']
-      # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_8500_dpo_fullft_job.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e6_4k.yaml', 'bitnet_glan2_2048_default_template_1e6_12k.yaml', 'bitnet_glan2_2048_default_template_1e6_8k.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
+      values: ['bitnet_glan2_2048_default_template_2e5_4k.yaml']
 
