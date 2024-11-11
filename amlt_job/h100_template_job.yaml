@@ -106,8 +106,10 @@ search:
       # values: ['bitnet_glan2_2048_default_template_1e5_4k.yaml', 'bitnet_glan2_2048_default_template_2e5_4k.yaml']
       # values: ['bitnet_glan2_2048_default_template_1e5_16k.yaml']
       # values: ['bitnet_glan1.5_2048_default_template_5e6_2k_nostream.yaml']
-      values: ['bitnet_glan1.6_2048_default_template_5e6_10k.yaml']
+      # values: ['bitnet_glan1.6_2048_default_template_5e6_10k.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_8500_dpo_fullft_job.yaml']
       # values: ['bitnet_glan2_2048_default_template_1e6_4k.yaml', 'bitnet_glan2_2048_default_template_1e6_12k.yaml', 'bitnet_glan2_2048_default_template_1e6_8k.yaml']
       # values: ['bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
+      # values: ['bitnet_glan1.5_2048_default_template_2e5_e2.yaml', 'bitnet_glan1.5_2048_default_template_3e5_e2.yaml', 'bitnet_glan1.5_2048_default_template_5e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_2e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_3e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_5e5_e2.yaml']
+      values: ['bitnet_glan1.5_2048_default_template_3e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_2e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_5e5_e2.yaml']
 
