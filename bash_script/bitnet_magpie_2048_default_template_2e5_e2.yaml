@@ -11,14 +11,14 @@ deepspeed: examples/deepspeed/ds_z3_config.json
 ### dataset
 dataset: magpie_sft_v0.1
 template: bitnet
-cutoff_len: 8192
+cutoff_len: 4096
 overwrite_cache: true
 preprocessing_num_workers: 16
 # streaming: true
 # split_batches: true
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_magpie_2048_default_template/lr2e5_e2_bsz128/sft
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_magpie_2048_default_template/lr2e5_e2_bsz2k/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
@@ -26,7 +26,7 @@ overwrite_output_dir: true
 
 ### train
 per_device_train_batch_size: 8
-gradient_accumulation_steps: 2
+gradient_accumulation_steps: 32
 learning_rate: 2.0e-5
 lr_scheduler_type: cosine
 warmup_ratio: 0.1
