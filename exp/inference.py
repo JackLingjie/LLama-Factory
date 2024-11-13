@@ -23,7 +23,7 @@ def generate_response(prompt, tokenizer, model, has_system):
 def inference(model_path, output_name, gpu_id, has_system):
 
     # Load the tokenizer and model
-    tokenizer = transformers.AutoTokenizer.from_pretrained("./sft_12k_5k/checkpoint-5000/", trust_remote_code=True)
+    tokenizer = transformers.AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 
     model = transformers.AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, torch_dtype=torch.bfloat16, attn_implementation = "flash_attention_2")
     model.to(f"cuda:{gpu_id}")
@@ -39,7 +39,6 @@ def inference(model_path, output_name, gpu_id, has_system):
             item['generator'] = output_name
     with open(f"{output_name}.json", "w", encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-
 
 
 if __name__ == "__main__":
