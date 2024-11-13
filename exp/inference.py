@@ -4,12 +4,15 @@ import json
 import fire
 import tqdm
 
-def generate_response(prompt, tokenizer, model, has_system):
-    if has_system == 1:
-        prompt = f"System: You are an AI assistant that provides helpful responses to user queries, developed by MSRA GenAI group. For politically sensitive questions, security and privacy issues, you will refuse to answer\n\nHuman: {prompt}\nAssistant:"
-    else:
-        prompt = f'Human: {prompt}\nAssistant:'
-    inputs = tokenizer([prompt, prompt], return_tensors="pt").to(model.device)
+def generate_response(prompts, tokenizer, model, has_system):
+    new_prompts = []
+    for prompt in prompts:
+        if has_system == 1:
+            prompt = f"System: You are an AI assistant that provides helpful responses to user queries, developed by MSRA GenAI group. For politically sensitive questions, security and privacy issues, you will refuse to answer\n\nHuman: {prompt}\nAssistant:"
+        else:
+            prompt = f'Human: {prompt}\nAssistant:'
+        new_prompts.append(prompt)
+    inputs = tokenizer(new_prompts, return_tensors="pt").to(model.device)
     print(prompt)
     tokens = model.generate(
         **inputs,
@@ -18,13 +21,14 @@ def generate_response(prompt, tokenizer, model, has_system):
         top_p=0.95,
         do_sample=True,
     )
-    print(tokenizer.decode(tokens[0], skip_special_tokens=True).replace(prompt, ''))
-    print(tokenizer.decode(tokens[1], skip_special_tokens=True).replace(prompt, ''))
+    outputs = []
+    for i in range(len(new_prompts)):
+        outputs.append(tokenizer.decode(tokens[i], skip_special_tokens=True).replace(new_prompts[i], ''))
+    return outputs
 
-    return tokenizer.decode(tokens[0], skip_special_tokens=True).replace(prompt, '')
 
 def inference(model_path, output_name, gpu_id, has_system):
-
+    bsz = 32
     # Load the tokenizer and model
     tokenizer = transformers.AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 
@@ -35,11 +39,15 @@ def inference(model_path, output_name, gpu_id, has_system):
     # read alpaca data
     with open("alpaca_eval.json", "r", encoding='utf-8') as f:
         data = json.load(f)
-        for item in tqdm.tqdm(data):
-            prompt = item["instruction"]
-            response = generate_response(prompt, tokenizer, model, has_system)
-            item["output"] = response    
-            item['generator'] = output_name
+        for i in tqdm.tqdm(range(0, len(data), bsz)):
+            batch = data[i:i+bsz]
+            prompts = [item["instruction"] for item in batch]
+            
+            responses = generate_response(prompts, tokenizer, model, has_system)
+            for j, item in enumerate(batch):
+                item["output"] = responses[j]
+                item['generator'] = output_name
+
     with open(f"{output_name}.json", "w", encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
 
