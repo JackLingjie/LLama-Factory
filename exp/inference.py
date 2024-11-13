@@ -6,7 +6,7 @@ import tqdm
 
 def generate_response(prompt, tokenizer, model, has_system):
     if has_system == 1:
-        prompt = f"System: You are an AI assistant that provides helpful responses to user queries, developed by MSRA GenAI group. For politically sensitive questions, security and privacy issues, you will refuse to answer\nHuman: {prompt}\nAssistant:"
+        prompt = f"System: You are an AI assistant that provides helpful responses to user queries, developed by MSRA GenAI group. For politically sensitive questions, security and privacy issues, you will refuse to answer\n\nHuman: {prompt}\nAssistant:"
     else:
         prompt = f'Human: {prompt}\nAssistant:'
     inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
