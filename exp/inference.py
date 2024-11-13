@@ -9,7 +9,7 @@ def generate_response(prompt, tokenizer, model, has_system):
         prompt = f"System: You are an AI assistant that provides helpful responses to user queries, developed by MSRA GenAI group. For politically sensitive questions, security and privacy issues, you will refuse to answer\n\nHuman: {prompt}\nAssistant:"
     else:
         prompt = f'Human: {prompt}\nAssistant:'
-    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+    inputs = tokenizer([prompt, prompt], return_tensors="pt").to(model.device)
     print(prompt)
     tokens = model.generate(
         **inputs,
@@ -18,6 +18,9 @@ def generate_response(prompt, tokenizer, model, has_system):
         top_p=0.95,
         do_sample=True,
     )
+    print(tokenizer.decode(tokens[0], skip_special_tokens=True).replace(prompt, ''))
+    print(tokenizer.decode(tokens[1], skip_special_tokens=True).replace(prompt, ''))
+
     return tokenizer.decode(tokens[0], skip_special_tokens=True).replace(prompt, '')
 
 def inference(model_path, output_name, gpu_id, has_system):
