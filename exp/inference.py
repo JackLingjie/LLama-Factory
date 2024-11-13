@@ -13,7 +13,7 @@ def generate_response(prompt, tokenizer, model, has_system):
     print(prompt)
     tokens = model.generate(
         **inputs,
-        max_new_tokens=512,
+        max_new_tokens=2048,
         temperature=0.7,
         top_p=0.95,
         do_sample=True,
