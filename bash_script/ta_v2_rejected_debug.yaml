@@ -2,29 +2,28 @@
 model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/sft_merge_checkpoints/Meta-Llama-3.1-8B-Instruct
 
 ### method
-stage: dpo_list
+stage: dpo
 do_train: true
 finetuning_type: lora
 lora_target: all
 pref_beta: 0.1
-pref_loss: hinge  # choices: [sigmoid (dpo), orpo, simpo]
-# max_grad_norm: 0.1
+pref_loss: sigmoid  # choices: [sigmoid (dpo), orpo, simpo]
+# deepspeed: examples/deepspeed/ds_z2_config.json
 
 ### dataset
-dataset: ta_list_dpo_debug
+dataset: ta_v2_rejected_v2_job
 template: default
-cutoff_len: 1024
+cutoff_len: 512
 max_samples: 100
 overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: saves/tulu_v2_8b_default_template_dpo_list/lora/dpo
+output_dir: saves/ta_v2_rejected_tuluv2_dpo_2048_default_template_bsz1_acc8_v2/lora/dpo
 logging_steps: 10
 save_steps: 500
 plot_loss: true
 overwrite_output_dir: true
-report_to: tensorboard
 
 ### train
 per_device_train_batch_size: 1
