@@ -12,8 +12,9 @@ def generate_response(prompts, tokenizer, model, has_system):
         else:
             prompt = f'Human: {prompt}\nAssistant:'
         new_prompts.append(prompt)
-    inputs = tokenizer(new_prompts, return_tensors="pt").to(model.device)
-    print(prompt)
+    print(new_prompts)
+    inputs = tokenizer(new_prompts, return_tensors="pt", padding=True, padding_side='left').to(model.device)
+    #print(inputs)
     tokens = model.generate(
         **inputs,
         max_new_tokens=2048,
@@ -28,12 +29,13 @@ def generate_response(prompts, tokenizer, model, has_system):
 
 
 def inference(model_path, output_name, gpu_id, has_system):
-    bsz = 32
+    bsz = 64
     # Load the tokenizer and model
     tokenizer = transformers.AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
 
     model = transformers.AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, torch_dtype=torch.bfloat16, attn_implementation = "flash_attention_2")
-    model.to(f"cuda:{gpu_id}")
+    #model = transformers.AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, torch_dtype=torch.bfloat16, attn_implementation = "eager")
+    model.to("cuda:0")
     model.eval()
 
     # read alpaca data
