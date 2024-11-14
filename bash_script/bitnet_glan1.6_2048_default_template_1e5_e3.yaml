@@ -9,8 +9,8 @@ flash_attn: fa2
 # deepspeed: examples/deepspeed/ds_z3_config.json
 
 ### dataset
-dataset: glan1.5
-template: default
+dataset: glan1.6
+template: bitnet
 cutoff_len: 2048
 overwrite_cache: true
 preprocessing_num_workers: 16
@@ -18,7 +18,7 @@ preprocessing_num_workers: 16
 # split_batches: true
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.5_2048_default_template/lr2e5_e2_bsz2k_default_temp/sft
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.6_2048_default_template/lr1e5_e3_bsz2k_fx/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
@@ -27,12 +27,12 @@ overwrite_output_dir: true
 ### train
 per_device_train_batch_size: 4
 gradient_accumulation_steps: 32
-learning_rate: 2.0e-5
+learning_rate: 1.0e-5
 lr_scheduler_type: cosine
 warmup_ratio: 0.1
 bf16: true
 ddp_timeout: 180000000
-num_train_epochs: 2.0
+num_train_epochs: 3.0
 
 
 ### eval

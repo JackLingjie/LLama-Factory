@@ -17,7 +17,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_magpie_dpo_v0.1_2048_default_template_dpo_magpie_ckpt536/fullft_bitnet_template/dpo
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_magpie_dpo_v0.1_2048_default_template_dpo_magpie_ckpt536/fullft_bitnet_template_fx/dpo
 logging_steps: 1
 save_steps: 100
 plot_loss: true

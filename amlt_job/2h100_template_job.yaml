@@ -78,6 +78,11 @@ search:
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
     - ls /mnt/lingjiejiang
     # - FORCE_TORCHRUN=1 llamafactory-cli train bash_script/{rank}
+    # Download and extract
+    - wget https://aka.ms/downloadazcopy-v10-linux
+    - tar -xvf downloadazcopy-v10-linux
+    - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/model_checkpoint/bitnet-2B-v0/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
+    - ls model
     - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bash_script/{rank}
     submit_args:
       env:
@@ -91,5 +96,10 @@ search:
   params:
     - name: rank
       spec: discrete
-      values: ['bitnet_glan2_2048_default_template_2e5_4k.yaml']
+      # values: ['bitnet_glan1.6_2048_default_template_2e5_e2.yaml']
+      # values: ['bitnet_glan2-1108_2048_default_template_2e5_e2.yaml']
+      # values: ['bitnet_glan1.6_2048_default_template_1e5_e3.yaml']
+      # values: ['bitnet_glan1.6_2048_default_template_3e5_e2.yaml']
+      # values: ['bitnet_glan1.6_2048_default_template_2e5_e3.yaml']
+      values: ['bitnet_glan1.5_2048_default_template_2e5_e2.yaml', 'bitnet_glan1.5_2048_default_template_2e5_e3.yaml', 'bitnet_glan1.5_2048_default_template_2e5_e5.yaml']
 

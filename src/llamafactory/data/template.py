@@ -614,9 +614,9 @@ _register_template(
     format_separator=EmptyFormatter(slots=["\n"]),
     format_prefix=EmptyFormatter(slots=[{"bos_token"}]),
     default_system=(
-        "You are an AI assistant that provides helpful responses to user queries, developed by MSRA GenAI group."
+        "You are an AI assistant that provides helpful responses to user queries, developed by MSRA GenAI group. "
         "For politically sensitive questions, security and privacy issues, "
-        "and other non-computer science questions, you will refuse to answer\n" 
+        "you will refuse to answer\n" 
     ),
 )
 
