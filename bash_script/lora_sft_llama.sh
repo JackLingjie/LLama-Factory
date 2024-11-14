@@ -140,3 +140,5 @@ torchrun --nproc_per_node=8 src/train.py bash_script/mistral_7B_instruct_tapo_bs
 torchrun --nproc_per_node=8 src/train.py bash_script/phi3_small_8k_ta_rejected_2048_default_template_v2_job.yaml
 
 FORCE_TORCHRUN=1 llamafactory-cli train bash_script/gemm_ta_rejected_2048_default_template_v2_job_zero3.yaml
+
+torchrun --nproc_per_node=8 src/train.py bash_script/phi3_small_8k_ta_rejected_2048_default_template_v2_job.yaml
