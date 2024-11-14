@@ -10,7 +10,7 @@ flash_attn: fa2
 
 ### dataset
 dataset: glan1.5
-template: default
+template: bitnet
 cutoff_len: 2048
 overwrite_cache: true
 preprocessing_num_workers: 16
@@ -18,7 +18,7 @@ preprocessing_num_workers: 16
 # split_batches: true
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.5_2048_default_template/lr2e5_e2_bsz2k_default_temp/sft
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.5_2048_default_template/lr2e5_e2_bsz2k_fx/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
