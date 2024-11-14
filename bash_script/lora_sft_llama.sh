@@ -133,3 +133,6 @@ llamafactory-cli train bash_script/tulu_lora_dpo_list_test.yaml
 llamafactory-cli train bash_script/tulu_lora_dpo_test_fa2.yaml
 
 llamafactory-cli train bash_script/gemm_ta_rejected_2048_default_template_v2_job_test.yaml
+
+torchrun --nproc_per_node=8 src/train.py bash_script/mistral_7B_ta_rejected_2048_default_template_v2_job.yaml
+torchrun --nproc_per_node=8 src/train.py bash_script/mistral_7B_instruct_tapo_bsz1_job_v2.yaml
