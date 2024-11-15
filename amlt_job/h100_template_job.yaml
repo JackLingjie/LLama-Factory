@@ -72,22 +72,17 @@ search:
     - pip install -e ".[torch,metrics]"
     - pip install deepspeed==0.14.4
     - echo $${rank}
-    - pip install -U transformers
-    # - bash amlt_job/sas_mount.sh
-    # - pip install -U flash-attn --no-build-isolation
     - pip install -U flash-attn==2.4.2 --no-build-isolation
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
-    - ls /mnt/lingjiejiang
-    # - ls /mnt/msranlp
-    # - ls /mnt/nlcredstone
-    # - ls /mnt/conversationhub
-    # - ls /mnt/conversationhubhot
-    # - FORCE_TORCHRUN=1 llamafactory-cli train bash_script/{rank}
-    # - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bash_script/{rank}
+    - pip install git+https://github.com/yushuiwx/datasets.git
+    - pip install transformers==4.44.2
     - wget https://aka.ms/downloadazcopy-v10-linux
     - tar -xvf downloadazcopy-v10-linux
-    - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glanchat_v2.1_8b_2048_default_template/fullft_lr5e6_e3/sft/checkpoint-3500/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
-    - torchrun --nproc_per_node=8 src/train.py bash_script/{rank}
+    # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glanchat_v2.1_8b_2048_default_template/fullft_lr5e6_e3/sft/checkpoint-3500/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
+    # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/model_checkpoint/bitnet-2B-v0/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive # base model checkpoint
+    - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.5/bitnet_glan1.5_default_template_2e5_e2_bsz128_trm4442/checkpoint-6000/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf& 
+    # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/model_checkpoint/huggingface/gemma-2b/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf& sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
+    - torchrun --nproc_per_node=8 src/train.py bitnet_script/{rank}
     submit_args:
       env:
         {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
@@ -100,27 +95,8 @@ search:
   params:
     - name: rank
       spec: discrete
-      # values: ['bitnet_glan2_2048_default_template_2e5_4k.yaml','bitnet_glan2_2048_default_template_2e5_8k.yaml','bitnet_glan2_2048_default_template_2e5_12k.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_8k.yaml','bitnet_glan2_2048_default_template_2e6_4k.yaml','bitnet_glan2_2048_default_template_2e6_8k.yaml','bitnet_glan2_2048_default_template_2e6_12k.yaml','bitnet_glan2_2048_default_template_5e6_8k.yaml', 'bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_8k.yaml','bitnet_glan2_2048_default_template_2e6_4k.yaml','bitnet_glan2_2048_default_template_2e6_8k.yaml', 'bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_8k.yaml','bitnet_glan2_2048_default_template_2e6_4k.yaml','bitnet_glan2_2048_default_template_2e6_8k.yaml', 'bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_5e6_2k.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_5e6_2k_nostream.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_4k.yaml', 'bitnet_glan2_2048_default_template_2e5_4k.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e5_16k.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_5e6_2k_nostream.yaml']
-      # values: ['bitnet_glan1.6_2048_default_template_5e6_10k.yaml']
-      # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_8500_dpo_fullft_job.yaml']
-      # values: ['bitnet_glan2_2048_default_template_1e6_4k.yaml', 'bitnet_glan2_2048_default_template_1e6_12k.yaml', 'bitnet_glan2_2048_default_template_1e6_8k.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_2e5_4k.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_2e5_e2.yaml', 'bitnet_glan1.5_2048_default_template_3e5_e2.yaml', 'bitnet_glan1.5_2048_default_template_5e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_2e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_3e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_5e5_e2.yaml']
-      # values: ['bitnet_glan1.5_2048_default_template_3e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_2e5_e2.yaml', 'bitnet_glan1.6_2048_default_template_5e5_e2.yaml']
-      # values: ['bitnet_magpie_2048_default_template_2e5_e2.yaml']
-      # values: ['bitnet_glan1.6_2048_default_template_2e5_e2.yaml']
-      # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_536_dpo_fullft_job.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_536_dpo_fullft_job_4e7.yaml']
-      # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_536_dpo_fullft_job.yaml']
-      # values: ['bitnet_glan2-1108_2048_default_template_2e5_e2.yaml']
-      # values: ['bitnet_glan1.6_2048_default_template_2e5_e2.yaml']
-      # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_536_dpo_fullft_job.yaml']
-      values: ['bitnet_magpie_dpo_v0.1_2048_default_template_8500_dpo_fullft_job.yaml']
+      # values: ['bitnet_glan1.5_default_template_2e5_e2_bsz128.yaml']
+      # values: ['bitnet_glan2-1108_default_template_2e5_e2_bsz2k.yaml', 'bitnet_glan1.5_default_template_2e5_e2_bsz2k.yaml']
+      values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_6000.yaml']
+      # values: ['gemma_glan1.5_default_template_2e5_e2_bsz128.yaml']
 

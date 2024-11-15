@@ -85,20 +85,11 @@ search:
     - pip install -e ".[torch,metrics]"
     - pip install deepspeed==0.14.4
     - echo $${rank}
-    # - bash amlt_job/sas_mount.sh
-    # - pip install -U flash-attn --no-build-isolation
     - pip install -U flash-attn==2.4.2 --no-build-isolation
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+    - pip install transformers==4.44.2
     - ls /mnt/lingjiejiang
-    # - ls /mnt/msranlp
-    # - ls /mnt/nlcredstone
-    # - ls /mnt/conversationhub
-    # - ls /mnt/conversationhubhot
-    # - FORCE_TORCHRUN=1 llamafactory-cli train bash_script/{rank}
-    - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bash_script/{rank}
-    # - FORCE_TORCHRUN=1 NNODES=2 RANK=$$OMPI_COMM_WORLD_RANK MASTER_ADDR="$$MASTER_ADDR" MASTER_PORT=$$MASTER_PORT llamafactory-cli train bash_script/{rank}
-    # - sleep infinity
-    # - torchrun --nproc_per_node=8 src/train.py bash_script/{rank}
+    - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py btinet_script/{rank}
     submit_args:
       env:
         {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
@@ -111,8 +102,5 @@ search:
   params:
     - name: rank
       spec: discrete
-      # values: ['ta_chosen_llama3.1_instruct_dpo_2048_default_template_job.yaml', 'ta_chosen_tuluv2_dpo_2048_default_template_job.yaml', 'ta_rejected_llama3.1_instruct_dpo_2048_default_template_job.yaml', 'ta_rejected_tuluv2_dpo_2048_default_template_job.yaml']
-      # values: ['ta_rejected_tuluv2_dpo_2048_default_template_job.yaml', 'ta_rejected_tuluv2_dpo_2048_default_template_v2_job.yaml', 'ta_rejected_tuluv2_dpo_2048_default_template_v3_job.yaml']
-      # values: ['glanchatv2_full_sft_2048_default_template_job_lr5e6_e3.yaml', 'glanv2_full_sft_2048_default_template_job_lr5e6_e3.yaml', 'glanv2_glanchatv2_full_sft_2048_default_template_job_lr5e6_e3.yaml']
-      values: ['magpie_dpo_v0.1_8b_2048_default_template_8500_dpo_fullft_job.yaml']
+      values: ['bitnet_glan1.5_default_template_2e5_e2_bsz128.yaml']
 
