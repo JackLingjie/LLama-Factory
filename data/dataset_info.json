@@ -168,6 +168,20 @@
       "system_tag": "system"
     }
   },
+  "dv3_train_2.5m_trunc256_ql": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/dv3_train_2.5m_trunc256_ql.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  },
   "glan1.5": {
     "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/glanchatv2.1.shuf.jsonl",
     "formatting": "sharegpt",

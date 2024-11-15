@@ -78,9 +78,8 @@ search:
     - pip install transformers==4.44.2
     - wget https://aka.ms/downloadazcopy-v10-linux
     - tar -xvf downloadazcopy-v10-linux
-    # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glanchat_v2.1_8b_2048_default_template/fullft_lr5e6_e3/sft/checkpoint-3500/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
-    # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/model_checkpoint/bitnet-2B-v0/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive # base model checkpoint
-    - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.5/bitnet_glan1.5_default_template_2e5_e2_bsz128_trm4442/checkpoint-6000/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
+    - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/model_checkpoint/bitnet-2B-v0/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive # base model checkpoint
+    # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.5/bitnet_glan1.5_default_template_2e5_e2_bsz128_trm4442/checkpoint-6000/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
     # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/model_checkpoint/huggingface/gemma-2b/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
     - torchrun --nproc_per_node=8 src/train.py bitnet_script/{rank}
     submit_args:
@@ -97,6 +96,7 @@ search:
       spec: discrete
       # values: ['bitnet_glan1.5_default_template_2e5_e2_bsz128.yaml']
       # values: ['bitnet_glan2-1108_default_template_2e5_e2_bsz2k.yaml', 'bitnet_glan1.5_default_template_2e5_e2_bsz2k.yaml']
-      values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_6000.yaml']
+      # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_6000.yaml']
       # values: ['gemma_glan1.5_default_template_2e5_e2_bsz128.yaml']
+      values: ['bitnet_dv3_train_2.5m_trunc256_ql_default_template_2e5_e3_bsz2k.yaml', 'bitnet_dv3_train_2.5m_trunc256_ql_default_template_2e5_e5_bsz2k.yaml']
 
