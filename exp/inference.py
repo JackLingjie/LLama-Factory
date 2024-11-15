@@ -35,7 +35,7 @@ def inference(model_path, output_name, gpu_id, has_system):
 
     model = transformers.AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, torch_dtype=torch.bfloat16, attn_implementation = "flash_attention_2")
     #model = transformers.AutoModelForCausalLM.from_pretrained(model_path, trust_remote_code=True, torch_dtype=torch.bfloat16, attn_implementation = "eager")
-    model.to("cuda:0")
+    model.to("cuda:3")
     model.eval()
 
     # read alpaca data
