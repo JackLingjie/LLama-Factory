@@ -11,9 +11,9 @@ for idx in 0; do
     end_idx=$((start_idx + step))
     echo "start_idx: $start_idx, end_idx: $end_idx"
     python inference.py \
-        --ckpt_folder "$HOME/checkpoints/$basefolder/checkpoint-3000" \
+        --ckpt_folder "$basefolder/checkpoint-3000" \
         --data_file "/data/users/shaohanh/demo/Validation_test_trunc256_gemma2_prompt.jsonl" \
         --dst_file "${basefolder}_imps_fbs_e2_preds_part_${idx}.txt" \
-        --batch_size 128 --start_idx $start_idx --end_idx $end_idx &
+        --batch_size 128 --start_idx $start_idx --end_idx $end_idx 
         # --data_file "$HOME/Datasets/L3Rel/Validation_test_trunc256_gemma2_prompt_shuf10k.jsonl" \
 done
