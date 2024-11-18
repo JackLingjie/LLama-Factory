@@ -16,16 +16,18 @@ def cal_softmax(yes_score, no_score):
     return scores[0]
 
 
-def cal_auc(filename):
-    data = open(filename).readlines()
-    data = [json.loads(x) for x in data]
+def cal_auc(filenames):
     labels = []
     preds = []
-    for elem in data:
-        label = 1.0 if elem['label'].strip() == 'Answer: Yes' else 0.0
-        labels.append(label)
-        score = cal_softmax(elem['yes_score'], elem['no_score'])
-        preds.append(score)
+    filenames = filenames.split(',')
+    for filename in filenames:
+        data = open(filename).readlines()
+        data = [json.loads(x) for x in data]    
+        for elem in data:
+            label = 1.0 if elem['label'].strip() == 'Answer: Yes' else 0.0
+            labels.append(label)
+            score = cal_softmax(elem['yes_score'], elem['no_score'])
+            preds.append(score)
     auc = roc_auc_score(labels, preds)
     print('AUC: ', auc)
 
