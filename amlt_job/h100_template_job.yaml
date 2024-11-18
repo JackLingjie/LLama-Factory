@@ -100,5 +100,6 @@ search:
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_6000.yaml']
       # values: ['gemma_glan1.5_default_template_2e5_e2_bsz128.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan2_2000.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan2_2000_bsz64.yaml']
-      values: ['bitnet_dv3_train_2.5m_trunc256_ql_default_template_1e5_e3_bsz2k.yaml']
+      # values: ['bitnet_dv3_train_2.5m_trunc256_ql_default_template_1e5_e3_bsz2k.yaml']
+      values: ['bitnet_glan1.5_default_template_1e4_e2_bsz128.yaml', 'bitnet_glan1.5_default_template_4e5_e2_bsz128.yaml', 'bitnet_glan1.5_default_template_7e5_e2_bsz128.yaml']
 
