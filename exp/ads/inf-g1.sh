@@ -62,3 +62,15 @@ for idx in 0 1; do
         --dst_file "${basefolder}_6300_imps_fbs_e2_preds_part_${idx}.txt" \
         --batch_size 64 --start_idx $start_idx --end_idx $end_idx &
 done
+wait
+echo "Done"
+
+echo "Calculating metrics"
+echo "python calc.py ads-e5_4000_imps_fbs_e2_preds_part_0.txt,ads-e5_4000_imps_fbs_e2_preds_part_1.txt"
+python calc.py ads-e5_4000_imps_fbs_e2_preds_part_1.txt,ads-e5_4000_imps_fbs_e2_preds_part_0.txt
+echo "python calc.py ads-e5_5000_imps_fbs_e2_preds_part_0.txt,ads-e5_5000_imps_fbs_e2_preds_part_1.txt"
+python calc.py ads-e5_5000_imps_fbs_e2_preds_part_1.txt,ads-e5_5000_imps_fbs_e2_preds_part_0.txt
+echo "python calc.py ads-e5_6000_imps_fbs_e2_preds_part_0.txt,ads-e5_6000_imps_fbs_e2_preds_part_1.txt"
+python calc.py ads-e5_6000_imps_fbs_e2_preds_part_1.txt,ads-e5_6000_imps_fbs_e2_preds_part_0.txt
+echo "python calc.py ads-e5_6300_imps_fbs_e2_preds_part_0.txt,ads-e5_6300_imps_fbs_e2_preds_part_1.txt"
+python calc.py ads-e5_6300_imps_fbs_e2_preds_part_1.txt,ads-e5_6300_imps_fbs_e2_preds_part_0.txt
