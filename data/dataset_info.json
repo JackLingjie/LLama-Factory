@@ -52,6 +52,34 @@
       "system_tag": "system"
     }
   },
+  "mmlu_min_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/prm/data/data_6/train_data/train_data_min_step.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  },
+  "mmlu_max_job": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/prm/data/data_6/train_data/train_data_max_step.json",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  },
   "wildchat_v1_job": {
     "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/WildChat-1M.1turn.en.completions.shuf.merged.json",
     "formatting": "sharegpt",
