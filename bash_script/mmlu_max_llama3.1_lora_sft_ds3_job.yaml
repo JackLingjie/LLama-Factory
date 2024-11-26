@@ -6,8 +6,8 @@ stage: sft
 do_train: true
 finetuning_type: lora
 lora_target: all
-deepspeed: examples/deepspeed/ds_z3_config.json
-flash_attn: fa2
+# deepspeed: examples/deepspeed/ds_z3_config.json
+# flash_attn: fa2
 
 ### dataset
 dataset: mmlu_max_job

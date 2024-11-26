@@ -147,4 +147,8 @@ FORCE_TORCHRUN=1 llamafactory-cli train bash_script/gemm_9b_instruct_tapo_bsz1_j
 torchrun --nproc_per_node=8 src/train.py bash_script/mistral_7B_instruct_tapo_bsz1_job_v1.yaml
 torchrun --nproc_per_node=8 src/train.py bash_script/mistral_7B_instruct_tapo_bsz1_job_v2_1e7.yaml
 torchrun --nproc_per_node=8 src/train.py bash_script/mistral_7B_instruct_tapo_bsz1_job_v2_1e5.yaml
+torchrun --nproc_per_node=8 src/train.py bash_script/mistral_7B_uf_2048_default_template_v2_job.yaml
+torchrun --nproc_per_node=8 src/train.py bash_script/qwen2_instruct_uf_2048_default_template_v2_job.yaml
 
+
+torchrun --nproc_per_node=1 src/train.py bash_script/mmlu_llama3.1_lora_sft_ds3.yaml

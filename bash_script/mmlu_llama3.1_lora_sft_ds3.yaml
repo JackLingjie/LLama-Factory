@@ -6,19 +6,19 @@ stage: sft
 do_train: true
 finetuning_type: lora
 lora_target: all
-# deepspeed: examples/deepspeed/ds_z3_config.json
-# flash_attn: fa2
+deepspeed: examples/deepspeed/ds_z3_config.json
+flash_attn: fa2
 
 ### dataset
 dataset: mmlu_min_job
 template: llama3
-cutoff_len: 2048
-max_samples: 12000
+cutoff_len: 1024
+max_samples: 100
 overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/mmlu_min_llama3_sft_2048_bsz8/lora/dpo
+output_dir: saves/tulu_v2_8b_zero2/lora/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
@@ -28,7 +28,7 @@ overwrite_output_dir: true
 per_device_train_batch_size: 1
 gradient_accumulation_steps: 8
 learning_rate: 2.0e-5
-num_train_epochs: 3.0
+num_train_epochs: 2.0
 lr_scheduler_type: cosine
 warmup_ratio: 0.1
 bf16: true
