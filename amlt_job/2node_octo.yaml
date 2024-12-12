@@ -1,44 +1,11 @@
 description: bitnet
 
-# target:
-#   service: aml
-#   name: alta2
-
-# environment:
-#   image: nvcr:v23.10
-#   registry: shumingdocker.azurecr.io
-#   setup:
-#   - echo "master_addr:" "$$MASTER_ADDR"
-#   - echo "master_port:" $$MASTER_PORT
-#   - echo "node_rank:" $$OMPI_COMM_WORLD_RANK
-#   username: shumingdocker
-
-# target:
-#   service: sing
-#   name: msroctovc
-#   resource_group: gcr-singularity-octo
-#   # workspace_name: Workspace_NLC
-#   workspace_name: NLC_Workspace
-
 target:
   service: sing
-  name: gcrprojvc1
-  resource_group:  gcr-singularity-proj1
+  name: msroctovc
+  resource_group: gcr-singularity-octo
   # workspace_name: Workspace_NLC
   workspace_name: NLC_Workspace
-
-# target:
-#   service: sing
-#   name: msrresrchvc
-#   resource_group: gcr-singularity-resrch
-#   workspace_name: Workspace_NLC
-
-
-# target:
-#   service: sing
-#   name: msroctobasicvc
-#   resource_group: gcr-singularity-octo
-#   workspace_name: Workspace_NLC
 
 
 environment:

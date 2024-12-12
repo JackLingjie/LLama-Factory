@@ -178,7 +178,7 @@ class CustomDPOTrainer(DPOTrainer):
         all_logits: "torch.Tensor" = model(**batch, return_dict=True, use_cache=False).logits.to(torch.float32)
 
         all_logps, valid_length = get_batch_logps(logits=all_logits, labels=batch["labels"])
-        if self.loss_type in ["ipo", "orpo", "simpo"]:
+        if self.loss_type in ["ipo", "orpo", "simpo", "dpo_norm"]:
             all_logps = all_logps / valid_length
 
         batch_size = batch["input_ids"].size(0) // 2

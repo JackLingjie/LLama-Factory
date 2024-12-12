@@ -1,44 +1,11 @@
 description: bitnet
 
-# target:
-#   service: aml
-#   name: alta2
-
-# environment:
-#   image: nvcr:v23.10
-#   registry: shumingdocker.azurecr.io
-#   setup:
-#   - echo "master_addr:" "$$MASTER_ADDR"
-#   - echo "master_port:" $$MASTER_PORT
-#   - echo "node_rank:" $$OMPI_COMM_WORLD_RANK
-#   username: shumingdocker
-
-# target:
-#   service: sing
-#   name: msroctovc
-#   resource_group: gcr-singularity-octo
-#   # workspace_name: Workspace_NLC
-#   workspace_name: NLC_Workspace
-
 target:
   service: sing
-  name: gcrprojvc1
-  resource_group:  gcr-singularity-proj1
+  name: msroctovc
+  resource_group: gcr-singularity-octo
   # workspace_name: Workspace_NLC
   workspace_name: NLC_Workspace
-
-# target:
-#   service: sing
-#   name: msrresrchvc
-#   resource_group: gcr-singularity-resrch
-#   workspace_name: Workspace_NLC
-
-
-# target:
-#   service: sing
-#   name: msroctobasicvc
-#   resource_group: gcr-singularity-octo
-#   workspace_name: Workspace_NLC
 
 
 environment:
@@ -77,19 +44,19 @@ search:
   job_template:
     name: PRJ-0349-A54-1_.58_-bit-LLMs-test-scaling
     # sku: 1x40G8
-    sku: 2x40G8-A100-IB-NvLink
+    sku: 40G8-A100-IB-NvLink
     identity: managed
-    mpi: True
-    process_count_per_node: 1
+    # mpi: True
+    # process_count_per_node: 1
     command:
     - pip install -e ".[torch,metrics]"
     - pip install deepspeed==0.14.4
     - echo $${rank}
     - pip install -U flash-attn==2.4.2 --no-build-isolation
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
-    - pip install transformers==4.44.2
+    - pip install git+https://github.com/buaahsh/pytorch-transformers.git --no-build-isolation -b shaohanh/4442_sumloss
     - ls /mnt/lingjiejiang
-    - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bitnet_script/{rank}
+    - torchrun --nproc_per_node=8 src/train.py bitnet_script/{rank}
     submit_args:
       env:
         {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
@@ -103,5 +70,5 @@ search:
     - name: rank
       spec: discrete
       # values: ['bitnet_glan1.5_default_template_2e5_e2_bsz128.yaml']
-      values: ['bitnet_glan1.5_default_template_5e6_e4_bsz128.yaml']
+      values: ['bitnet_glan1.5_default_template_5e6_e4_bsz128_sumloss.yaml']
 
