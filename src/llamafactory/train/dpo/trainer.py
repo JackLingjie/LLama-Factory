@@ -158,9 +158,14 @@ class CustomDPOTrainer(DPOTrainer):
             chosen_rewards = self.beta * policy_chosen_logps.to(self.accelerator.device).detach()
             rejected_rewards = self.beta * policy_rejected_logps.to(self.accelerator.device).detach()
         else:
+            is_dpo_norm = self.loss_type == "dpo_norm"
+            if is_dpo_norm:
+                self.loss_type = "sigmoid"
             losses, chosen_rewards, rejected_rewards = self.dpo_loss(
                 policy_chosen_logps, policy_rejected_logps, reference_chosen_logps, reference_rejected_logps
             )
+            if is_dpo_norm:
+                self.loss_type = "dpo_norm"
 
         return losses, chosen_rewards, rejected_rewards
 

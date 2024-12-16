@@ -606,6 +606,14 @@ _register_template(
     format_prefix=EmptyFormatter(slots=[{"bos_token"}]),
 )
 
+_register_template(
+    name="bitnet_default",
+    format_user=StringFormatter(slots=["User: {{content}}<|eot_id|>Assistant: "]),
+    format_system=StringFormatter(slots=["{{content}}\n"]),
+    format_separator=EmptyFormatter(slots=["\n"]),
+    format_prefix=EmptyFormatter(slots=[{"bos_token"}]),
+)
+
 
 _register_template(
     name="bitnet",
