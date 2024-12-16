@@ -1,5 +1,5 @@
 ### model
-model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/gemma_glan1.5/gemma_glan1.5_default_template_2e5_e2_bsz128/checkpoint-7332/
+model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.5/bitnet_2b_2t_sft_glan1.5_5e-6_8k_4ep_chatformat_loss_mi300/
 
 ### method
 stage: dpo
@@ -7,24 +7,24 @@ do_train: true
 finetuning_type: full
 pref_beta: 0.01
 flash_attn: fa2
-deepspeed: examples/deepspeed/ds_z3_config.json
+# deepspeed: examples/deepspeed/ds_z3_config.json
 
 ### dataset
 dataset: magpie_dpo_v0.1
-template: default
+template: bitnet_default
 cutoff_len: 2048
 overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/gemma_glan1.5/gemma_glan1.5_default_template_2e5_e2_bsz2k_dpo_bsz64_2e7_1e
-logging_steps: 1
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.5/bitnet_2b_2t_sft_glan1.5_5e-6_8k_4ep_chatformat_loss_dpo_bsz128_2e7_1e_bitnet_default_mi300
+logging_steps: 10
 save_steps: 100
 plot_loss: true
 overwrite_output_dir: true
 
-### train #bsz 128
-per_device_train_batch_size: 1
+### train #bsz 32
+per_device_train_batch_size: 2
 gradient_accumulation_steps: 8
 learning_rate: 2.0e-7
 num_train_epochs: 1.0

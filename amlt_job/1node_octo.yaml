@@ -49,7 +49,7 @@ search:
     # mpi: True
     # process_count_per_node: 1
     command:
-    - pip install -e ".[torch,metrics]"
+    - pip install -e ".[torch,metrics]" --user
     - pip install deepspeed==0.14.4
     - echo $${rank}
     - pip install -U flash-attn==2.4.2 --no-build-isolation
@@ -60,8 +60,8 @@ search:
     submit_args:
       env:
         {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
-      container_args:
-        shm_size: 256g
+      # container_args:
+      #   shm_size: 256g
     tags: [Project_Name:1.58-bit-LLMs, ProjectID:PRJ-0349-A54, Experiment:BitNet-scaling]
 
   type: grid
@@ -72,5 +72,9 @@ search:
       # values: ['bitnet_glan1.5_default_template_2e5_e2_bsz128.yaml']
       # values: ['bitnet_glan1.5_default_template_5e6_e4_bsz128.yaml']
       # values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332.yaml']
-      values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332_dponorm.yaml', 'bitnet_glan1.5_default_template_5e6_e4_bsz128.yaml', 'gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332.yaml']
+      # values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332_dponorm.yaml', 'bitnet_glan1.5_default_template_5e6_e4_bsz128.yaml', 'gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332.yaml']
+      # values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332_dponorm.yaml', ]
+      # values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332.yaml', 'gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332_bsz32.yaml']
+      values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz32.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz32_lr4e7.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz128.yaml']
+      # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz128.yaml']
 
