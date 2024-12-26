@@ -2,9 +2,8 @@ description: bitnet
 
 target:
   service: sing
-  # name: msroctovc
-  name: msroctobasicvc
-  # resource_group: gcr-singularity-octo
+  name: msroctovc
+  resource_group: gcr-singularity-octo
   # workspace_name: Workspace_NLC
   workspace_name: NLC_Workspace
 
@@ -45,20 +44,16 @@ search:
   job_template:
     name: PRJ-0349-A54-1_.58_-bit-LLMs-test-scaling
     # sku: 1x40G8
-    sku: 40G8-A100-IB-NvLink
+    sku: 40G1
     identity: managed
-    sla_tier: standard
     # mpi: True
     # process_count_per_node: 1
     command:
-    - pip install -e ".[torch,metrics]" --user
-    - pip install deepspeed==0.14.4
+    - pip install datasets
+    - pip install vllm --user
     - echo $${rank}
-    - pip install -U flash-attn==2.4.2 --no-build-isolation
-    - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
-    - pip install transformers==4.44.2
-    - ls /mnt/lingjiejiang
-    - torchrun --nproc_per_node=8 src/train.py bitnet_script/{rank}
+    - python eval/reason/eval.py --model-path /mnt/lingjiejiang/math_reason/exp/1220_dpo_data/bsz64_lr2e7_e1/checkpoint-567/ --output /mnt/lingjiejiang/math_reason/exp/1220_dpo_data/bsz64_lr2e7_e1/checkpoint-567/math_500_eval 
+    # --only-eval
     submit_args:
       env:
         {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
@@ -78,7 +73,6 @@ search:
       # values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332_dponorm.yaml', ]
       # values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332.yaml', 'gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332_bsz32.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz32.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz32_lr4e7.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz128.yaml']
-      # values: ['gemma_tulu3_dpo_v0.1_2048_default_template_glan1.5_7332_bsz32.yaml']
-      values: ['gemma_glan2_default_template_2e5_e2_bsz128.yaml']
+      values: ['gemma_tulu3_dpo_v0.1_2048_default_template_glan1.5_7332_bsz32.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz128.yaml']
 

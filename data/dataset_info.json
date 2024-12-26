@@ -136,8 +136,35 @@
       "system_tag": "system"
     }
   },
+  "qwq_math_1219": {
+    "file_name": "/mnt/lingjiejiang/math_reason/data/math_dpo_llama_1219.jsonl",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "qwq_math_1220": {
+    "file_name": "/mnt/lingjiejiang/math_reason/data/math_dpo_llama_1220.jsonl",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
   "magpie_dpo_v0.1": {
     "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/magpie_dpo_v0.1.jsonl",
+    "ranking": true,
+    "columns": {
+      "prompt": "prompt",
+      "chosen": "chosen",
+      "rejected": "rejected"
+    }
+  },
+  "tulu3_dpo_v0.1": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/tulu3_dpo_v0.1.jsonl",
     "ranking": true,
     "columns": {
       "prompt": "prompt",
