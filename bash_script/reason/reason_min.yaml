@@ -10,7 +10,7 @@ deepspeed: examples/deepspeed/ds_z0_config.json
 flash_attn: fa2
 
 ### dataset
-dataset: reason_max
+dataset: reason_min
 template: llama3
 cutoff_len: 4096
 max_samples: 100000
@@ -18,7 +18,7 @@ overwrite_cache: true
 preprocessing_num_workers: 16
 
 ### output
-output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/llama3_sft_4096_bsz8_reason_max/lora/sft
+output_dir: /mnt/lingjiejiang/textual_aesthetics/exp/saves/llama3_sft_4096_bsz8_reason_min/lora/sft
 logging_steps: 10
 save_steps: 500
 plot_loss: true
