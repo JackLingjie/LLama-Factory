@@ -5,6 +5,15 @@
   "alpaca_en_demo": {
     "file_name": "alpaca_en_demo.json"
   },
+  "reason_max": {
+    "file_name": "/mnt/lingjiejiang/math_reason/data/qilong_qwq_math_alpaca_longest.json"
+  },
+  "reason_min": {
+    "file_name": "/mnt/lingjiejiang/math_reason/data/qilong_qwq_math_alpaca_shortest.json"
+  },
+  "reason_random": {
+    "file_name": "/mnt/lingjiejiang/math_reason/data/qilong_qwq_math_alpaca_random.json"
+  },
   "alpaca_zh_demo": {
     "file_name": "alpaca_zh_demo.json"
   },
