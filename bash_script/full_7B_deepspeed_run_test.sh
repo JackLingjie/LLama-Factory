@@ -8,12 +8,12 @@ deepspeed --num_gpus 8 --num_nodes 2 --hostfile bash_script/config_files/hostfil
     --finetuning_type full \
     --flash_attn fa2 \
     --dataset glanchat_v2 \
-    --max_samples 10000 \
+    --max_samples 2000 \
     --template default \
     --cutoff_len 2048 \
     --overwrite_cache \
     --preprocessing_num_workers 16 \
-    --output_dir /mnt/lingjiejiang/textual_aesthetics/exp/saves/glanchat_v2_llama_base_7b_2048_default_template_test/fullft_lr5e6_e3_fx/sft \
+    --output_dir /mnt/lingjiejiang/textual_aesthetics/exp/saves/deepspeed_test/fullft_lr5e6_e3_fx/sft \
     --logging_steps 10 \
     --save_steps 500 \
     --plot_loss \
