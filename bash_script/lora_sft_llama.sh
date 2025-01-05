@@ -154,3 +154,8 @@ torchrun --nproc_per_node=8 src/train.py bash_script/qwen2_instruct_uf_2048_defa
 torchrun --nproc_per_node=1 src/train.py bash_script/mmlu_llama3.1_lora_sft_ds3.yaml
 
 FORCE_TORCHRUN=1 llamafactory-cli train bash_script/reason/reason_max.yaml
+FORCE_TORCHRUN=1 llamafactory-cli train bash_script/reason/reason_min.yaml
+FORCE_TORCHRUN=1 llamafactory-cli train bash_script/reason/reason_random.yaml
+
+
+llamafactory-cli export bash_script/reason/reason_max.yaml

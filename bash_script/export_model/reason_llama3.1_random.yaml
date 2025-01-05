@@ -1,0 +1,13 @@
+### Note: DO NOT use quantized model or quantization_bit when merging lora adapters
+
+### model
+model_name_or_path: /mnt/lingjiejiang/textual_aesthetics/model_checkpoint/sft_merge_checkpoints/Meta-Llama-3.1-8B-Instruct
+adapter_name_or_path: /mnt/lingjiejiang/textual_aesthetics/exp/saves/llama3_sft_4096_bsz8_reason_random/lora/sft/
+template: llama3
+finetuning_type: lora
+
+### export
+export_dir: /mnt/qilongma/share/sft_checkpoints/llama3.1_lora_4096_bsz8_reason_random
+export_size: 2
+export_device: cpu
+export_legacy_format: false
