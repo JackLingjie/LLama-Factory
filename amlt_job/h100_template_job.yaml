@@ -2,7 +2,7 @@ description: bitnet
 
 target:
   service: aml
-  name: alta2
+  name: alta1
 
 # environment:
 #   image: nvcr:v23.10
@@ -76,9 +76,9 @@ search:
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
     - pip install git+https://github.com/yushuiwx/datasets.git
     - pip install transformers==4.44.2
-    - wget https://aka.ms/downloadazcopy-v10-linux
-    - tar -xvf downloadazcopy-v10-linux
-    - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/model_checkpoint/bitnet-2B-v0/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive # base model checkpoint
+    # - wget https://aka.ms/downloadazcopy-v10-linux
+    # - tar -xvf downloadazcopy-v10-linux
+    # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/model_checkpoint/bitnet-2B-v0/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive # base model checkpoint
     # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan1.5/bitnet_glan1.5_default_template_2e5_e2_bsz128_trm4442/checkpoint-6000/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
     # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/model_checkpoint/huggingface/gemma-2b/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
     # - ./azcopy_linux_amd64_*/azcopy copy 'https://msranlpintern.blob.core.windows.net/lingjiejiang/textual_aesthetics/exp/saves/bitnet_glan2-1108/bitnet_glan2-1108_default_template_2e5_e2_bsz2k/checkpoint-2000/?sv=2023-01-03&st=2024-11-12T09%3A54%3A42Z&se=2024-11-19T09%3A54%3A00Z&skoid=4ca952ec-968b-41ca-95cb-e9b2a5fe0a02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2024-11-12T09%3A54%3A42Z&ske=2024-11-19T09%3A54%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxltf&sig=BEYQBkcT8J7uYRNCtvkqPSxYcUzIHhsyXeb%2B2w2xbvU%3D' 'model' --recursive
@@ -101,5 +101,7 @@ search:
       # values: ['gemma_glan1.5_default_template_2e5_e2_bsz128.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan2_2000.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan2_2000_bsz64.yaml']
       # values: ['bitnet_dv3_train_2.5m_trunc256_ql_default_template_1e5_e3_bsz2k.yaml']
-      values: ['bitnet_glan1.5_default_template_1e4_e2_bsz128.yaml', 'bitnet_glan1.5_default_template_4e5_e2_bsz128.yaml', 'bitnet_glan1.5_default_template_7e5_e2_bsz128.yaml']
+      # values: ['bitnet_glan1.5_default_template_1e4_e2_bsz128.yaml', 'bitnet_glan1.5_default_template_4e5_e2_bsz128.yaml', 'bitnet_glan1.5_default_template_7e5_e2_bsz128.yaml']
+      values: ['gemma_glan2_default_template_2e5_e2_bsz128.yaml', 'gemma_tulu3_default_template_2e5_e2_bsz128.yaml']
+      # values: ['gemma_tulu3_default_template_2e5_e2_bsz128.yaml']
 

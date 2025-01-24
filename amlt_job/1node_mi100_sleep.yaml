@@ -3,14 +3,16 @@ description: bitnet
 target:
   service: sing
   # name: msroctovc
-  name: msroctobasicvc
-  resource_group: gcr-singularity-octo
-  # workspace_name: Workspace_NLC
-  workspace_name: NLC_Workspace
+  # name: msroctobasicvc
+  name: msrresrchlab
+  # resource_group: gcr-singularity-octo
+  workspace_name: Workspace_NLC
+  # workspace_name: NLC_Workspace
 
 
 environment:
-  image: amlt-sing/acpt-rocm6.1_ubuntu20.04_py3.9_pytorch2.1.2
+  # image: amlt-sing/acpt-rocm6.1_ubuntu20.04_py3.9_pytorch2.1.2
+  image: j4ckl1u/rocm6.2.2_ubuntu22.04_py3.10_pytorch_release_2.3.0_megatronlm:latest
   setup:
   - echo "master_addr:" "$$MASTER_ADDR"
   - echo "master_port:" $$MASTER_PORT
@@ -44,22 +46,22 @@ search:
     name: PRJ-0349-A54-1_.58_-bit-LLMs-test-scaling
     # sku: 1x40G8
     # sku: 2x192G8-MI300X-IB-xGMI
-    sku: 192G8-MI300X-xGMI
+    sku: 32G8-MI100
     identity: managed
-    sla_tier: standard
+    # sla_tier: standard
     # mpi: True
     # process_count_per_node: 1
     command:
-    - pip install -e ".[torch,metrics]"  --user
-    - pip install deepspeed==0.14.4
-    - echo $${rank}
+    # - pip install -e ".[torch,metrics]"  --user
+    # - pip install deepspeed==0.14.4
+    # - echo $${rank}
     - pip install /mnt/msranlp/amd/flash_attn-2.6.3+torch2.1+rocm6.1-cp39-cp39-linux_x86_64.whl
     - export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
     - ls /mnt/lingjiejiang
     - sleep infinity
     # - torchrun --nproc_per_node=8 --nnodes=2 --node_rank=$$OMPI_COMM_WORLD_RANK --master_addr="$$MASTER_ADDR" --master_port=$$MASTER_PORT src/train.py bash_script/{rank}
-    - torchrun --nproc_per_node=8 src/train.py bitnet_script/{rank}
-    # - torchrun --nproc_per_node=8 src/train.py math_script/{rank}
+    # - torchrun --nproc_per_node=8 src/train.py bitnet_script/{rank}
+    - torchrun --nproc_per_node=8 src/train.py math_script/{rank}
     # submit_args:
     #   env:
     #     {"SINGULARITY_MPI_ENV":"-mca pml ucx --mca btl ^vader,tcp,openib -x NCCL_SOCKET_IFNAME=bond0 -x NCCL_IB_HCA=mlx5_0,mlx5_3,mlx5_4,mlx5_5,mlx5_6,mlx5_9,mlx5_10,mlx5_11 -x NCCL_DEBUG=INFO"}
@@ -78,6 +80,5 @@ search:
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz32_m300.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz64_m300.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz128_m300.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz64_lr1e7_m300.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz64_e2_m300.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz64_lr1e7_e2_m300.yaml']
-      # values: ['1219_dpo_v0.1_8b_2048_default_template.yaml']
-      values: ['gemma_glan2_default_template_2e5_e2_bsz128.yaml', 'gemma_tulu3_default_template_2e5_e2_bsz128.yaml']
+      values: ['1219_dpo_v0.1_8b_2048_default_template.yaml']
 

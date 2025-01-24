@@ -26,9 +26,9 @@ storage:
   lingjiejiang:
     storage_account_name: msranlpintern
     container_name: lingjiejiang
-#   msranlp:
-#     storage_account_name: msranlp
-#     container_name: unilm
+  msranlp:
+    storage_account_name: msranlp
+    container_name: unilm
 #   nlcredstone:
 #     storage_account_name: nlcredstone
 #     container_name: unilm
@@ -51,8 +51,9 @@ search:
     command:
     - pip install datasets
     - pip install vllm --user
-    - echo $${rank}
-    - python eval/reason/eval.py --model-path /mnt/lingjiejiang/math_reason/exp/1220_dpo_data/bsz64_lr2e7_e1/checkpoint-567/ --output /mnt/lingjiejiang/math_reason/exp/1220_dpo_data/bsz64_lr2e7_e1/checkpoint-567/math_500_eval 
+    - echo $${model}
+    # - python eval/reason/eval.py --model-path /mnt/lingjiejiang/math_reason/exp/1220_dpo_data/bsz64_lr2e7_e1/checkpoint-567/ --output /mnt/lingjiejiang/math_reason/exp/1220_dpo_data/bsz64_lr2e7_e1/checkpoint-567/math_500_eval 
+    - python eval/reason/eval.py --model-path /mnt/msranlp/xun/reasoning/Large_RL/results/cluster_results/{model}/ --output /mnt/msranlp/xun/reasoning/Large_RL/results/cluster_results/{model}/math_500_eval 
     # --only-eval
     submit_args:
       env:
@@ -64,7 +65,7 @@ search:
   type: grid
   max_trials: 500
   params:
-    - name: rank
+    - name: model
       spec: discrete
       # values: ['bitnet_glan1.5_default_template_2e5_e2_bsz128.yaml']
       # values: ['bitnet_glan1.5_default_template_5e6_e4_bsz128.yaml']
@@ -73,6 +74,6 @@ search:
       # values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332_dponorm.yaml', ]
       # values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332.yaml', 'gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332_bsz32.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz32.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz32_lr4e7.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz128.yaml']
-      values: ['gemma_tulu3_dpo_v0.1_2048_default_template_glan1.5_7332_bsz32.yaml']
+      values: ['QwQ-cpkt-402-qwq_rlvr_data_top_p0.9_temperature0.7_checkpoints/step_100', 'QwQ-cpkt-402-qwq_rlvr_data_top_p0.9_temperature0.7_checkpoints/step_200', 'QwQ-cpkt-402-qwq_rlvr_data_top_p0.9_temperature1_checkpoints/step_100', 'QwQ-cpkt-402-qwq_rlvr_data_top_p0.9_temperature1_checkpoints/step_200', 'QwQ-cpkt-402-qwq_rlvr_data_bsz518_epi100k_maxtok4k_top_p1_temperature0.3', 'QwQ-cpkt-402-qwq_rlvr_data_bsz518_epi100k_maxtok4k_top_p1_temperature0.5', 'QwQ-cpkt-402-qwq_rlvr_data_bsz518_epi100k_maxtok4k_top_p1_temperature0.7', 'QwQ-cpkt-402-qwq_rlvr_data_bsz518_epi100k_maxtok4k_top_p1_temperature1','QwQ-cpkt-402-qwq_rlvr_data_bsz518_epi100k_maxtok4k_top_p1_temperature0.3_checkpoints/step_100', 'QwQ-cpkt-402-qwq_rlvr_data_bsz518_epi100k_maxtok4k_top_p1_temperature0.5_checkpoints/step_100', 'QwQ-cpkt-402-qwq_rlvr_data_bsz518_epi100k_maxtok4k_top_p1_temperature0.7_checkpoints/step_100', 'QwQ-cpkt-402-qwq_rlvr_data_bsz518_epi100k_maxtok4k_top_p1_temperature1_checkpoints/step_100']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz128.yaml']
 

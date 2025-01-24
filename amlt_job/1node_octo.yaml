@@ -79,6 +79,7 @@ search:
       # values: ['gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332.yaml', 'gemma_magpie_dpo_v0.1_2048_default_template_glan1.5_7332_bsz32.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz32.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz32_lr4e7.yaml', 'bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz128.yaml']
       # values: ['gemma_tulu3_dpo_v0.1_2048_default_template_glan1.5_7332_bsz32.yaml']
-      values: ['gemma_glan2_default_template_2e5_e2_bsz128.yaml']
+      # values: ['gemma_glan2_default_template_2e5_e2_bsz128.yaml']
+      values: ['gemma_tulu3_default_template_2e5_e2_bsz128.yaml']
       # values: ['bitnet_magpie_dpo_v0.1_2048_default_template_glan1.5_sm_bsz128.yaml']
 

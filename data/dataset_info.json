@@ -52,6 +52,20 @@
       "system_tag": "system"
     }
   },
+  "tulu3": {
+    "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/tulu3_sft_v0.1.jsonl",
+    "formatting": "sharegpt",
+    "columns": {
+      "messages": "messages"
+    },
+    "tags": {
+      "role_tag": "role",
+      "content_tag": "content",
+      "user_tag": "user",
+      "assistant_tag": "assistant",
+      "system_tag": "system"
+    }
+  },
   "wildchat_v1_job": {
     "file_name": "/mnt/lingjiejiang/textual_aesthetics/data/WildChat-1M.1turn.en.completions.shuf.merged.json",
     "formatting": "sharegpt",
