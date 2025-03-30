@@ -12,7 +12,7 @@ export PATH=$PATH:/home/aiscuser/.local/bin
 git clone https://github.com/JackLingjie/LLama-Factory.git
 cd LLama-Factory
 git checkout -b debug origin/debug
-
+pip uninstall -r requirements.txt -y
 pip install tensorboard
 
 
