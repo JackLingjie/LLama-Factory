@@ -1,0 +1,4 @@
+bash bash_script/auto_run_8/distribute_run_8/kill_sleep.sh
+bash bash_script/auto_run_8/distribute_run_8/kill_llama.sh
+bash bash_script/auto_run_8/distribute_run_8/kill_port.sh
+bash bash_script/auto_run_8/distribute_run_8/pull_all.sh
