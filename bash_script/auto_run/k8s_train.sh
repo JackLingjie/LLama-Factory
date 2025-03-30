@@ -11,6 +11,7 @@ CUSTOM_YAML=$5
 # 默认 YAML 配置文件（数组格式，方便后续替换）
 yaml_files=(
     "bash_script/deepseek-llm-7b-chat_tapo_v2.yaml"
+    # "bash_script/deepseek-llm-7b-chat_tapo_v2.yaml"
     # "bash_script/DeepSeek-V2-Lite-Chat_uf_2048_v2.yaml"
     # "bash_script/think_hybrid_qwen_math_7b_merged_reasoning_1074k_generall_nothink_oasst2_1749k.yaml"
     # "bash_script/bitnet_add_synthetic_openr1_openthought_aime_rej_kodcode_taco_aops_cf_1075k_epoch5_ctr.yaml"
