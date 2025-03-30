@@ -12,8 +12,6 @@ export PATH=$PATH:/home/aiscuser/.local/bin
 git clone https://github.com/JackLingjie/LLama-Factory.git
 cd LLama-Factory
 git checkout -b debug origin/debug
-pip install torchvision==0.20.1
-
 
 pip install tensorboard
 
