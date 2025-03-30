@@ -17,12 +17,12 @@ pip install tensorboard
 
 
 pip uninstall deepspeed -y
-pip install deepspeed==0.14.0
-pip install deepspeed==0.14.0
+pip install deepspeed==0.14.4
+pip install deepspeed==0.14.4
 
 
 pip install --user -e ".[torch,metrics]"
-pip install deepspeed==0.14.0
+pip install deepspeed==0.14.4
 pip install wandb
 EOF
 )
