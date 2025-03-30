@@ -6,7 +6,8 @@ NODES=("node-0" "node-1" "node-2" "node-3" "node-4" "node-5" "node-6" "node-7")
 
 # 训练 YAML 配置文件（假设 YAML 已经在 `/tmp/Qwen-sft/`）
 yaml_files=(
-    "bash_script/deepseek-llm-7b-chat_uf_2048_v2.yaml"
+    "bash_script/deepseek-llm-7b-chat_tapo_v2.yaml"
+    # "bash_script/deepseek-llm-7b-chat_uf_2048_v2.yaml"
     # "bash_script/DeepSeek-V2-Lite-Chat_uf_2048_v2.yaml"
     # "bash_script/think_hybrid_qwen_7b_merged_reasoning_1074k_generall_nothink_oasst2_1749k.yaml"
     # bash_script/am_980k_openr1_synthetic_openthought_aime_kodcode_aops_taco_cf_dedup_1074k_2054k_resume.yaml
