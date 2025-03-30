@@ -44,7 +44,7 @@ if [[ -z "$NNODES" || -z "$NODE_RANK" || -z "$MASTER_ADDR" || -z "$MASTER_PORT" 
 fi
 
 # 训练任务所在目录
-WORK_DIR="/workspace/Qwen-sft"
+WORK_DIR="/workspace/LLama-Factory"
 
 echo "启动训练: NODE_RANK=$NODE_RANK, MASTER=$MASTER_ADDR, PORT=$MASTER_PORT, NNODES=$NNODES, YAML_FILE=$YAML_FILE"
 
