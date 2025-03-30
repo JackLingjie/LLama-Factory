@@ -4,7 +4,7 @@
 NODES_FILE="bash_script/auto_run_8/distribute_run_8/node_config/nodes.txt"
 
 script=$(cat << 'EOF'
-cd /tmp/Qwen-sft
+cd /tmp/LLama-Factory
 git pull
 EOF
 )
