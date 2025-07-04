@@ -1,0 +1,30 @@
+logging:
+  type: syslog
+  level: log_debug
+
+components:
+  - libfuse
+  - file_cache
+  - attr_cache
+  - azstorage
+
+libfuse:
+  attribute-expiration-sec: 120
+  entry-expiration-sec: 120
+  negative-entry-expiration-sec: 240
+
+file_cache:
+  path: /tmp/blob_buffer_lj
+  timeout-sec: 120
+  max-size-mb: 4096
+
+attr_cache:
+  timeout-sec: 7200
+
+azstorage:
+  type: block
+  endpoint: https://msranlpintern.blob.core.windows.net
+  account-name: msranlpintern
+  mode: sas
+  sas: ?sv=2023-01-03&st=2025-07-01T02%3A14%3A22Z&se=2025-07-08T02%3A14%3A00Z&skoid=28c96e8a-ab96-4c6e-8967-9928eb6b3d02&sktid=72f988bf-86f1-41af-91ab-2d7cd011db47&skt=2025-07-01T02%3A14%3A22Z&ske=2025-07-08T02%3A14%3A00Z&sks=b&skv=2023-01-03&sr=c&sp=racwdxl&sig=kGiDebKaAPRYdfvly7PCdX2z5zPf4pmtU0gg2Fyqr%2BY%3D
+  container: lingjiejiang
