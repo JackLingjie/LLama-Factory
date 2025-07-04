@@ -23,7 +23,8 @@ pip install deepspeed==0.14.4
 
 pip install --user -e ".[torch,metrics]"
 pip install deepspeed==0.14.4
-pip install flash-attn==2.6.1 --no-build-isolation
+# pip install flash-attn==2.6.1 --no-build-isolation
+pip install -U flash-attn==2.7.2.post1 --no-build-isolation
 pip install wandb
 EOF
 )
