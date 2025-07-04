@@ -1,5 +1,5 @@
 #!/bin/bash
-cd /workspace/Qwen-sft/blob
+cd /workspace/LLama-Factoryblob
 
 curl -sSL -O https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
 

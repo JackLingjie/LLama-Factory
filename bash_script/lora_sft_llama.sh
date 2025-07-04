@@ -159,3 +159,8 @@ FORCE_TORCHRUN=1 llamafactory-cli train bash_script/reason/reason_random.yaml
 
 
 llamafactory-cli export bash_script/reason/reason_max.yaml
+
+
+FORCE_TORCHRUN=1 llamafactory-cli train bash_script/DeepSeek-V2-Lite-Chat_uf_2048_v2.yaml
+
+FORCE_TORCHRUN=1 llamafactory-cli 

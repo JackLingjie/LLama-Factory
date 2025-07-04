@@ -4,7 +4,7 @@ set -x  # 开启调试模式，显示命令执行细节
 # 定义所有节点
 NODES=("node-0" "node-1" "node-2" "node-3" "node-4" "node-5" "node-6" "node-7")
 
-# 训练 YAML 配置文件（假设 YAML 已经在 `/tmp/Qwen-sft/`）
+# 训练 YAML 配置文件（假设 YAML 已经在 `/tmp/LLama-Factory`）
 yaml_files=(
     "bash_script/ablation_llama3-base-sft-uf_ta_merged.yaml"
     # "bash_script/ablation_llama3.1_instruct_2048_ta_uf_merged.yaml"
