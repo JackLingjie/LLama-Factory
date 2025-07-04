@@ -4,7 +4,7 @@
 NODES_FILE="bash_script/auto_run_8/distribute_run_8/node_config/nodes.txt"
 
 script=$(cat << 'EOF'
-cd /tmp/LLama-Factoryblob
+cd /tmp/LLama-Factory/blob
 bash myblob.sh
 EOF
 )
